@@ -7,10 +7,8 @@ use Openapi\ServerGenerator\Tests\TestCase;
 
 class OpenapiServerGeneratorTest extends TestCase
 {
-
     public function test_can_generate_file()
     {
         $this->artisan(OpenapiServerGeneratorCommand::class)->assertSuccessful();
     }
-
 }

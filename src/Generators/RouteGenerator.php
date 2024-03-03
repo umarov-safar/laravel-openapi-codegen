@@ -13,12 +13,11 @@ class RouteGenerator implements GeneratorInterface
     public function generate(SpecObjectInterface $object): void
     {
         /**
-         * @var  $route
+         * @var $route
          * @var PathItem $path
          */
         foreach ($object->paths as $route => $path) {
 
         }
     }
-
 }

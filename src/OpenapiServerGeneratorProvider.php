@@ -14,7 +14,7 @@ class OpenapiServerGeneratorProvider extends ServiceProvider
                 OpenapiServerGeneratorCommand::class,
             ]);
         }
-        $this->publishes([__DIR__ . '/../config/openapi-generator.php' => config_path('openapi-generator.php')], 'config');
+        $this->publishes([__DIR__.'/../config/openapi-generator.php' => config_path('openapi-generator.php')], 'config');
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/openapi-generator.php', 'openapi-generator'

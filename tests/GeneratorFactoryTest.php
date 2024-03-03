@@ -9,7 +9,6 @@ use Openapi\ServerGenerator\Generators\RouteGenerator;
 
 class GeneratorFactoryTest extends TestCase
 {
-
     public function test_return_valid_type_generator()
     {
         $generator = GeneratorFactory::createGenerator(EntityTypes::ROUTE);
@@ -23,5 +22,4 @@ class GeneratorFactoryTest extends TestCase
 
         GeneratorFactory::createGenerator('not_exists');
     }
-
 }

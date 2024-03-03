@@ -18,7 +18,7 @@ class GeneratorFactory
             case EntityTypes::ROUTE:
                 return new RouteGenerator();
             default:
-                throw new GeneratorNotFoundException("Invalid generator type");
+                throw new GeneratorNotFoundException('Invalid generator type');
         }
     }
 }

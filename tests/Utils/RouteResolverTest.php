@@ -22,12 +22,11 @@ class RouteResolverTest extends TestCase
         $expect = [
             'App\Http\Controllers\Api\UserController',
             'UserController',
-            'search'
+            'search',
         ];
 
         $actual = RouteControllerResolver::extract($controller);
 
-        $this->assertSame($expect,  $actual);
+        $this->assertSame($expect, $actual);
     }
-
 }

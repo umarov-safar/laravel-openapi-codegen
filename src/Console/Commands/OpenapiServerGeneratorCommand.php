@@ -14,12 +14,11 @@ use Openapi\ServerGenerator\Generators\BaseGenerator;
 
 class OpenapiServerGeneratorCommand extends GeneratorCommand
 {
-
     protected $signature = 'openapi:generate-server';
 
     protected function getStub(): string
     {
-        return __DIR__ . '/../../../stubs';
+        return __DIR__.'/../../../stubs';
     }
 
     /**
@@ -32,7 +31,7 @@ class OpenapiServerGeneratorCommand extends GeneratorCommand
         $spec = Reader::readFromYamlFile(realpath(Config::get('openapi-generator.path')));
 
         /**
-         * @var  $key
+         * @var $key
          * @var GeneratorInterface $generator
          */
         foreach (Config::get('openapi-generator.entities') as $entity) {
@@ -41,5 +40,4 @@ class OpenapiServerGeneratorCommand extends GeneratorCommand
         }
 
     }
-
 }
