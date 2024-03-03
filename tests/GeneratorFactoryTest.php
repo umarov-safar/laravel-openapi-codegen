@@ -10,14 +10,14 @@ use Openapi\ServerGenerator\Generators\RouteGenerator;
 class GeneratorFactoryTest extends TestCase
 {
 
-    public function test_return_correct_type()
+    public function test_return_valid_type_generator()
     {
         $generator = GeneratorFactory::createGenerator(EntityTypes::ROUTE);
 
         $this->assertInstanceOf(RouteGenerator::class, $generator);
     }
 
-    public function test_exception_invalid_type()
+    public function test_invalid_type_will_throw_exception()
     {
         $this->expectException(GeneratorNotFoundException::class);
 
