@@ -1,0 +1,22 @@
+type: integer
+description: |
+  Статус компаний:
+   * `1` - Новая
+   * `2` - Активная
+   * `3` - Заблокирована
+   * `4` - Удалена
+enum:
+  - 1
+  - 2
+  - 3
+  - 4
+x-enum-varnames:
+  - NEW
+  - ACTIVE
+  - BLOCKED
+  - DELETED
+x-enum-descriptions:
+  - Новая
+  - Активная
+  - Заблокирована
+  - Удалена

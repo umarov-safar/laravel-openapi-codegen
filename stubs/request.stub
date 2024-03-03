@@ -1,0 +1,15 @@
+<?php
+
+use Illuminate\Http\Request;
+
+class {{ class }} extends Request
+{
+
+    public function rules()
+    {
+        return [
+            {{ rules }}
+        ]
+    }
+
+}

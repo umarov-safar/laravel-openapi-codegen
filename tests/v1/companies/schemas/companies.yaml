@@ -1,0 +1,158 @@
+CompanyReadonlyProperties:
+  type: object
+  properties:
+    id:
+      type: integer
+      description: Идентификатор компании
+      example: 202
+    created_at:
+      type: string
+      format: date-time
+      description: Дата создания компании
+      example: "2021-06-11T11:27:10.000000Z"
+    updated_at:
+      type: string
+      format: date-time
+      description: Дата обновления компании
+      example: "2021-06-11T11:27:10.000000Z"
+  required:
+    - id
+    - created_at
+    - updated_at
+
+CompanyFillableProperties:
+  type: object
+  properties:
+    inn:
+      type: string
+      description: ИНН компании
+      example: "48230984021012"
+    info:
+      type: object
+      description: Информация о компании из DaData
+      properties:
+        name:
+          type: string
+          example: "OOO ENIAK"
+    customer_id:
+      type: integer
+      description: ID покупателя(админ)
+      example: 3
+    status:
+      type: integer
+      description: Статус компании
+      allOf:
+        - type: integer
+        - $ref: '../enums/company_status_enum.yaml'
+    account:
+      description: Аккаунт
+      type: string
+
+CompanyFillableRequiredProperties:
+  type: object
+  required:
+    - status
+    - customer_id
+    - info
+    - inn
+
+CompanyIncludes:
+  type: object
+  properties:
+    employees:
+      type: array
+      nullable: true
+      items:
+        $ref: './company_employees.yaml#/CompanyEmployee'
+Company:
+  allOf:
+    - $ref: '#/CompanyReadonlyProperties'
+    - $ref: '#/CompanyFillableProperties'
+    - $ref: '#/CompanyIncludes'
+
+CreateCompanyRequest:
+  allOf:
+    - $ref: '#/CompanyFillableProperties'
+    - $ref: '#/CompanyFillableRequiredProperties'
+
+ReplaceCompanyRequest:
+  allOf:
+    - $ref: '#/CompanyFillableProperties'
+    - $ref: '#/CompanyFillableRequiredProperties'
+
+PatchCompanyRequest:
+  type: object
+  properties:
+    info:
+      type: object
+      description: Информация о компании из DaData
+    customer_id:
+      type: integer
+      description: ID покупателя(админ)
+      example: 3
+    status:
+      type: integer
+      description: Статус компании
+      allOf:
+        - type: integer
+        - $ref: '../enums/company_status_enum.yaml'
+    account:
+      description: Аккаунт
+      type: string
+
+CompanyResponse:
+  type: object
+  properties:
+    data:
+      $ref: '#/Company'
+    meta:
+      type: object
+  required:
+    - data
+
+SearchCompanyFilter:
+  type: object
+  properties:
+    id:
+      type: string
+      example: 1
+    inn:
+      type: string
+      example: "2349302293302"
+    status:
+      type: integer
+      allOf:
+        - type: integer
+        - $ref: '../enums/company_status_enum.yaml'
+    account:
+      type: string
+      example: "32024324230492"
+
+SearchCompaniesRequest:
+  type: object
+  properties:
+    sort:
+      $ref: '../../common_schemas.yaml#/RequestBodySort'
+    include:
+      $ref: '../../common_schemas.yaml#/RequestBodyInclude'
+    pagination:
+      $ref: '../../common_schemas.yaml#/RequestBodyPagination'
+    filter:
+      $ref: '#/SearchCompanyFilter'
+
+SearchCompaniesResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        $ref: '#/Company'
+    meta:
+      type: object
+      properties:
+        pagination:
+          $ref: '../../common_schemas.yaml#/ResponseBodyPagination'
+  required:
+    - data
+    - meta
+
