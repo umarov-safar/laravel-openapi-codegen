@@ -14,11 +14,9 @@ class GeneratorFactory
      */
     public static function createGenerator(string $type): GeneratorInterface
     {
-        switch ($type) {
-            case EntityTypes::ROUTE:
-                return new RouteGenerator();
-            default:
-                throw new GeneratorNotFoundException('Invalid generator type');
-        }
+        return match ($type) {
+            EntityTypes::ROUTE => new RouteGenerator(),
+            default => throw new GeneratorNotFoundException('Invalid generator type'),
+        };
     }
 }

@@ -19,4 +19,7 @@ jobs:
       - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
       - uses: php-actions/composer@v6
       - run: echo "Composer dependencies have been installed"
-      - run: vendor/bin/phpunit
+      - uses: php-actions/phpunit@v3
+        with:
+          configuration: ./phpunit.xml.dist
+          php_version: 8.0
