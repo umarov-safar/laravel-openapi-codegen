@@ -23,7 +23,7 @@ jobs:
           sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
           cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api/
           # Check if files are copied correctly
-          ls -l ./vendor/orchestra/testbench-core/laravel/public/api/v1
+          ls -l ./vendor/orchestra/testbench-core/laravel/public
       - name: Run PHPUnit
         uses: php-actions/phpunit@v3
         with:
