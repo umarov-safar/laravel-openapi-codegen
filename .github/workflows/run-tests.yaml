@@ -19,7 +19,8 @@ jobs:
       - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
       - uses: php-actions/composer@v6
       - run: echo "Composer dependencies have been installed"
-      - run: cp ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public
+      - run: cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public
+      - run: ls ./vendor/orchestra/testbench-core/laravel/public
       - uses: php-actions/phpunit@v3
         with:
           configuration: ./phpunit.xml.dist
