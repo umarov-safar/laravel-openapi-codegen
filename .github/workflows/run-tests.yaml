@@ -22,10 +22,8 @@ jobs:
       - run: |
           sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
           cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api/
+      - run: ls ./vendor/orchestra/testbench-core/laravel/public/api/v1
       - uses: php-actions/phpunit@v3
-        run: |
-          sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
-          cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api/
         with:
           php_version: 8.0
           configuration: ./phpunit.xml.dist
