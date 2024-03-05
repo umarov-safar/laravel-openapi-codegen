@@ -20,7 +20,7 @@ jobs:
       - uses: php-actions/composer@v6
       - run: echo "Composer dependencies have been installed"
       - run: |
-          chmod 777 ./vendor/orchestra/testbench-core/laravel/public
+          sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
           cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public
           ls ./vendor/orchestra/testbench-core/laravel/public
       - uses: php-actions/phpunit@v3
