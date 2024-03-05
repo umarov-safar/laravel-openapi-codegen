@@ -28,7 +28,7 @@ class OpenapiServerGeneratorCommand extends GeneratorCommand
      */
     public function handle(): void
     {
-        $spec = Reader::readFromYamlFile(realpath(Config::get('openapi-generator.path')));
+        $spec = Reader::readFromYamlFile(Config::get('openapi-generator.path'));
 
         /**
          * @var $key
