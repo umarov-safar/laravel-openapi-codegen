@@ -13,7 +13,6 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: ./app
 
 jobs:
   test:
@@ -29,9 +28,5 @@ jobs:
           cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api/
           # Check if files are copied correctly
           ls -R ./vendor/orchestra/testbench-core/laravel/public
-      - name: Run PHPUnit
-        uses: php-actions/phpunit@v3
-        with:
-          php_version: 8.0
-          configuration: ./phpunit.xml.dist
+      - run: composer test
         
