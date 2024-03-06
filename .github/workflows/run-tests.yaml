@@ -6,6 +6,7 @@ on:
       - '**.php'
       - '.github/workflows/run-tests.yaml'
       - 'phpunit.xml.dist'
+      - 'phpunit.xml'
       - 'composer.json'
       - 'composer.lock'
   workflow_dispatch:
