@@ -25,7 +25,7 @@ jobs:
       - run: echo "Composer dependencies have been installed"
       - run: |
           sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
-          cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api/
+          cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api/v1
           # Check if files are copied correctly
           ls -R ./vendor/orchestra/testbench-core/laravel/public
       - run: composer test
