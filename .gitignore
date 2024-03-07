@@ -6,6 +6,5 @@ docs
 phpstan.neon
 vendor
 node_modules
-workbench
 
 Dockerfile
