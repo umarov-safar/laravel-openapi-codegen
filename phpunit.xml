@@ -6,17 +6,12 @@
         colors="true"
         stopOnFailure="true"
         cacheDirectory=".phpunit.cache"
-        displayDetailsOnTestsThatTriggerWarnings="true"
 >
   <testsuites>
     <testsuite name="Project Test Suite">
       <directory>tests</directory>
     </testsuite>
   </testsuites>
-  <php>
-    <ini name="display_errors" value="On" />
-    <ini name="display_startup_errors" value="On" />
-  </php>
   <source>
     <include>
       <directory suffix="Test.php">src/</directory>
