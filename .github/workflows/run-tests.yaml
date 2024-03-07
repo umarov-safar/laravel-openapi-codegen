@@ -30,5 +30,9 @@ jobs:
           sudo cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api
           # Check if files are copied correctly
           ls -R ./vendor/orchestra/testbench-core/laravel/public
-      - run: composer test
+      - name: PHPUnit tests
+        uses: php-actions/phpunit@v3
+        with:
+          php_extensions: "xdebug"
+          configuration: ./phpunit.xml
         
