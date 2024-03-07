@@ -33,6 +33,5 @@ jobs:
       - name: PHPUnit tests
         uses: php-actions/phpunit@v3
         with:
-          php_extensions: "xdebug"
           configuration: ./phpunit.xml
         
