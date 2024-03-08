@@ -20,11 +20,6 @@ class OpenapiServerGeneratorCommand extends GeneratorCommand
         return __DIR__.'/../../../stubs';
     }
 
-    /**
-     * @throws UnresolvableReferenceException
-     * @throws IOException
-     * @throws TypeErrorException
-     */
     public function handle(): void
     {
         $spec = Reader::readFromYamlFile(Config::get('openapi-generator.path'));
