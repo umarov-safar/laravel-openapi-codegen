@@ -17,7 +17,6 @@ class RouteGenerator implements GeneratorInterface
          * @var PathItem $path
          */
         foreach ($object->paths as $route => $path) {
-            dd($path->post);
         }
     }
 }
