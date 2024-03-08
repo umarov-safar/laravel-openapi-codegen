@@ -14,12 +14,12 @@ final class BaseGenerator
         $this->generator = $generator;
     }
 
-    public function setGenerator(GeneratorInterface $generator)
+    public function setGenerator(GeneratorInterface $generator): void
     {
         $this->generator = $generator;
     }
 
-    public function generate(SpecObjectInterface $spec)
+    public function generate(SpecObjectInterface $spec): void
     {
         $this->generator->generate($spec);
     }

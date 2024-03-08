@@ -16,7 +16,7 @@ class RouteResolverTest extends TestCase
         RouteControllerResolver::extract($controller);
     }
 
-    public function test_extracts_route_correct()
+    public function test_extracts_route_correctly()
     {
         $controller = "App\Http\Controllers\Api\UserController@search";
         $expect = [

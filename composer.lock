@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "863de6b214c6f2d1b0b3a9276c8aab56",
+    "content-hash": "e6a5fd8c13ef91637091ee46d36f853e",
     "packages": [
         {
             "name": "devizzent/cebe-php-openapi",
@@ -1841,6 +1841,73 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2024-02-16T10:04:27+00:00"
+        },
+        {
+            "name": "laravel/pint",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/pint.git",
+                "reference": "3e47cb8238726b39028623502bbb1cf5dee307bf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/pint/zipball/3e47cb8238726b39028623502bbb1cf5dee307bf",
+                "reference": "3e47cb8238726b39028623502bbb1cf5dee307bf",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "ext-tokenizer": "*",
+                "ext-xml": "*",
+                "php": "^8.1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.49.0",
+                "illuminate/view": "^10.43.0",
+                "larastan/larastan": "^2.8.1",
+                "laravel-zero/framework": "^10.3.0",
+                "mockery/mockery": "^1.6.7",
+                "nunomaduro/termwind": "^1.15.1",
+                "pestphp/pest": "^2.33.6"
+            },
+            "default-branch": true,
+            "bin": [
+                "builds/pint"
+            ],
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "app/",
+                    "Database\\Seeders\\": "database/seeders/",
+                    "Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "An opinionated code formatter for PHP.",
+            "homepage": "https://laravel.com",
+            "keywords": [
+                "format",
+                "formatter",
+                "lint",
+                "linter",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/pint/issues",
+                "source": "https://github.com/laravel/pint"
+            },
+            "time": "2024-02-20T17:39:12+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -9084,7 +9151,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "devizzent/cebe-php-openapi": 20,
-        "orchestra/testbench": 20
+        "orchestra/testbench": 20,
+        "friendsofphp/php-cs-fixer": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

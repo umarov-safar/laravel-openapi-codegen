@@ -10,7 +10,7 @@ class RouteControllerResolver
     /**
      * Extract route controller
      * Input: App\Http\Controllers\TestController@index
-     * Output: [App\Http\Controllers\TestController, TestController, index]
+     * Output: [App\Http\Controllers\TestController, TestController, index] -> [namespace, class, method]
      *
      * @throws RouteControllerInvalidException
      */
