@@ -5,7 +5,6 @@ namespace Openapi\ServerGenerator\Tests;
 use Openapi\ServerGenerator\Data\EntityTypes;
 use Openapi\ServerGenerator\Exceptions\GeneratorNotFoundException;
 use Openapi\ServerGenerator\Factories\DefaultGeneratorFactory;
-use Openapi\ServerGenerator\Factories\GeneratorFactory;
 use Openapi\ServerGenerator\Generators\RouteGenerator;
 
 class GeneratorFactoryTest extends TestCase
