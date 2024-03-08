@@ -9,7 +9,6 @@ use cebe\openapi\Reader;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\Config;
 use Openapi\ServerGenerator\Factories\DefaultGeneratorFactory;
-use Openapi\ServerGenerator\Factories\GeneratorFactory;
 use Openapi\ServerGenerator\Generators\BaseGenerator;
 
 class OpenapiServerGeneratorCommand extends GeneratorCommand
