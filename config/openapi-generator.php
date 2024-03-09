@@ -18,4 +18,5 @@ return [
     'paths' => [
         'routes_file' => base_path('routes/openapi.php')
     ]
+
 ];

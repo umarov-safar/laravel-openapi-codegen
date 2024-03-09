@@ -11,7 +11,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->app->setBasePath(__DIR__ . '/../workbench');
+        $this->app->setBasePath(__DIR__.'/../workbench');
     }
 
     protected function getPackageProviders($app)
