@@ -2,7 +2,7 @@
 
 return [
 
-    'path' => public_path('api/v1/index.yaml'),
+    'api_docs_url' => public_path('api/v1/index.yaml'),
 
     // laravel_ddd domain driven develop
     'architecture_type' => 'default',
@@ -13,6 +13,9 @@ return [
         'route',
     ],
 
+    'stubs' => __DIR__ . '/../stubs',
 
-    'stubs' => __DIR__ . '/../stubs'
+    'paths' => [
+        'routes_file' => base_path('routes/openapi.php')
+    ]
 ];

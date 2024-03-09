@@ -6,6 +6,7 @@ use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
 use cebe\openapi\SpecObjectInterface;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Openapi\ServerGenerator\Contracts\GeneratorInterface;
 use Openapi\ServerGenerator\Data\HttpMethod;
@@ -66,7 +67,7 @@ class RouteGenerator implements GeneratorInterface
             $routesStubFile
         );
 
-        $this->filesystem->put(base_path('routes/openapi-generator.php'), $content);
+        $this->filesystem->put(Config::get('openapi-generator.paths.routes_file'), $content);
     }
 
     protected function getRoutesStubFileContent(): string
