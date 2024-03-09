@@ -1,0 +1,1 @@
+Route::{{ method }}([{{ controller }}::class, '{{ action }}']);

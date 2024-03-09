@@ -14,7 +14,7 @@ class RouteControllerResolver
      *
      * @throws RouteControllerInvalidException
      */
-    public static function extract(string $controller): array
+    public static function extract(string $controller, ?string $methodName = null): ExtractedRouteController
     {
         if (! Str::contains($controller, '@')) {
             throw new RouteControllerInvalidException(sprintf('The %s is invalid controller', $controller));
@@ -24,6 +24,11 @@ class RouteControllerResolver
         $lastBlackSlash = strrpos($controller, '\\');
         $controller = substr($namespace, $lastBlackSlash + 1);
 
-        return [$namespace, $controller, $action];
+        return new ExtractedRouteController(
+            namespace: $namespace,
+            controller: $controller,
+            action: $action,
+            httpMethod: $methodName
+        );
     }
 }

@@ -13,4 +13,6 @@ return [
         'route',
     ],
 
+
+    'stubs' => __DIR__ . '/../stubs'
 ];

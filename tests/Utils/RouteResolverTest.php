@@ -25,8 +25,28 @@ class RouteResolverTest extends TestCase
             'search',
         ];
 
-        $actual = RouteControllerResolver::extract($controller);
+        $extractedRouteController = RouteControllerResolver::extract($controller);
 
-        $this->assertSame($expect, $actual);
+        $this->assertSame($expect[0], $extractedRouteController->namespace);
+        $this->assertSame($expect[1], $extractedRouteController->controller);
+        $this->assertSame($expect[2], $extractedRouteController->action);
+    }
+
+    public function test_extracts_route_with_http_method_correctly()
+    {
+        $controller = "App\Http\Controllers\Api\UserController@search";
+        $expect = [
+            'App\Http\Controllers\Api\UserController',
+            'UserController',
+            'search',
+            'post'
+        ];
+
+        $extractedRouteController = RouteControllerResolver::extract($controller, 'post');
+
+        $this->assertSame($expect[0], $extractedRouteController->namespace);
+        $this->assertSame($expect[1], $extractedRouteController->controller);
+        $this->assertSame($expect[2], $extractedRouteController->action);
+        $this->assertSame($expect[3], $extractedRouteController->httpMethod);
     }
 }

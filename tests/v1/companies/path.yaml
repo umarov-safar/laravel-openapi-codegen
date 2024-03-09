@@ -3,9 +3,9 @@ SearchCompany:
     tags:
       - companies
     operationId: searchCompany
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@search'
-    x-lg-route-name: 'searchCompany'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@search'
+    x-og-route-name: 'searchCompany'
+    x-og-skip-request-generation: true
     summary: Поиск компании
     description: Поиск компании
     requestBody:
@@ -30,9 +30,9 @@ CreateCompany:
     tags:
       - companies
     operationId: createCompany
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@create'
-    x-lg-route-name: 'createCompany'
-    x-lg-skip-request-generation: false
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@create'
+    x-og-route-name: 'createCompany'
+    x-og-skip-request-generation: false
     summary: Запрос на создание новой компании
     description: Запрос на создание новой компании
     requestBody:
@@ -63,9 +63,9 @@ CurrentCompany:
     tags:
       - companies
     operationId: patchCompany
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@patch'
-    x-lg-route-name: 'patchCompany'
-    x-lg-skip-request-generation: false
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@patch'
+    x-og-route-name: 'patchCompany'
+    x-og-skip-request-generation: false
     summary: Запрос на обновление компании
     description:  Запрос на обновление компании
     parameters:
@@ -94,9 +94,9 @@ CurrentCompany:
     tags:
       - companies
     operationId: getCompany
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@get'
-    x-lg-route-name: 'getCompany'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@get'
+    x-og-route-name: 'getCompany'
+    x-og-skip-request-generation: true
     summary: Запрос на получение компании
     description:  Запрос на получение компании
     parameters:
@@ -119,9 +119,9 @@ CurrentCompany:
     tags:
       - companies
     operationId: deleteCompany
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@delete'
-    x-lg-route-name: 'deleteCompany'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@delete'
+    x-og-route-name: 'deleteCompany'
+    x-og-skip-request-generation: true
     summary: Запрос на удаление компании
     description:  Запрос на удаление компании
     parameters:
@@ -145,9 +145,9 @@ CompanyEmployee:
     tags:
       - company_employees
     operationId: createCompanyEmployee
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@create'
-    x-lg-route-name: 'createCompanyEmployee'
-    x-lg-skip-request-generation: false
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@create'
+    x-og-route-name: 'createCompanyEmployee'
+    x-og-skip-request-generation: false
     summary: Запрос на создание сотрудника компании
     description: Запрос на создание сотрудника компании
     requestBody:
@@ -178,9 +178,9 @@ CurrentCompanyEmployee:
     tags:
       - company_employees
     operationId: patchCompanyEmployee
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@patch'
-    x-lg-route-name: 'patchCompanyEmployee'
-    x-lg-skip-request-generation: false
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@patch'
+    x-og-route-name: 'patchCompanyEmployee'
+    x-og-skip-request-generation: false
     summary: Запрос на обновление сотрудника компании
     description:  Запрос на обновление сотрудника компании
     parameters:
@@ -209,9 +209,9 @@ CurrentCompanyEmployee:
     tags:
       - company_employees
     operationId: getCompanyEmployee
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@get'
-    x-lg-route-name: 'getCompanyEmployee'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@get'
+    x-og-route-name: 'getCompanyEmployee'
+    x-og-skip-request-generation: true
     summary: Запрос на получение сотрудника компании
     description:  Запрос на получение сотрудника компании
     parameters:
@@ -234,9 +234,9 @@ CurrentCompanyEmployee:
     tags:
       - company_employees
     operationId: deleteCompanyEmployee
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@delete'
-    x-lg-route-name: 'deleteCompanyEmployee'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@delete'
+    x-og-route-name: 'deleteCompanyEmployee'
+    x-og-skip-request-generation: true
     summary: Запрос на удаление сотрудника компании
     description:  Запрос на удаление сотрудника компании
     parameters:
@@ -259,9 +259,9 @@ SearchCompanyEmployees:
     tags:
       - company_employees
     operationId: searchCompanyEmployees
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@search'
-    x-lg-route-name: 'searchCompanyEmployees'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@search'
+    x-og-route-name: 'searchCompanyEmployees'
+    x-og-skip-request-generation: true
     summary: Поиск сотрудников компании
     description: Поиск сотрудников компании
     requestBody:
@@ -287,9 +287,9 @@ SearchEmployeeBalances:
     tags:
       - employee_balances
     operationId: searchEmployeeBalance
-    x-lg-handler: 'App\Http\ApiV1\Modules\Companies\Controllers\EmployeeBalancesController@search'
-    x-lg-route-name: 'searchEmployeeBalance'
-    x-lg-skip-request-generation: true
+    x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\EmployeeBalancesController@search'
+    x-og-route-name: 'searchEmployeeBalance'
+    x-og-skip-request-generation: true
     summary: Поиск балансов
     description: Поиск балансов
     requestBody:
