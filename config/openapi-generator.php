@@ -13,10 +13,10 @@ return [
         'route',
     ],
 
-    'stubs' => __DIR__ . '/../stubs',
+    'stubs' => __DIR__.'/../stubs',
 
     'paths' => [
-        'routes_file' => base_path('routes/openapi.php')
-    ]
+        'routes_file' => base_path('routes/openapi.php'),
+    ],
 
 ];
