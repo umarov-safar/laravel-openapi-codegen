@@ -29,7 +29,6 @@ class StubTest extends TestCase
         Stub::getStubFilePath('not-exists.stub');
     }
 
-
     public function test_can_get_stub_file_content()
     {
         $content = Stub::getStubContent('routes.stub');

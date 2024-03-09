@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController;
 use App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController;
 use App\Http\ApiV1\Modules\Companies\Controllers\EmployeeBalancesController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::post([CompaniesController::class, 'search']);
 Route::post([CompaniesController::class, 'create']);

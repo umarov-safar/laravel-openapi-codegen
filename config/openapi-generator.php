@@ -13,6 +13,5 @@ return [
         'route',
     ],
 
-
-    'stubs' => __DIR__ . '/../stubs'
+    'stubs' => __DIR__.'/../stubs',
 ];

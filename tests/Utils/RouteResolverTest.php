@@ -39,7 +39,7 @@ class RouteResolverTest extends TestCase
             'App\Http\Controllers\Api\UserController',
             'UserController',
             'search',
-            'post'
+            'post',
         ];
 
         $extractedRouteController = RouteControllerResolver::extract($controller, 'post');
