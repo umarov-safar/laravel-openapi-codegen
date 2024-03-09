@@ -23,14 +23,22 @@ class RouteGenerator implements GeneratorInterface
     {
     }
 
+    /**
+     * Generate routes based on the given specification.
+     */
     public function generate(SpecObjectInterface $spec): void
     {
         /** @var PathItem $path */
         foreach ($spec->paths as $path) {
             $this->makeRoute($path);
         }
+
+        $this->generateFile();
     }
 
+    /**
+     * Extract controller information from the operation and add it in the routes array
+     */
     protected function makeRoute(PathItem $path): void
     {
         foreach (HttpMethod::case() as $methodName) {
@@ -42,8 +50,6 @@ class RouteGenerator implements GeneratorInterface
                 $this->addRoute($extractedController);
             }
         }
-
-        $this->generateFile();
     }
 
     protected function addRoute(ExtractedRouteController $extractedRouteController)
@@ -51,6 +57,9 @@ class RouteGenerator implements GeneratorInterface
         $this->routes[] = $extractedRouteController;
     }
 
+    /**
+     * Generate the file containing the routes.
+     */
     protected function generateFile(): void
     {
         $routesStubFile = $this->getRoutesStubFileContent();
@@ -80,6 +89,11 @@ class RouteGenerator implements GeneratorInterface
         return Stub::getStubContent('route.stub');
     }
 
+    /**
+     * Get the namespaces as a string for inclusion in the routes file.
+     *
+     * @return string The namespaces as a string.
+     */
     protected function getNamespacesAsString(): string
     {
         $namespaces = '';
@@ -93,6 +107,11 @@ class RouteGenerator implements GeneratorInterface
         return $namespaces;
     }
 
+    /**
+     * Get the routes as a string for inclusion in the routes file.
+     *
+     * @return string The routes as a string.
+     */
     protected function getRoutesAsString(): string
     {
         $routeStub = $this->getRouteStubFileContent();
