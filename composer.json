@@ -47,6 +47,6 @@
         "test": "@php vendor/bin/phpunit tests"
     },
     "require": {
-        "devizzent/cebe-php-openapi": "^1.6.x-dev"
+        "devizzent/cebe-php-openapi": "1.6.x-dev"
     }
 }
