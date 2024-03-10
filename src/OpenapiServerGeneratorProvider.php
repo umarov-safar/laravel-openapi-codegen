@@ -2,7 +2,7 @@
 
 namespace Openapi\ServerGenerator;
 
-use Carbon\Laravel\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Openapi\ServerGenerator\Console\Commands\OpenapiServerGeneratorCommand;
 
 class OpenapiServerGeneratorProvider extends ServiceProvider
