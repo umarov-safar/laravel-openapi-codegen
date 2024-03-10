@@ -1,6 +1,6 @@
 <?php
 
-namespace Openapi\ServerGenerator\Utils;
+namespace Openapi\ServerGenerator\DTO;
 
 class ExtractedRouteController
 {

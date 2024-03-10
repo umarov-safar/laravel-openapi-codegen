@@ -1,1 +1,1 @@
-Route::{{ method }}([{{ controller }}::class, '{{ action }}']);
+Route::{{ method }}([{{ controller }}::class, '{{ action }}'])->name({{ routeName }})->middleware([{{ middlewares }}])

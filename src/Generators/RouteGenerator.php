@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Openapi\ServerGenerator\Contracts\GeneratorInterface;
 use Openapi\ServerGenerator\Data\HttpMethod;
-use Openapi\ServerGenerator\Utils\ExtractedRouteController;
+use Openapi\ServerGenerator\DTO\RouteConfiguration;
+use Openapi\ServerGenerator\DTO\RouteInfo;
 use Openapi\ServerGenerator\Utils\RouteControllerResolver;
 use Openapi\ServerGenerator\Utils\Stub;
 
 class RouteGenerator implements GeneratorInterface
 {
-    /** @var ExtractedRouteController[] */
+    /** @var RouteInfo[] */
     private array $routes = [];
 
     public function __construct(protected Filesystem $filesystem)
@@ -45,14 +46,25 @@ class RouteGenerator implements GeneratorInterface
             if (isset($path->getOperations()[$methodName])) {
                 /** @var Operation $operation */
                 $operation = $path->{$methodName};
-                $controller = $operation->{'x-og-controller'};
-                $extractedController = RouteControllerResolver::extract($controller, $methodName);
-                $this->addRoute($extractedController);
+                $this->addRoute($this->makeRouteInfoObject($operation, $methodName));
             }
         }
     }
 
-    protected function addRoute(ExtractedRouteController $extractedRouteController)
+    protected function makeRouteInfoObject(Operation $operation, string $methodName): RouteInfo
+    {
+        $controller = $operation->{'x-og-controller'};
+        $extractedController = RouteControllerResolver::extract($controller, $methodName);
+
+        $routeConfiguration = RouteConfiguration::create(
+            $operation->{'x-og-route-name'} ?? null,
+            $operation->{'x-og-middlewares'} ?? null
+        );
+
+        return new RouteInfo($extractedController, $routeConfiguration);
+    }
+
+    protected function addRoute(RouteInfo $extractedRouteController): void
     {
         $this->routes[] = $extractedRouteController;
     }
@@ -103,10 +115,10 @@ class RouteGenerator implements GeneratorInterface
     {
         $namespaces = '';
         foreach ($this->routes as $route) {
-            if (Str::contains($namespaces, 'use '.$route->namespace)) {
+            if (Str::contains($namespaces, 'use '.$route->extractedRouteController->namespace)) {
                 continue;
             }
-            $namespaces .= sprintf("use %s;\n", $route->namespace);
+            $namespaces .= sprintf("use %s;\n", $route->extractedRouteController->namespace);
         }
 
         return $namespaces;
@@ -119,25 +131,64 @@ class RouteGenerator implements GeneratorInterface
      */
     protected function getRoutesAsString(): string
     {
-        $routeStub = $this->getRouteStubFileContent();
         $routes = '';
+        $routeStub = $this->getRouteStubFileContent();
+        [$routeAction, $routeNameMethod, $middlewaresMethod] = $this->extractRouteSegments($routeStub);
 
-        foreach ($this->routes as $route) {
-            $routes .= str_replace(
-                [
-                    '{{ method }}',
-                    '{{ controller }}',
-                    '{{ action }}',
-                ],
-                [
-                    $route->httpMethod,
-                    $route->controller,
-                    $route->action,
-                ],
-                $routeStub
-            )."\n";
+        foreach ($this->routes as $routeInfo) {
+            $routes .= sprintf('%s%s%s%s',
+                $this->replaceAction($routeInfo, $routeAction),
+                $this->replaceRouteNameMethod($routeInfo, $routeNameMethod),
+                $this->replaceMiddlewareMethod($routeInfo, $middlewaresMethod),
+                ";\n"
+            );
         }
 
         return $routes;
+    }
+
+    protected function replaceAction(RouteInfo $routeInfo, string $routeAction): string
+    {
+        return str_replace(
+            [
+                '{{ method }}',
+                '{{ controller }}',
+                '{{ action }}',
+            ],
+            [
+                $routeInfo->extractedRouteController->httpMethod,
+                $routeInfo->extractedRouteController->controller,
+                $routeInfo->extractedRouteController->action,
+            ],
+            $routeAction
+        );
+    }
+
+    protected function replaceRouteNameMethod(RouteInfo $routeInfo, string $routeNameMethod): string
+    {
+        if ($routeName = $routeInfo->routeConfiguration->routeName) {
+            return '->'.str_replace('{{ routeName }}', "'$routeName'", $routeNameMethod);
+        }
+
+        return '';
+    }
+
+    protected function replaceMiddlewareMethod(RouteInfo $routeInfo, string $middlewaresMethod): string
+    {
+        if ($middlewares = $routeInfo->routeConfiguration->middlewares) {
+            $middlewares = explode(',', $middlewares);
+            $middlewares = array_map(fn ($value) => "'".$value."'", $middlewares);
+
+            $middlewares = implode(',', $middlewares);
+
+            return '->'.str_replace('{{ middlewares }}', $middlewares, $middlewaresMethod);
+        }
+
+        return '';
+    }
+
+    protected function extractRouteSegments(string $route): array
+    {
+        return explode('->', $route);
     }
 }

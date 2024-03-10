@@ -3,6 +3,7 @@
 namespace Openapi\ServerGenerator\Utils;
 
 use Illuminate\Support\Str;
+use Openapi\ServerGenerator\DTO\ExtractedRouteController;
 use Openapi\ServerGenerator\Exceptions\RouteControllerInvalidException;
 
 class RouteControllerResolver
