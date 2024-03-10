@@ -20,11 +20,9 @@ class OpenapiServerGeneratorCommand extends GeneratorCommand
     public function handle(): void
     {
         $spec = Reader::readFromYamlFile(Config::get('openapi-generator.api_docs_url'));
-
         foreach (Config::get('openapi-generator.entities') as $entity) {
             $generator = new BaseGenerator(DefaultGeneratorFactory::createGenerator($entity));
             $generator->generate($spec);
         }
-
     }
 }

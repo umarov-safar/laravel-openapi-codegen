@@ -62,9 +62,16 @@ class RouteGenerator implements GeneratorInterface
      */
     protected function generateFile(): void
     {
+        $content = $this->generateRoutesFileContent();
+
+        $this->filesystem->put(Config::get('openapi-generator.paths.routes_file'), $content);
+    }
+
+    protected function generateRoutesFileContent(): string
+    {
         $routesStubFile = $this->getRoutesStubFileContent();
 
-        $content = str_replace(
+        return str_replace(
             [
                 '{{ namespaces }}',
                 '{{ routes }}',
@@ -75,8 +82,6 @@ class RouteGenerator implements GeneratorInterface
             ],
             $routesStubFile
         );
-
-        $this->filesystem->put(Config::get('openapi-generator.paths.routes_file'), $content);
     }
 
     protected function getRoutesStubFileContent(): string
