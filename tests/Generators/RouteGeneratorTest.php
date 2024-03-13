@@ -21,9 +21,9 @@ class RouteGeneratorTest extends TestCase
         $routeGenerator->generate($specObj);
 
         $this->assertFileExists($routesTestFile);
-        $this->assertStringContainsString("App\Http\TestController", $filesystem->get($routesTestFile));
+        $this->assertStringContainsString("App\Http\Controllers\TestController", $filesystem->get($routesTestFile));
         $this->assertStringContainsString('TestController::class', $filesystem->get($routesTestFile));
 
-        $filesystem->delete($routesTestFile);
+        //        $filesystem->delete($routesTestFile);
     }
 }

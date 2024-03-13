@@ -8,3 +8,5 @@ vendor
 node_modules
 
 Dockerfile
+
+phpunit.xml

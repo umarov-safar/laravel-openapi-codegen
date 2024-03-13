@@ -20,8 +20,11 @@ class RouteGenerator implements GeneratorInterface
     /** @var RouteInfo[] */
     private array $routes = [];
 
-    public function __construct(protected Filesystem $filesystem)
+    protected Filesystem $filesystem;
+
+    public function __construct()
     {
+        $this->filesystem = new Filesystem();
     }
 
     /**
