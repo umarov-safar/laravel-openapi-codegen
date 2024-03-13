@@ -11,7 +11,10 @@
     "autoload": {
         "psr-4": {
             "Openapi\\ServerGenerator\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers/helpers.php"
+        ]
     },
     "authors": [
         {

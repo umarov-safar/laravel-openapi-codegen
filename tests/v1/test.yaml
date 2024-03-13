@@ -14,7 +14,7 @@ paths:
   /users:
     get:
       summary: Retrieve all users
-      x-og-controller: App\Http\TestController@get
+      x-og-controller: App\Http\Controllers\TestController@get
       x-og-route-name: getAll
       x-og-middlewares: auth,rest
       responses:
@@ -28,7 +28,7 @@ paths:
                   $ref: '#/components/schemas/User'
     post:
       summary: Create a new user
-      x-og-controller: App\Http\TestController@post
+      x-og-controller: App\Http\Controllers\TestController@post
       x-og-route-name: createUser
       requestBody:
         required: true
@@ -46,7 +46,7 @@ paths:
   /users/{userId}:
     get:
       summary: Retrieve a user by ID
-      x-og-controller: App\Http\TestController@get
+      x-og-controller: App\Http\Controllers\TestController@get
       x-og-route-name: getUser
       x-og-middlewares: auth,rest
       parameters:
@@ -65,7 +65,7 @@ paths:
                 $ref: '#/components/schemas/User'
     put:
       summary: Update a user by ID
-      x-og-controller: App\Http\TestController@put
+      x-og-controller: App\Http\Controllers\TestController@put
       parameters:
         - name: userId
           in: path
@@ -88,7 +88,7 @@ paths:
                 $ref: '#/components/schemas/User'
     delete:
       summary: Delete a user by ID
-      x-og-controller: App\Http\TestController@delete
+      x-og-controller: App\Http\Controllers\TestController@delete
       x-og-route-name: deleteUser
       x-og-middlewares: auth,rest
       parameters:

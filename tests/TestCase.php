@@ -24,4 +24,13 @@ class TestCase extends \Orchestra\Testbench\TestCase
             'Openapi\ServerGenerator\OpenapiServerGeneratorProvider',
         ];
     }
+
+    protected function getMethod(string $className, string $method)
+    {
+        $class = new \ReflectionClass($className);
+        $method = $class->getMethod($method);
+        $method->setAccessible(true);
+
+        return $method;
+    }
 }
