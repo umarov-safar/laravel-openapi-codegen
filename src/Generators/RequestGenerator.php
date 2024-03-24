@@ -7,14 +7,12 @@ use cebe\openapi\spec\PathItem;
 use cebe\openapi\SpecObjectInterface;
 use Illuminate\Filesystem\Filesystem;
 use Openapi\ServerGenerator\Contracts\GeneratorInterface;
-use Openapi\ServerGenerator\Data\HttpMethod;
 use Openapi\ServerGenerator\Data\MediaType;
 use Openapi\ServerGenerator\DTO\ExtractedRouteController;
 use Openapi\ServerGenerator\DTO\OpenapiProperty;
 use Openapi\ServerGenerator\Utils\ModelSchemaParser;
 use Openapi\ServerGenerator\Utils\RouteControllerResolver;
 use Openapi\ServerGenerator\Utils\Stub;
-use PhpParser\Builder\Property;
 
 class RequestGenerator implements GeneratorInterface
 {
@@ -28,7 +26,6 @@ class RequestGenerator implements GeneratorInterface
     {
         $this->filesystem = new Filesystem();
     }
-
 
     public function setExtractedRouteController(ExtractedRouteController $extractedRouteController): void
     {
@@ -58,16 +55,15 @@ class RequestGenerator implements GeneratorInterface
              * we generate requests even for methods not in the default list.
              */
             if ($controller && (
-                    (in_array($methodName, $this->methodsForGenerate) && $skipRequest !== true) ||
-                    $skipRequest === false
-                )) {
+                (in_array($methodName, $this->methodsForGenerate) && $skipRequest !== true) ||
+                $skipRequest === false
+            )) {
 
                 $this->extractedRouteController = RouteControllerResolver::extract($controller, $methodName);
                 $this->generateRequestForOperation($operation);
             }
         }
     }
-
 
     protected function generateRequestForOperation(Operation $operation): void
     {
@@ -97,11 +93,11 @@ class RequestGenerator implements GeneratorInterface
         return str_replace(
             [
                 '{{ namespace }}',
-                '{{ class }}'
+                '{{ class }}',
             ],
             [
                 implode('\\', $namespaceParts),
-                $requestClasName
+                $requestClasName,
             ],
             $stubContent
         );
@@ -118,18 +114,19 @@ class RequestGenerator implements GeneratorInterface
             if (in_array($propertyName, $schema->getRequired())) {
                 $property->addValidationItem('required');
             }
-            $rules .= sprintf("\t\t\t'%s' => %s", $propertyName, $this->makeRule($property)) ;
+            $rules .= sprintf("\t\t\t'%s' => %s", $propertyName, $this->makeRule($property));
         }
+
         return trim($rules);
     }
 
     public function makeRule(OpenapiProperty $property)
     {
         $rules = array_map(function ($item) {
-            return "'" . $item . "'";
+            return "'".$item."'";
         }, $property->getValidation());
 
-        return "[" . implode(', ', $rules) . "], \n";
+        return '['.implode(', ', $rules)."], \n";
     }
 
     public function requestFileExists(): bool
@@ -175,7 +172,7 @@ class RequestGenerator implements GeneratorInterface
 
     protected function getFilePath(): string
     {
-        $requestFilePath = lcfirst($this->makeNamespace()) . '.php';
+        $requestFilePath = lcfirst($this->makeNamespace()).'.php';
 
         return normalizePathSeparators(base_path($requestFilePath));
     }

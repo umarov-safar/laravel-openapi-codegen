@@ -3,7 +3,6 @@
 namespace Openapi\ServerGenerator\Tests\Generators;
 
 use cebe\openapi\Reader;
-use cebe\openapi\spec\PathItem;
 use Illuminate\Support\Facades\Config;
 use Openapi\ServerGenerator\Factories\DefaultGeneratorFactory;
 use Openapi\ServerGenerator\Generators\RequestGenerator;
@@ -32,7 +31,6 @@ class RequestGeneratorTest extends TestCase
 
         $this->assertFileExists($filePath);
     }
-
 
     public function test_make_correct_request_namespace()
     {
@@ -65,9 +63,8 @@ class RequestGeneratorTest extends TestCase
         $this->assertStringContainsString('class CreateTestRequest', $requestStub);
     }
 
-
-//    public function test_can_generate_request_file_from_operation()
-//    {
-//        $method = $this->getMethod(RequestGenerator::class, '');
-//    }
+    //    public function test_can_generate_request_file_from_operation()
+    //    {
+    //        $method = $this->getMethod(RequestGenerator::class, '');
+    //    }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use cebe\openapi\spec\MediaType;
 use Openapi\ServerGenerator\DTO\Schema;
 use Openapi\ServerGenerator\Utils\OpenapiPropertyConvertor;
 
@@ -11,9 +10,9 @@ if (! function_exists('normalizePathSeparators')) {
     }
 }
 
-
 if (! function_exists('type_of')) {
-    function type_of(array $openapiSchemas): Schema {
+    function type_of(array $openapiSchemas): Schema
+    {
         $schema = new Schema();
 
         foreach ($openapiSchemas as $item) {
@@ -21,6 +20,7 @@ if (! function_exists('type_of')) {
                 foreach ($item->required as $propName) {
                     $schema->pushRequiredPropName($propName);
                 }
+
                 continue;
             }
 

@@ -4,7 +4,6 @@ namespace Openapi\ServerGenerator\Utils;
 
 use cebe\openapi\spec\MediaType;
 use Openapi\ServerGenerator\DTO\Schema;
-use Openapi\ServerGenerator\Helpers\SchemaHelper;
 use stdClass;
 
 class ModelSchemaParser
@@ -81,5 +80,4 @@ class ModelSchemaParser
     {
         return isset($this->openapiSchema->allOf);
     }
-
 }

@@ -30,6 +30,4 @@ class Schema
             $this->required[] = $name;
         }
     }
-
-
 }

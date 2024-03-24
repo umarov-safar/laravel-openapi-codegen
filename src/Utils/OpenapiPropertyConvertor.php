@@ -4,7 +4,6 @@ namespace Openapi\ServerGenerator\Utils;
 
 use Openapi\ServerGenerator\Data\OpenapiToLaravelValidationMapper;
 use Openapi\ServerGenerator\DTO\OpenapiProperty;
-use stdClass;
 
 class OpenapiPropertyConvertor
 {
@@ -31,16 +30,15 @@ class OpenapiPropertyConvertor
             $property->enumData = $options['enum'];
         }
 
-
         switch (strtolower($options['type'])) {
             case 'string':
                 if (isset($options['minLength'])) {
                     $property->minLength = $options['minLength'];
-                    $property->addValidationItem($openapiToLaravelValidationMapper->get($options['minLength']) . ':'.$property->minLength);
+                    $property->addValidationItem($openapiToLaravelValidationMapper->get($options['minLength']).':'.$property->minLength);
                 }
                 if (isset($options['maxLength'])) {
                     $property->maxLength = $options['maxLength'];
-                    $property->addValidationItem($openapiToLaravelValidationMapper->get($options['maxLength']) . ':'.$property->minLength);
+                    $property->addValidationItem($openapiToLaravelValidationMapper->get($options['maxLength']).':'.$property->minLength);
                 }
                 break;
             case 'integer':

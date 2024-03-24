@@ -9,7 +9,6 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Openapi\ServerGenerator\Contracts\GeneratorInterface;
-use Openapi\ServerGenerator\Data\HttpMethod;
 use Openapi\ServerGenerator\DTO\RouteConfiguration;
 use Openapi\ServerGenerator\DTO\RouteInfo;
 use Openapi\ServerGenerator\Utils\RouteControllerResolver;

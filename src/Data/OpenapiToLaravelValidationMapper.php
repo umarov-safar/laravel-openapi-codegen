@@ -6,7 +6,6 @@ use Illuminate\Support\Fluent;
 
 class OpenapiToLaravelValidationMapper extends Fluent
 {
-
     protected $attributes = [
         'string' => 'string',
         'minimum' => 'min',
@@ -17,7 +16,7 @@ class OpenapiToLaravelValidationMapper extends Fluent
         'maxItems' => 'max',
         'minProperties' => 'min',
         'maxProperties' => 'max',
-//       'uniqueItems' => 'distinct'
+        //       'uniqueItems' => 'distinct'
         'float' => 'numeric',
         'double' => 'numeric',
         'int' => 'integer',
@@ -27,6 +26,6 @@ class OpenapiToLaravelValidationMapper extends Fluent
         'date-time' => 'date_format:Y-m-d H:i:s',
         'password' => 'string',
         'email' => 'email',
-        'uuid' => 'uuid'
+        'uuid' => 'uuid',
     ];
 }

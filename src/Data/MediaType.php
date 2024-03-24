@@ -18,7 +18,7 @@ class MediaType implements Enumerable
             self::APPLICATION_JSON,
             self::TEXT_PLAIN,
             self::VND_GITHUB_JSON,
-            self::VND_GITHUB_V3_JSON
+            self::VND_GITHUB_V3_JSON,
         ];
     }
 }
