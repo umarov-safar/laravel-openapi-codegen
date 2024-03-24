@@ -37,7 +37,7 @@ class ModelSchemaParser
         return $this->parseSchema($schema);
     }
 
-    public function parseTypeOf(array $openapiSchemas)
+    public function parseTypeOf(array $openapiSchemas): Schema
     {
         foreach ($openapiSchemas as $openapiSchema) {
             $this->parseSchema($openapiSchema);
@@ -46,7 +46,7 @@ class ModelSchemaParser
         return $this->schema;
     }
 
-    public function parseSchema(stdClass $openapiSchema)
+    public function parseSchema(stdClass $openapiSchema): Schema
     {
         if (isset($openapiSchema->required) && is_array($openapiSchema->required)) {
             foreach ($openapiSchema->required as $propName) {
@@ -59,7 +59,7 @@ class ModelSchemaParser
 
             foreach ($properties as $propertyName => $options) {
                 $property = OpenapiPropertyConvertor::convert($propertyName, get_object_vars($options));
-                $this->schema->pushProperty($property);
+                $this->schema->addProperty($property);
             }
         }
 

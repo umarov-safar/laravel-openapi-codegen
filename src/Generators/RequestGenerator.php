@@ -120,11 +120,11 @@ class RequestGenerator implements GeneratorInterface
         return trim($rules);
     }
 
-    public function makeRule(OpenapiProperty $property)
+    public function makeRule(OpenapiProperty $property): string
     {
         $rules = array_map(function ($item) {
             return "'".$item."'";
-        }, $property->getValidation());
+        }, $property->getLaravelValidation());
 
         return '['.implode(', ', $rules)."], \n";
     }

@@ -19,7 +19,7 @@ class Schema
         return $this->required;
     }
 
-    public function pushProperty(OpenapiProperty $property): void
+    public function addProperty(OpenapiProperty $property): void
     {
         $this->properties[$property->name] = $property;
     }

@@ -67,6 +67,8 @@ class OpenapiPropertyConvertor
                 }
                 break;
         }
+
+        return $property;
     }
 
     public function convertMany()
