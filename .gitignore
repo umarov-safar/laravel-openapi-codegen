@@ -7,6 +7,6 @@ phpstan.neon
 vendor
 node_modules
 
-Dockerfile
-
 phpunit.xml
+
+openapi-frontend

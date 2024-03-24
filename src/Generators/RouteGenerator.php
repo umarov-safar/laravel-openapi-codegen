@@ -45,12 +45,10 @@ class RouteGenerator implements GeneratorInterface
      */
     protected function makeRoute(PathItem $path): void
     {
-        foreach (HttpMethod::case() as $methodName) {
-            if (isset($path->getOperations()[$methodName])) {
-                /** @var Operation $operation */
-                $operation = $path->{$methodName};
-                $this->addRoute($this->makeRouteInfoObject($operation, $methodName));
-            }
+        foreach (array_keys($path->getOperations()) as $methodName) {
+            /** @var Operation $operation */
+            $operation = $path->{$methodName};
+            $this->addRoute($this->makeRouteInfoObject($operation, $methodName));
         }
     }
 

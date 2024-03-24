@@ -16,7 +16,7 @@ class RouteGeneratorTest extends TestCase
 
         $routesTestFile = Config::get('openapi-generator.paths.routes_file');
         $filesystem = new Filesystem();
-        $routeGenerator = new RouteGenerator($filesystem);
+        $routeGenerator = new RouteGenerator();
 
         $routeGenerator->generate($specObj);
 

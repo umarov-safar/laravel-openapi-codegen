@@ -47,6 +47,10 @@ CompanyFillableProperties:
     account:
       description: Аккаунт
       type: string
+    create_at:
+      description: Created At
+      type: string
+      format: date
 
 CompanyFillableRequiredProperties:
   type: object
@@ -71,9 +75,9 @@ Company:
     - $ref: '#/CompanyIncludes'
 
 CreateCompanyRequest:
-  allOf:
-    - $ref: '#/CompanyFillableProperties'
+  oneOf:
     - $ref: '#/CompanyFillableRequiredProperties'
+    - $ref: '#/CompanyFillableProperties'
 
 ReplaceCompanyRequest:
   allOf:

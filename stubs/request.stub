@@ -1,15 +1,17 @@
 <?php
 
+namespace {{ namespace }};
+
 use Illuminate\Http\Request;
 
 class {{ class }} extends Request
 {
 
-    public function rules()
+    public function rules(): array
     {
         return [
             {{ rules }}
-        ]
+        ];
     }
 
 }

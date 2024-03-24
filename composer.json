@@ -25,7 +25,7 @@
     "minimum-stability": "dev",
     "autoload-dev": {
         "psr-4": {
-            "Workbench\\App\\": "workbench/app/",
+            "App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/",
             "Openapi\\ServerGenerator\\Tests\\": "tests"

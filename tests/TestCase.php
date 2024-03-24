@@ -15,7 +15,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->app->setBasePath(__DIR__.'/../workbench');
 
         Config::set('openapi-generator.paths.routes_file', base_path('routes/openapi_test.php'));
-        Config::set('openapi-generator.api_docs_url', __DIR__.'/v1/test.yaml');
+        Config::set('openapi-generator.api_docs_url', __DIR__.'/v1/index.yaml');
     }
 
     protected function getPackageProviders($app)
