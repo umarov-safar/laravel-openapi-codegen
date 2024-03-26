@@ -5,7 +5,7 @@ SearchCompany:
     operationId: searchCompany
     x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@search'
     x-og-route-name: 'searchCompany'
-    x-og-skip-request-generation: true
+    x-og-skip-request: true
     summary: Поиск компании
     description: Поиск компании
     requestBody:
@@ -66,7 +66,7 @@ CurrentCompany:
     operationId: patchCompany
     x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@patch'
     x-og-route-name: 'patchCompany'
-    x-og-skip-request-generation: false
+    x-og-skip-request: false
     summary: Запрос на обновление компании
     description:  Запрос на обновление компании
     parameters:
@@ -97,7 +97,7 @@ CurrentCompany:
     operationId: getCompany
     x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@get'
     x-og-route-name: 'getCompany'
-    x-og-skip-request-generation: true
+    x-og-skip-request: true
     summary: Запрос на получение компании
     description:  Запрос на получение компании
     parameters:
@@ -148,7 +148,7 @@ CompanyEmployee:
     operationId: createCompanyEmployee
     x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController@create'
     x-og-route-name: 'createCompanyEmployee'
-    x-og-skip-request-generation: false
+    x-og-skip-request: false
     summary: Запрос на создание сотрудника компании
     description: Запрос на создание сотрудника компании
     requestBody:
