@@ -67,7 +67,7 @@ class RequestGenerator implements GeneratorInterface
 
     protected function generateRequestForOperation(Operation $operation): void
     {
-        if (!isset($operation->requestBody->content) /* || $this->requestFileExists() */) {
+        if (! isset($operation->requestBody->content) /* || $this->requestFileExists() */) {
             return;
         }
 

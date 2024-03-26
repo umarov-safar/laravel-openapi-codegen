@@ -1,13 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController;
 use App\Http\ApiV1\Modules\Companies\Controllers\CompanyEmployeesController;
 use App\Http\ApiV1\Modules\Companies\Controllers\EmployeeBalancesController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::post([CompaniesController::class, 'search'])->name('searchCompany');
-Route::post([CompaniesController::class, 'create'])->name('createCompany')->middleware(['auth','admin']);
+Route::post([CompaniesController::class, 'create'])->name('createCompany')->middleware(['auth', 'admin']);
 Route::get([CompaniesController::class, 'get'])->name('getCompany');
 Route::delete([CompaniesController::class, 'delete'])->name('deleteCompany');
 Route::patch([CompaniesController::class, 'patch'])->name('patchCompany');
