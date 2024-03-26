@@ -1,5 +1,5 @@
 {
-    "name": "openapi/server-generator",
+    "name": "tjacademy/laravel-rest-generator",
     "description": "Generate server code from openapi(swagger) definition.",
     "type": "library",
     "require-dev": {
