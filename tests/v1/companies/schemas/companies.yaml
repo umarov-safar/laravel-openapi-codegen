@@ -75,7 +75,7 @@ Company:
     - $ref: '#/CompanyIncludes'
 
 CreateCompanyRequest:
-  oneOf:
+  allOf:
     - $ref: '#/CompanyFillableRequiredProperties'
     - $ref: '#/CompanyFillableProperties'
 

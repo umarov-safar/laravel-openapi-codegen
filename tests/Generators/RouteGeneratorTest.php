@@ -12,7 +12,7 @@ class RouteGeneratorTest extends TestCase
 {
     public function test_generate_routes()
     {
-        $specObj = Reader::readFromYamlFile(__DIR__.'/../v1/test.yaml');
+        $specObj = Reader::readFromYamlFile(__DIR__.'/../v1/index.yaml');
 
         $routesTestFile = Config::get('openapi-generator.paths.routes_file');
         $filesystem = new Filesystem();
@@ -21,8 +21,8 @@ class RouteGeneratorTest extends TestCase
         $routeGenerator->generate($specObj);
 
         $this->assertFileExists($routesTestFile);
-        $this->assertStringContainsString("App\Http\Controllers\TestController", $filesystem->get($routesTestFile));
-        $this->assertStringContainsString('TestController::class', $filesystem->get($routesTestFile));
+        $this->assertStringContainsString("App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController", $filesystem->get($routesTestFile));
+        $this->assertStringContainsString('CompaniesController::class', $filesystem->get($routesTestFile));
 
         //        $filesystem->delete($routesTestFile);
     }

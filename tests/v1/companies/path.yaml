@@ -32,7 +32,8 @@ CreateCompany:
     operationId: createCompany
     x-og-controller: 'App\Http\ApiV1\Modules\Companies\Controllers\CompaniesController@create'
     x-og-route-name: 'createCompany'
-    x-og-skip-request-generation: false
+    x-og-skip-request: false
+    x-og-middlewares: auth,admin
     summary: Запрос на создание новой компании
     description: Запрос на создание новой компании
     requestBody:

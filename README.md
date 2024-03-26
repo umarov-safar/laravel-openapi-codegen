@@ -14,7 +14,7 @@ Route::get([UserController::class, 'get']);
 
 ###### x-og-route-name: getUser
 
-Route name optional if name was set then in route will be add.
+Route name optional if name was set then in route will be added.
 
 ```php
 Route::get([UserController::class, 'get'])->name('getUser');

@@ -11,7 +11,7 @@ return [
     // The entities for which code generation will be performed
     'entities' => [
         'route',
-        'controller',
+        'request',
     ],
 
     // The directory containing stub files used for code generation

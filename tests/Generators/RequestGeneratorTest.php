@@ -47,7 +47,7 @@ class RequestGeneratorTest extends TestCase
         $methodForTest = $this->getMethod(RequestGenerator::class, 'generateRequests');
         $spec = Reader::readFromYamlFile(Config::get('openapi-generator.api_docs_url'));
 
-        $pathItem = $spec->paths->getPath('/companies');
+        $pathItem = $spec->paths->getPath('/companies:search');
 
         $methodForTest->invokeArgs($this->requestGenerator, [$pathItem]);
 
@@ -59,6 +59,7 @@ class RequestGeneratorTest extends TestCase
         $methodForCall = $this->getMethod(RequestGenerator::class, 'replaceNamespace');
         $this->requestGenerator->setExtractedRouteController(RouteControllerResolver::extract('App\Http\Controllers\TestController@create'));
         $requestStub = $methodForCall->invokeArgs($this->requestGenerator, [Stub::getStubContent('request.stub')]);
+
         $this->assertStringContainsString('namespace App\Http\Requests;', $requestStub);
         $this->assertStringContainsString('class CreateTestRequest', $requestStub);
     }

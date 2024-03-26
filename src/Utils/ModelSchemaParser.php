@@ -58,7 +58,8 @@ class ModelSchemaParser
             $properties = get_object_vars($openapiSchema->properties);
 
             foreach ($properties as $propertyName => $options) {
-                $property = OpenapiPropertyConvertor::convert($propertyName, get_object_vars($options));
+                $options = convertTypeOfSchemaToArray(get_object_vars($options));
+                $property = OpenapiPropertyConvertor::convert($propertyName, $options);
                 $this->schema->addProperty($property);
             }
         }

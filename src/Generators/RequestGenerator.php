@@ -67,14 +67,15 @@ class RequestGenerator implements GeneratorInterface
 
     protected function generateRequestForOperation(Operation $operation): void
     {
-        if ($this->requestFileExists()) {
-            return;
-        }
+        //        if ($this->requestFileExists()) {
+        //            return;
+        //        }
 
         $filePath = $this->createRequestFileIfNotExists();
         $stubContent = $this->getRequestStubContent();
         $stubContent = $this->replaceNamespace($stubContent);
         $stubContent = $this->replaceRules($operation, $stubContent);
+
         $this->filesystem->put($filePath, $stubContent);
     }
 
@@ -85,7 +86,7 @@ class RequestGenerator implements GeneratorInterface
         return str_replace('{{ rules }}', $rules, $stubContent);
     }
 
-    protected function replaceNamespace(string $stubContent)
+    protected function replaceNamespace(string $stubContent): string
     {
         $namespaceParts = explode('\\', $this->makeNamespace());
         $requestClasName = array_pop($namespaceParts);
