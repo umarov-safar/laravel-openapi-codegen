@@ -1,6 +1,6 @@
 <?php
 
-namespace Openapi\ServerGenerator\Generators;
+namespace LaravelOpenapi\Codegen\Generators;
 
 use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
@@ -8,11 +8,11 @@ use cebe\openapi\SpecObjectInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
-use Openapi\ServerGenerator\Contracts\GeneratorInterface;
-use Openapi\ServerGenerator\DTO\RouteConfiguration;
-use Openapi\ServerGenerator\DTO\RouteInfo;
-use Openapi\ServerGenerator\Utils\RouteControllerResolver;
-use Openapi\ServerGenerator\Utils\Stub;
+use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
+use LaravelOpenapi\Codegen\DTO\RouteConfiguration;
+use LaravelOpenapi\Codegen\DTO\RouteInfo;
+use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
+use LaravelOpenapi\Codegen\Utils\Stub;
 
 class RouteGenerator implements GeneratorInterface
 {
@@ -76,7 +76,7 @@ class RouteGenerator implements GeneratorInterface
     {
         $content = $this->generateRoutesFileContent();
 
-        $this->filesystem->put(Config::get('rest-generator.paths.routes_file'), $content);
+        $this->filesystem->put(Config::get('laravel-openapi-codegen.paths.routes_file'), $content);
     }
 
     protected function generateRoutesFileContent(): string

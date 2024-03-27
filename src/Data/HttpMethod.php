@@ -1,6 +1,6 @@
 <?php
 
-namespace Openapi\ServerGenerator\Data;
+namespace LaravelOpenapi\Codegen\Data;
 
 class HttpMethod implements Enumerable
 {

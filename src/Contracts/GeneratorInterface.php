@@ -1,6 +1,6 @@
 <?php
 
-namespace Openapi\ServerGenerator\Contracts;
+namespace LaravelOpenapi\Codegen\Contracts;
 
 use cebe\openapi\SpecObjectInterface;
 

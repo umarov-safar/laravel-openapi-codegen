@@ -1,12 +1,12 @@
 <?php
 
-namespace Openapi\ServerGenerator\Utils;
+namespace LaravelOpenapi\Codegen\Utils;
 
 class Stub
 {
     public static function getBasePath(): string
     {
-        return config('rest-generator.stubs') ?? __DIR__.'/../../stubs';
+        return config('laravel-openapi-codegen.stubs') ?? __DIR__.'/../../stubs';
     }
 
     public static function getStubFilePath(string $fileName): string

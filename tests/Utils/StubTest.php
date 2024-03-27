@@ -1,9 +1,9 @@
 <?php
 
-namespace Openapi\ServerGenerator\Tests\Utils;
+namespace LaravelOpenapi\Codegen\Tests\Utils;
 
-use Openapi\ServerGenerator\Tests\TestCase;
-use Openapi\ServerGenerator\Utils\Stub;
+use LaravelOpenapi\Codegen\Tests\TestCase;
+use LaravelOpenapi\Codegen\Utils\Stub;
 
 class StubTest extends TestCase
 {

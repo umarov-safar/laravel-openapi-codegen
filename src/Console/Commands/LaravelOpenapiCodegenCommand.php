@@ -1,14 +1,14 @@
 <?php
 
-namespace Openapi\ServerGenerator\Console\Commands;
+namespace LaravelOpenapi\Codegen\Console\Commands;
 
 use cebe\openapi\Reader;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
-use Openapi\ServerGenerator\Factories\DefaultGeneratorFactory;
-use Openapi\ServerGenerator\Generators\BaseGenerator;
+use LaravelOpenapi\Codegen\Factories\DefaultGeneratorFactory;
+use LaravelOpenapi\Codegen\Generators\BaseGenerator;
 
-class OpenapiServerGeneratorCommand extends Command
+class LaravelOpenapiCodegenCommand extends Command
 {
     protected $signature = 'openapi:generate-server';
 
@@ -19,9 +19,9 @@ class OpenapiServerGeneratorCommand extends Command
 
     public function handle(): void
     {
-        $spec = Reader::readFromYamlFile(Config::get('rest-generator.api_docs_url'));
+        $spec = Reader::readFromYamlFile(Config::get('laravel-openapi-codegen.api_docs_url'));
 
-        foreach (Config::get('rest-generator.entities') as $entity) {
+        foreach (Config::get('laravel-openapi-codegen.entities') as $entity) {
             $generator = new BaseGenerator(DefaultGeneratorFactory::createGenerator($entity));
             $generator->generate($spec);
         }

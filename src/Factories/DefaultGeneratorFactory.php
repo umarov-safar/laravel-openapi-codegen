@@ -1,13 +1,13 @@
 <?php
 
-namespace Openapi\ServerGenerator\Factories;
+namespace LaravelOpenapi\Codegen\Factories;
 
-use Openapi\ServerGenerator\Contracts\GeneratorInterface;
-use Openapi\ServerGenerator\Data\EntityType;
-use Openapi\ServerGenerator\Exceptions\GeneratorNotFoundException;
-use Openapi\ServerGenerator\Generators\ControllerGenerator;
-use Openapi\ServerGenerator\Generators\RequestGenerator;
-use Openapi\ServerGenerator\Generators\RouteGenerator;
+use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
+use LaravelOpenapi\Codegen\Data\EntityType;
+use LaravelOpenapi\Codegen\Exceptions\GeneratorNotFoundException;
+use LaravelOpenapi\Codegen\Generators\ControllerGenerator;
+use LaravelOpenapi\Codegen\Generators\RequestGenerator;
+use LaravelOpenapi\Codegen\Generators\RouteGenerator;
 
 class DefaultGeneratorFactory extends GeneratorFactory
 {

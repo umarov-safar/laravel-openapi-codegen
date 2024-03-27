@@ -1,18 +1,18 @@
 <?php
 
-namespace Openapi\ServerGenerator\Generators;
+namespace LaravelOpenapi\Codegen\Generators;
 
 use cebe\openapi\spec\Operation;
 use cebe\openapi\spec\PathItem;
 use cebe\openapi\SpecObjectInterface;
 use Illuminate\Filesystem\Filesystem;
-use Openapi\ServerGenerator\Contracts\GeneratorInterface;
-use Openapi\ServerGenerator\Data\MediaType;
-use Openapi\ServerGenerator\DTO\ExtractedRouteController;
-use Openapi\ServerGenerator\DTO\OpenapiProperty;
-use Openapi\ServerGenerator\Utils\ModelSchemaParser;
-use Openapi\ServerGenerator\Utils\RouteControllerResolver;
-use Openapi\ServerGenerator\Utils\Stub;
+use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
+use LaravelOpenapi\Codegen\Data\MediaType;
+use LaravelOpenapi\Codegen\DTO\ExtractedRouteController;
+use LaravelOpenapi\Codegen\DTO\OpenapiProperty;
+use LaravelOpenapi\Codegen\Utils\ModelSchemaParser;
+use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
+use LaravelOpenapi\Codegen\Utils\Stub;
 
 class RequestGenerator implements GeneratorInterface
 {

@@ -9,7 +9,6 @@ info:
   description: Customers Company
 servers:
   - url: /api/v1
-
 paths:
   /users:
     get:

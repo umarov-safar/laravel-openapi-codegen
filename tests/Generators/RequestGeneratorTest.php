@@ -1,14 +1,14 @@
 <?php
 
-namespace Openapi\ServerGenerator\Tests\Generators;
+namespace LaravelOpenapi\Codegen\Tests\Generators;
 
 use cebe\openapi\Reader;
 use Illuminate\Support\Facades\Config;
-use Openapi\ServerGenerator\Factories\DefaultGeneratorFactory;
-use Openapi\ServerGenerator\Generators\RequestGenerator;
-use Openapi\ServerGenerator\Tests\TestCase;
-use Openapi\ServerGenerator\Utils\RouteControllerResolver;
-use Openapi\ServerGenerator\Utils\Stub;
+use LaravelOpenapi\Codegen\Factories\DefaultGeneratorFactory;
+use LaravelOpenapi\Codegen\Generators\RequestGenerator;
+use LaravelOpenapi\Codegen\Tests\TestCase;
+use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
+use LaravelOpenapi\Codegen\Utils\Stub;
 
 class RequestGeneratorTest extends TestCase
 {
@@ -45,7 +45,7 @@ class RequestGeneratorTest extends TestCase
     public function test_can_generate_requests_from_path_item()
     {
         $methodForTest = $this->getMethod(RequestGenerator::class, 'generateRequests');
-        $spec = Reader::readFromYamlFile(Config::get('rest-generator.api_docs_url'));
+        $spec = Reader::readFromYamlFile(Config::get('laravel-openapi-codegen.api_docs_url'));
 
         $pathItem = $spec->paths->getPath('/companies:search');
 

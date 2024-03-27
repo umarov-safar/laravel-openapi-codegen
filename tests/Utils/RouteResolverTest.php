@@ -1,10 +1,10 @@
 <?php
 
-namespace Openapi\ServerGenerator\Tests\Utils;
+namespace LaravelOpenapi\Codegen\Tests\Utils;
 
-use Openapi\ServerGenerator\Exceptions\RouteControllerInvalidException;
-use Openapi\ServerGenerator\Tests\TestCase;
-use Openapi\ServerGenerator\Utils\RouteControllerResolver;
+use LaravelOpenapi\Codegen\Exceptions\RouteControllerInvalidException;
+use LaravelOpenapi\Codegen\Tests\TestCase;
+use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
 
 class RouteResolverTest extends TestCase
 {

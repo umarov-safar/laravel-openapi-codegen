@@ -1,6 +1,6 @@
 {
-    "name": "laravel-openapi/rest-generator",
-    "description": "Generate rest server code from openapi(swagger) definition.",
+    "name": "laravel-openapi/codegen",
+    "description": "Generate laravel code from openapi specification.",
     "type": "library",
     "require-dev": {
         "orchestra/testbench": "8.x-dev",
@@ -10,7 +10,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Openapi\\ServerGenerator\\": "src/"
+            "LaravelOpenapi\\Codegen\\": "src/"
         },
         "files": [
             "src/Helpers/helpers.php"
@@ -29,7 +29,7 @@
             "App\\": "workbench/app/",
             "Workbench\\Database\\Factories\\": "workbench/database/factories/",
             "Workbench\\Database\\Seeders\\": "workbench/database/seeders/",
-            "Openapi\\ServerGenerator\\Tests\\": "tests"
+            "LaravelOpenapi\\Codegen\\Tests\\": "tests"
         }
     },
     "scripts": {

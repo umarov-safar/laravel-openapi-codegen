@@ -1,11 +1,11 @@
 <?php
 
-namespace Openapi\ServerGenerator\Tests;
+namespace LaravelOpenapi\Codegen\Tests;
 
-use Openapi\ServerGenerator\Data\EntityType;
-use Openapi\ServerGenerator\Exceptions\GeneratorNotFoundException;
-use Openapi\ServerGenerator\Factories\DefaultGeneratorFactory;
-use Openapi\ServerGenerator\Generators\RouteGenerator;
+use LaravelOpenapi\Codegen\Data\EntityType;
+use LaravelOpenapi\Codegen\Exceptions\GeneratorNotFoundException;
+use LaravelOpenapi\Codegen\Factories\DefaultGeneratorFactory;
+use LaravelOpenapi\Codegen\Generators\RouteGenerator;
 
 class GeneratorFactoryTest extends TestCase
 {

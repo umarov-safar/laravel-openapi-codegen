@@ -1,12 +1,12 @@
 <?php
 
-namespace Openapi\ServerGenerator\Tests\Generators;
+namespace LaravelOpenapi\Codegen\Tests\Generators;
 
 use cebe\openapi\Reader;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
-use Openapi\ServerGenerator\Generators\RouteGenerator;
-use Openapi\ServerGenerator\Tests\TestCase;
+use LaravelOpenapi\Codegen\Generators\RouteGenerator;
+use LaravelOpenapi\Codegen\Tests\TestCase;
 
 class RouteGeneratorTest extends TestCase
 {
@@ -14,7 +14,7 @@ class RouteGeneratorTest extends TestCase
     {
         $specObj = Reader::readFromYamlFile(__DIR__.'/../v1/index.yaml');
 
-        $routesTestFile = Config::get('rest-generator.paths.routes_file');
+        $routesTestFile = Config::get('laravel-openapi-codegen.paths.routes_file');
         $filesystem = new Filesystem();
         $routeGenerator = new RouteGenerator();
 

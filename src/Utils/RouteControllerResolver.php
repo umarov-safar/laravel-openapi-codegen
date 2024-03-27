@@ -1,10 +1,10 @@
 <?php
 
-namespace Openapi\ServerGenerator\Utils;
+namespace LaravelOpenapi\Codegen\Utils;
 
 use Illuminate\Support\Str;
-use Openapi\ServerGenerator\DTO\ExtractedRouteController;
-use Openapi\ServerGenerator\Exceptions\RouteControllerInvalidException;
+use LaravelOpenapi\Codegen\DTO\ExtractedRouteController;
+use LaravelOpenapi\Codegen\Exceptions\RouteControllerInvalidException;
 
 class RouteControllerResolver
 {

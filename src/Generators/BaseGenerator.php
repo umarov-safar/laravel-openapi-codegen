@@ -1,9 +1,9 @@
 <?php
 
-namespace Openapi\ServerGenerator\Generators;
+namespace LaravelOpenapi\Codegen\Generators;
 
 use cebe\openapi\SpecObjectInterface;
-use Openapi\ServerGenerator\Contracts\GeneratorInterface;
+use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
 
 final class BaseGenerator
 {

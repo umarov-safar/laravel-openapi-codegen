@@ -1,6 +1,6 @@
 <?php
 
-namespace Openapi\ServerGenerator\DTO;
+namespace LaravelOpenapi\Codegen\DTO;
 
 class RouteInfo
 {

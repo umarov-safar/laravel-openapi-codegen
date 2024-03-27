@@ -1,9 +1,9 @@
 <?php
 
-namespace Openapi\ServerGenerator\Utils;
+namespace LaravelOpenapi\Codegen\Utils;
 
 use cebe\openapi\spec\MediaType;
-use Openapi\ServerGenerator\DTO\Schema;
+use LaravelOpenapi\Codegen\DTO\Schema;
 use stdClass;
 
 class ModelSchemaParser

@@ -1,8 +1,8 @@
 <?php
 
-namespace Openapi\ServerGenerator\Factories;
+namespace LaravelOpenapi\Codegen\Factories;
 
-use Openapi\ServerGenerator\Contracts\GeneratorInterface;
+use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
 
 abstract class GeneratorFactory
 {

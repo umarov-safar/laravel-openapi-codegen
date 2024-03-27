@@ -1,9 +1,9 @@
 <?php
 
-namespace Openapi\ServerGenerator\Utils;
+namespace LaravelOpenapi\Codegen\Utils;
 
-use Openapi\ServerGenerator\Data\OpenapiToLaravelValidationMapper;
-use Openapi\ServerGenerator\DTO\OpenapiProperty;
+use LaravelOpenapi\Codegen\Data\OpenapiToLaravelValidationMapper;
+use LaravelOpenapi\Codegen\DTO\OpenapiProperty;
 
 class OpenapiPropertyConvertor
 {
