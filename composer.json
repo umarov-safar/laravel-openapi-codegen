@@ -56,7 +56,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Openapi\\ServerGenerator\\OpenapiServerGeneratorProvider"
+                "LaravelOpenapi\\Codegen\\LaravelOpenapiCodegenProvider"
             ]
         }
     }
