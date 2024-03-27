@@ -76,7 +76,7 @@ class RouteGenerator implements GeneratorInterface
     {
         $content = $this->generateRoutesFileContent();
 
-        $this->filesystem->put(Config::get('openapi-generator.paths.routes_file'), $content);
+        $this->filesystem->put(Config::get('rest-generator.paths.routes_file'), $content);
     }
 
     protected function generateRoutesFileContent(): string

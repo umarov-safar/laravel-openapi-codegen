@@ -14,7 +14,7 @@ class RouteGeneratorTest extends TestCase
     {
         $specObj = Reader::readFromYamlFile(__DIR__.'/../v1/index.yaml');
 
-        $routesTestFile = Config::get('openapi-generator.paths.routes_file');
+        $routesTestFile = Config::get('rest-generator.paths.routes_file');
         $filesystem = new Filesystem();
         $routeGenerator = new RouteGenerator();
 

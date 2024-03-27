@@ -45,7 +45,7 @@ class RequestGeneratorTest extends TestCase
     public function test_can_generate_requests_from_path_item()
     {
         $methodForTest = $this->getMethod(RequestGenerator::class, 'generateRequests');
-        $spec = Reader::readFromYamlFile(Config::get('openapi-generator.api_docs_url'));
+        $spec = Reader::readFromYamlFile(Config::get('rest-generator.api_docs_url'));
 
         $pathItem = $spec->paths->getPath('/companies:search');
 

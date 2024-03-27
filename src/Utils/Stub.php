@@ -6,7 +6,7 @@ class Stub
 {
     public static function getBasePath(): string
     {
-        return config('openapi-generator.stubs') ?? __DIR__.'/../../stubs';
+        return config('rest-generator.stubs') ?? __DIR__.'/../../stubs';
     }
 
     public static function getStubFilePath(string $fileName): string
@@ -14,7 +14,6 @@ class Stub
         if (self::stubExists($fileName)) {
             return self::getBasePath()."/$fileName";
         }
-
         throw new \Exception("The stub $fileName file not exists");
     }
 

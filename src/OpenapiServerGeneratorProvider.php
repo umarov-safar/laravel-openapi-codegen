@@ -15,12 +15,15 @@ class OpenapiServerGeneratorProvider extends ServiceProvider
             ]);
         }
 
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/openapi-generator.php', 'openapi-generator'
-        );
-
         $this->publishes([
-            __DIR__.'/../config/openapi-generator.php' => config_path('openapi-generator.php'),
+            __DIR__.'/../config/rest-generator.php' => config_path('rest-generator.php'),
         ], 'config');
+    }
+
+    public function register(): void
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/rest-generator.php', 'rest-generator'
+        );
     }
 }
