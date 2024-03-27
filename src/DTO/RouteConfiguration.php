@@ -17,8 +17,7 @@ class RouteConfiguration
         string $uri,
         ?string $routeName,
         ?string $middlewares
-    ): self
-    {
+    ): self {
         return new static($method, $uri, $routeName, $middlewares);
     }
 }

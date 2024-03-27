@@ -4,11 +4,10 @@ return [
     // The URL where the OpenAPI documentation will be accessible
     'api_docs_url' => public_path('api/v1/index.yaml'),
 
-
     // The entities for which code generation will be performed
     'entities' => [
         'route',
-        'request'
+        'request',
     ],
 
     // The directory containing stub files used for code generation

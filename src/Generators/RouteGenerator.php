@@ -55,8 +55,7 @@ class RouteGenerator implements GeneratorInterface
         string $uri,
         Operation $operation,
         string $methodName
-    ): RouteInfo
-    {
+    ): RouteInfo {
         $controller = $operation->{'x-og-controller'};
         $extractedController = RouteControllerResolver::extract($controller, $methodName);
 

@@ -4,12 +4,9 @@ namespace LaravelOpenapi\Codegen\Tests\Generators;
 
 use cebe\openapi\Reader;
 use cebe\openapi\spec\Operation;
-use cebe\openapi\spec\PathItem;
 use cebe\openapi\SpecObjectInterface;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Config;
-use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
 use LaravelOpenapi\Codegen\DTO\RouteConfiguration;
 use LaravelOpenapi\Codegen\DTO\RouteInfo;
 use LaravelOpenapi\Codegen\Factories\DefaultGeneratorFactory;
@@ -17,7 +14,6 @@ use LaravelOpenapi\Codegen\Generators\RouteGenerator;
 use LaravelOpenapi\Codegen\Tests\TestCase;
 use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
 use LaravelOpenapi\Codegen\Utils\Stub;
-use function Symfony\Component\Translation\t;
 
 class RouteGeneratorTest extends TestCase
 {
@@ -47,11 +43,10 @@ class RouteGeneratorTest extends TestCase
 
         $this->assertSame("Route::{{ method }}('{{ uri }}', [{{ controller }}::class, '{{ action }}'])", $route);
         $this->assertSame("name('{{ routeName }}')", $routeName);
-        $this->assertSame("middleware([{{ middlewares }}])", $middleware);
+        $this->assertSame('middleware([{{ middlewares }}])', $middleware);
 
         return [$route, $routeName, $middleware];
     }
-
 
     public function test_can_make_route_info_object()
     {
@@ -59,8 +54,8 @@ class RouteGeneratorTest extends TestCase
         $operation = $this->getOperation('/users', 'get');
 
         /**
-         *@var RouteInfo $routeInfo
-         * Call protected method makeRouteInfo
+         * @var RouteInfo $routeInfo
+         *                Call protected method makeRouteInfo
          */
         $routeInfo = $this->routeGenerator->makeRouteInfo('/users', $operation, 'get');
 
@@ -83,20 +78,19 @@ class RouteGeneratorTest extends TestCase
      */
     public function test_correctly_replace_middleware_method_in_route_stub_string(array $routeSegments)
     {
-        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers','auth,admin');
+        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers', 'auth,admin');
 
         $replacedMiddlewares = $this->routeGenerator->replaceMiddlewareMethod($routeConfiguration, $routeSegments[2]);
 
         $this->assertSame("->middleware(['auth', 'admin'])", $replacedMiddlewares);
     }
 
-
     /**
      * @depends test_correctly_extract_route_segments
      */
     public function test_correctly_replace_route_name_method_in_route_stub_string(array $routeSegments)
     {
-        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers','auth,admin');
+        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers', 'auth,admin');
 
         $replacedRouteNameMethod = $this->routeGenerator->replaceRouteNameMethod($routeConfiguration, $routeSegments[1]);
 
@@ -105,7 +99,7 @@ class RouteGeneratorTest extends TestCase
 
     public function test_correctly_replace_route_stub()
     {
-        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers','auth,admin');
+        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers', 'auth,admin');
         $extractedRouteController = RouteControllerResolver::extract("App\Http\Controllers\UserController@index");
 
         $routeInfo = RouteInfo::create($extractedRouteController, $routeConfiguration);
@@ -116,13 +110,12 @@ class RouteGeneratorTest extends TestCase
         $this->assertSame($expectedRoute, $route);
     }
 
-
     public function test_can_get_namespaces_as_string()
     {
         $routeGeneratorReflected = new \ReflectionClass(RouteGenerator::class);
         $reflection = $routeGeneratorReflected->getProperty('routes');
 
-        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers','auth,admin');
+        $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers', 'auth,admin');
         $extractedRouteController = RouteControllerResolver::extract("App\Http\Controllers\UserController@index");
 
         $reflection->setValue($this->routeGenerator, [new RouteInfo($extractedRouteController, $routeConfiguration)]);
@@ -130,5 +123,4 @@ class RouteGeneratorTest extends TestCase
 
         $this->assertSame("use App\Http\Controllers\UserController;\n", $namespaces);
     }
-
 }
