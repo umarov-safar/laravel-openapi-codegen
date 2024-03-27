@@ -22,7 +22,7 @@
             "email": "safarumarov711@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload-dev": {
         "psr-4": {
             "App\\": "workbench/app/",
