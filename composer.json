@@ -1,6 +1,6 @@
 {
-    "name": "tjacademy/laravel-rest-generator",
-    "description": "Generate server code from openapi(swagger) definition.",
+    "name": "laravel-openapi/rest-generator",
+    "description": "Generate rest server code from openapi(swagger) definition.",
     "type": "library",
     "require-dev": {
         "orchestra/testbench": "8.x-dev",
@@ -51,5 +51,12 @@
     },
     "require": {
         "devizzent/cebe-php-openapi": "1.6.x-dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Openapi\\ServerGenerator\\OpenapiServerGeneratorProvider"
+            ]
+        }
     }
 }

@@ -1,0 +1,17 @@
+PathId:
+  in: path
+  name: id
+  required: true
+  schema:
+    type: integer
+    minimum: 1
+  description: Числовой id
+  example: 1
+
+QueryInclude:
+  in: query
+  name: include
+  required: false
+  description: Связанные сущности для подгрузки, через запятую
+  schema:
+    type: string
