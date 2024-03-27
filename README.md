@@ -1,7 +1,12 @@
 ## OpenApi Server generator
 
-#### Route generator settings
+### Route generator 
+Now can generate route with:
+- [x] Route name
+- [x] Middlewares
+- [ ] Regular Expression Constraints
 
+### settings
 ###### x-og-controller: App\Http\Controllers\UserController@get
 
 Controller action for which will be generate route

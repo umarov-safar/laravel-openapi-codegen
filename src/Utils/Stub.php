@@ -6,7 +6,7 @@ class Stub
 {
     public static function getBasePath(): string
     {
-        return config('laravel-openapi-codegen.stubs') ?? __DIR__.'/../../stubs';
+        return config('openapi-codegen.stubs') ?? __DIR__.'/../../stubs';
     }
 
     public static function getStubFilePath(string $fileName): string

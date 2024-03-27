@@ -32,31 +32,37 @@ class RouteGenerator implements GeneratorInterface
     public function generate(SpecObjectInterface $spec): void
     {
         /** @var PathItem $path */
-        foreach ($spec->paths as $path) {
-            $this->makeRoute($path);
+        foreach ($spec->paths as $uri => $path) {
+            $this->makeRoute($uri, $path);
         }
 
         $this->generateFile();
     }
 
     /**
-     * Extract controller information from the operation and add it in the routes array
+     * Extract route information from the operation and add it in the routes array
      */
-    protected function makeRoute(PathItem $path): void
+    public function makeRoute(string $uri, PathItem $path): void
     {
         foreach (array_keys($path->getOperations()) as $methodName) {
             /** @var Operation $operation */
             $operation = $path->{$methodName};
-            $this->addRoute($this->makeRouteInfoObject($operation, $methodName));
+            $this->addRoute($this->makeRouteInfo($uri, $operation, $methodName));
         }
     }
 
-    protected function makeRouteInfoObject(Operation $operation, string $methodName): RouteInfo
+    public function makeRouteInfo(
+        string $uri,
+        Operation $operation,
+        string $methodName
+    ): RouteInfo
     {
         $controller = $operation->{'x-og-controller'};
         $extractedController = RouteControllerResolver::extract($controller, $methodName);
 
         $routeConfiguration = RouteConfiguration::create(
+            $methodName,
+            ltrim($uri, '/'),
             $operation->{'x-og-route-name'} ?? null,
             $operation->{'x-og-middlewares'} ?? null
         );
@@ -64,7 +70,7 @@ class RouteGenerator implements GeneratorInterface
         return new RouteInfo($extractedController, $routeConfiguration);
     }
 
-    protected function addRoute(RouteInfo $extractedRouteController): void
+    public function addRoute(RouteInfo $extractedRouteController): void
     {
         $this->routes[] = $extractedRouteController;
     }
@@ -72,14 +78,14 @@ class RouteGenerator implements GeneratorInterface
     /**
      * Generate the file containing the routes.
      */
-    protected function generateFile(): void
+    public function generateFile(): void
     {
         $content = $this->generateRoutesFileContent();
 
-        $this->filesystem->put(Config::get('laravel-openapi-codegen.paths.routes_file'), $content);
+        $this->filesystem->put(Config::get('openapi-codegen.paths.routes_file'), $content);
     }
 
-    protected function generateRoutesFileContent(): string
+    public function generateRoutesFileContent(): string
     {
         $routesStubFile = $this->getRoutesStubFileContent();
 
@@ -96,12 +102,12 @@ class RouteGenerator implements GeneratorInterface
         );
     }
 
-    protected function getRoutesStubFileContent(): string
+    public function getRoutesStubFileContent(): string
     {
         return Stub::getStubContent('routes.stub');
     }
 
-    protected function getRouteStubFileContent(): string
+    public function getRouteStubFileContent(): string
     {
         return Stub::getStubContent('route.stub');
     }
@@ -111,7 +117,7 @@ class RouteGenerator implements GeneratorInterface
      *
      * @return string The namespaces as a string.
      */
-    protected function getNamespacesAsString(): string
+    public function getNamespacesAsString(): string
     {
         $namespaces = '';
         foreach ($this->routes as $route) {
@@ -129,57 +135,59 @@ class RouteGenerator implements GeneratorInterface
      *
      * @return string The routes as a string.
      */
-    protected function getRoutesAsString(): string
+    public function getRoutesAsString(): string
     {
         $routes = '';
-        $routeStub = $this->getRouteStubFileContent();
-        [$routeAction, $routeNameMethod, $middlewaresMethod] = $this->extractRouteSegments($routeStub);
 
         foreach ($this->routes as $routeInfo) {
-            $routes .= sprintf('%s%s%s%s',
-                $this->replaceAction($routeInfo, $routeAction),
-                $this->replaceRouteNameMethod($routeInfo, $routeNameMethod),
-                $this->replaceMiddlewareMethod($routeInfo, $middlewaresMethod),
-                ";\n"
-            );
+            $routes .= sprintf('%s%s', $this->replaceRouteStub($routeInfo), ";\n");
         }
 
         return $routes;
     }
 
-    protected function replaceAction(RouteInfo $routeInfo, string $routeAction): string
+    public function replaceRouteStub(RouteInfo $routeInfo): string
     {
-        return str_replace(
+        $routeStub = $this->getRouteStubFileContent();
+        [$routeAction, $routeNameMethod, $middlewaresMethod] = $this->extractRouteSegments($routeStub);
+
+        $route = str_replace(
             [
                 '{{ method }}',
+                '{{ uri }}',
                 '{{ controller }}',
                 '{{ action }}',
             ],
             [
-                $routeInfo->extractedRouteController->httpMethod,
+                $routeInfo->routeConfiguration->method,
+                $routeInfo->routeConfiguration->uri,
                 $routeInfo->extractedRouteController->controller,
                 $routeInfo->extractedRouteController->action,
             ],
             $routeAction
         );
+        $route .= $this->replaceRouteNameMethod($routeInfo->routeConfiguration, $routeNameMethod);
+        $route .= $this->replaceMiddlewareMethod($routeInfo->routeConfiguration, $middlewaresMethod);
+
+        return $route;
     }
 
-    protected function replaceRouteNameMethod(RouteInfo $routeInfo, string $routeNameMethod): string
+    public function replaceRouteNameMethod(RouteConfiguration $routeConfiguration, string $routeNameMethod): string
     {
-        if ($routeName = $routeInfo->routeConfiguration->routeName) {
-            return '->'.str_replace('{{ routeName }}', "'$routeName'", $routeNameMethod);
+        if ($routeName = $routeConfiguration->routeName) {
+            return '->'.str_replace('{{ routeName }}', $routeName, $routeNameMethod);
         }
 
         return '';
     }
 
-    protected function replaceMiddlewareMethod(RouteInfo $routeInfo, string $middlewaresMethod): string
+    public function replaceMiddlewareMethod(RouteConfiguration $routeConfiguration, string $middlewaresMethod): string
     {
-        if ($middlewares = $routeInfo->routeConfiguration->middlewares) {
+        if ($middlewares = $routeConfiguration->middlewares) {
             $middlewares = explode(',', $middlewares);
             $middlewares = array_map(fn ($value) => "'".$value."'", $middlewares);
 
-            $middlewares = implode(',', $middlewares);
+            $middlewares = implode(', ', $middlewares);
 
             return '->'.str_replace('{{ middlewares }}', $middlewares, $middlewaresMethod);
         }
@@ -187,7 +195,7 @@ class RouteGenerator implements GeneratorInterface
         return '';
     }
 
-    protected function extractRouteSegments(string $route): array
+    public function extractRouteSegments(string $route): array
     {
         return explode('->', $route);
     }

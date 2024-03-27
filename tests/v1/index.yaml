@@ -1,43 +1,44 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
-  title: Customers Companies
+  title: Openapi Codegen Specification
   contact:
     name: API Support
-    url: https://eniak.ru/contacts
-    email: eniak@info.ru
+    url: https://github.com/umarov-safar
+    email: safarumarov711@gmail.com
   version: 1.0.0
-  description: Customers Company
+  description: This openapi specification is used for testing purpose
 servers:
   - url: /api/v1
 tags:
-  - name: companies
-    description: Компания покупателя
-  - name: company_employees
-    description: Сотрудники компании
+  - name: users
+    description: Пользователи
+  - name: roles
+    description: Ролей
+
 paths:
-  /companies:search:
-    $ref: './companies/path.yaml#/SearchCompany'
-  /companies:
-    $ref: './companies/path.yaml#/CreateCompany'
-  /companies/{id}:
-    $ref: './companies/path.yaml#/CurrentCompany'
-
-  /companies/employees:search:
-    $ref: './companies/path.yaml#/SearchCompanyEmployees'
-  /companies/employees:
-    $ref: './companies/path.yaml#/CompanyEmployee'
-  /companies/employees/{id}:
-    $ref: './companies/path.yaml#/CurrentCompanyEmployee'
-
-  /companies/employee-balances:search:
-    $ref: './companies/path.yaml#/SearchEmployeeBalances'
+  /users:
+    $ref: './schemas/users.yaml#/CreateUserAndGetAll'
+  /users/{id}:
+    $ref: './schemas/users.yaml#/CurrentUser'
 
 components:
   parameters:
     QueryInclude:
-      $ref: './common_parameters.yaml#/QueryInclude'
+      in: query
+      name: include
+      required: false
+      description: Связанные сущности для подгрузки, через запятую
+      schema:
+        type: string
     PathId:
-      $ref: './common_parameters.yaml#/PathId'
+      in: path
+      name: id
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+      description: Числовой id
+      example: 1
   schemas:
     EmptyDataResponse:
       type: object
@@ -49,28 +50,54 @@ components:
           type: object
       required:
         - data
-    PaginationTypeEnum:
-      $ref: './common_schemas.yaml#/PaginationTypeEnum'
-    CompanyStatusEnum:
-      $ref: './companies/enums/company_status_enum.yaml'
-    CompanyEmployeeStatusEnum:
-      $ref: './companies/enums/company_employee_status_enum.yaml'
+    Error:
+      type: object
+      properties:
+        code:
+          description: Строковый код ошибки
+          type: string
+        message:
+          description: Описание ошибки
+          type: string
+        meta:
+          type: object
+          description: Объект с мета-информацией
+      required:
+        - code
+        - message
+    ErrorResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          nullable: true
+        errors:
+          type: array
+          description: Массив ошибок
+          items:
+            $ref: "#/components/schemas/Error"
+        meta:
+          type: object
+          description: Объект с мета-информацией
+      required:
+        - data
+        - errors
   responses:
     BadRequest:
       description: Bad Request
       content:
         application/json:
           schema:
-            $ref: './errors.yaml#/ErrorResponse'
+            $ref: '#/components/schemas/ErrorResponse'
     NotFound:
       description: Not Found
       content:
         application/json:
           schema:
-            $ref: './errors.yaml#/ErrorResponse'
+            $ref: '#/components/schemas/ErrorResponse'
     ServerError:
       description: Internal Server Error
       content:
         application/json:
           schema:
-            $ref: './errors.yaml#/ErrorResponse'
+            $ref: '#/components/schemas/ErrorResponse'

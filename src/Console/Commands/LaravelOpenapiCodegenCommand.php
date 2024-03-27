@@ -10,7 +10,7 @@ use LaravelOpenapi\Codegen\Generators\BaseGenerator;
 
 class LaravelOpenapiCodegenCommand extends Command
 {
-    protected $signature = 'openapi:generate-server';
+    protected $signature = 'openapi:generate-code';
 
     protected function getStub(): string
     {
@@ -19,9 +19,9 @@ class LaravelOpenapiCodegenCommand extends Command
 
     public function handle(): void
     {
-        $spec = Reader::readFromYamlFile(Config::get('laravel-openapi-codegen.api_docs_url'));
+        $spec = Reader::readFromYamlFile(Config::get('openapi-codegen.api_docs_url'));
 
-        foreach (Config::get('laravel-openapi-codegen.entities') as $entity) {
+        foreach (Config::get('openapi-codegen.entities') as $entity) {
             $generator = new BaseGenerator(DefaultGeneratorFactory::createGenerator($entity));
             $generator->generate($spec);
         }

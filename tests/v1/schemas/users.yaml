@@ -1,0 +1,131 @@
+
+CreateUserAndGetAll:
+  get:
+    tags:
+      - users
+    summary: Get all users
+    description: This get operation return all users with pagination
+    x-og-generation: true
+    x-og-route-name: getUsers
+    x-og-controller: App\Http\Controllers\UsersController@index
+    x-og-skip-request: true
+    x-og-middlewares: auth,admin
+    responses:
+      200:
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              $ref: '#/UsersResponse'
+      404:
+        $ref: '../index.yaml#/components/responses/NotFound'
+  post:
+    tags:
+      - users
+    summary: Create user
+    description: This post operation create a user
+    x-og-generation: false
+    x-og-route-name: createUser
+    x-og-controller: App\Http\Controllers\UsersController@create
+    x-og-skip-request: false
+    x-og-middlewares: auth,admin
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/FillableProperties'
+    responses:
+      201:
+        description: Successful created
+        content:
+          application/json:
+            schema:
+              $ref: '#/UserResponse'
+
+CurrentUser:
+  get:
+    tags:
+      - users
+    summary: Get user by id
+    description: Get user by id
+    x-og-generation: false
+    x-og-route-name: getUser
+    x-og-controller: App\Http\Controllers\UsersController@view
+    x-og-skip-request: true
+    x-og-middlewares: auth,admin
+    parameters:
+      - $ref: '../index.yaml#/components/parameters/PathId'
+      - $ref: '../index.yaml#/components/parameters/QueryInclude'
+    responses:
+      200:
+        description: Successful request
+        content:
+          application/json:
+            schema:
+              $ref: '#/UserResponse'
+      404:
+        $ref: '../index.yaml#/components/responses/NotFound'
+
+
+
+
+# ----------------- SCHEMAS -----------------------
+
+ReadOnlyProperties:
+  type: object
+  properties:
+    created_at:
+      type: string
+      format: date-time
+      example: '2021-06-11T11:27:10.000000Z'
+    updated_at:
+      type: string
+      format: date-time
+      example: '2021-06-11T11:27:10.000000Z'
+
+FillableProperties:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Safar
+      minLength: 3
+      maxLength: 20
+      description: Username
+      required: true
+    last_name:
+      type: string
+      nullable: true
+      required: false
+      maxLength: 20
+      example: 'Hello world'
+      description: Last name
+    email:
+      type: string
+      example: safarumarov711@gamil.com
+      description: Email
+      required: true
+      pattern: '[a-z0-9]+@[a-z]+\.[a-z]{2,10}'
+    roles:
+      type: object
+      description: Roles
+
+UserSchema:
+  allOf:
+    - $ref: '#/FillableProperties'
+    - $ref: '#/ReadOnlyProperties'
+
+
+UsersResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        - $ref: '#/UserSchema'
+
+UserResponse:
+  type: object
+  properties:
+    data:
+      $ref: '#/UserSchema'

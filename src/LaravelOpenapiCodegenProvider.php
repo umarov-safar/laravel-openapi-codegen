@@ -16,14 +16,14 @@ class LaravelOpenapiCodegenProvider extends ServiceProvider
         }
 
         $this->publishes([
-            __DIR__.'/../config/laravel-openapi-codegen.php' => config_path('laravel-openapi-codegen.php'),
+            __DIR__.'/../config/openapi-codegen.php' => config_path('openapi-codegen.php'),
         ], 'config');
     }
 
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__.'/../config/laravel-openapi-codegen.php', 'laravel-openapi-codegen'
+            __DIR__.'/../config/openapi-codegen.php', 'openapi-codegen'
         );
     }
 }

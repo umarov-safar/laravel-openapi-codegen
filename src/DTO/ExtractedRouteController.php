@@ -8,7 +8,6 @@ class ExtractedRouteController
         public string $namespace,
         public string $controller,
         public string $action,
-        public ?string $httpMethod = null
     ) {
     }
 
@@ -16,8 +15,7 @@ class ExtractedRouteController
         string $namespace,
         string $controller,
         string $action,
-        ?string $httpMethod = null
     ): self {
-        return new static($namespace, $controller, $action, $httpMethod);
+        return new static($namespace, $controller, $action);
     }
 }

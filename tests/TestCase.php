@@ -14,8 +14,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
         $this->app->setBasePath(__DIR__.'/../workbench');
 
-        Config::set('laravel-openapi-codegen.paths.routes_file', base_path('routes/openapi_test.php'));
-        Config::set('laravel-openapi-codegen.api_docs_url', __DIR__.'/v1/index.yaml');
+        Config::set('openapi-codegen.paths.routes_file', base_path('routes/openapi_test.php'));
+        Config::set('openapi-codegen.api_docs_url', __DIR__.'/v1/index.yaml');
     }
 
     protected function getPackageProviders($app)
@@ -25,6 +25,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         ];
     }
 
+    /**
+     * @throws \ReflectionException
+     */
     protected function getMethod(string $className, string $method)
     {
         $class = new \ReflectionClass($className);

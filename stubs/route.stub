@@ -1,1 +1,1 @@
-Route::{{ method }}([{{ controller }}::class, '{{ action }}'])->name({{ routeName }})->middleware([{{ middlewares }}])
+Route::{{ method }}('{{ uri }}', [{{ controller }}::class, '{{ action }}'])->name('{{ routeName }}')->middleware([{{ middlewares }}])
