@@ -15,7 +15,7 @@ return [
     ],
 
     // The directory containing stub files used for code generation
-//    'stubs' => __DIR__.'/../stubs',
+    //    'stubs' => __DIR__.'/../stubs',
 
     // Additional paths used in the application
     'paths' => [

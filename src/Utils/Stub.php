@@ -6,7 +6,7 @@ class Stub
 {
     public static function getBasePath(): string
     {
-        return config('openapi-generator.stubs') ?? __DIR__.'/../../stubs' ;
+        return config('openapi-generator.stubs') ?? __DIR__.'/../../stubs';
     }
 
     public static function getStubFilePath(string $fileName): string
