@@ -9,15 +9,28 @@ class OpenapiPropertyConvertor
 {
     public static function convert(string $propertyName, array $options): OpenapiProperty
     {
-        $property = new OpenapiProperty($propertyName, $options);
+        $property = new OpenapiProperty($propertyName);
         $openapiToLaravelValidationMapper = new OpenapiToLaravelValidationMapper();
+
+        if (isset($options['required'])) {
+            $property->required = true;
+            $property->addValidationRule('required');
+        }
+
+        if (isset($options['nullable'])) {
+            $property->nullable = true;
+            $property->addValidationRule('nullable');
+        }
+
+        $property->type = $options['type'] == 'object' ? 'array' : $options['type'];
+        $property->addValidationRule($property->type);
 
         if (isset($options['format'])) {
             $property->format = $options['format'];
 
             $formatLaravel = $openapiToLaravelValidationMapper->get($options['format']);
             if ($formatLaravel) {
-                $property->addValidationItem($formatLaravel);
+                $property->addValidationRule($formatLaravel);
             }
         }
 
@@ -34,11 +47,11 @@ class OpenapiPropertyConvertor
             case 'string':
                 if (isset($options['minLength'])) {
                     $property->minLength = $options['minLength'];
-                    $property->addValidationItem($openapiToLaravelValidationMapper->get($options['minLength']).':'.$property->minLength);
+                    $property->addValidationRule($openapiToLaravelValidationMapper->get($options['minLength']).':'.$property->minLength);
                 }
                 if (isset($options['maxLength'])) {
                     $property->maxLength = $options['maxLength'];
-                    $property->addValidationItem($openapiToLaravelValidationMapper->get($options['maxLength']).':'.$property->minLength);
+                    $property->addValidationRule($openapiToLaravelValidationMapper->get($options['maxLength']).':'.$property->minLength);
                 }
                 break;
             case 'integer':

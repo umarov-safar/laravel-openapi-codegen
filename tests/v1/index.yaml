@@ -20,7 +20,12 @@ paths:
     $ref: './schemas/users.yaml#/CreateUserAndGetAll'
   /users/{id}:
     $ref: './schemas/users.yaml#/CurrentUser'
-
+  /request-generation:
+    $ref: './schemas/request.yaml#/PathForRequestTest'
+  /request-skip-generation:
+    $ref: './schemas/request.yaml#/NotGenerateRequestPath'
+  /request-generation-for-get:
+    $ref: './schemas/request.yaml#/GenerateRequestEvenForGetMethod'
 components:
   parameters:
     QueryInclude:

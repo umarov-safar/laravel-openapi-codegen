@@ -36,19 +36,16 @@ class OpenapiProperty
 
     public function __construct(
         string $name,
-        array $options,
     ) {
         $this->name = $name;
-        $this->type = $options['type'];
-        $this->addValidationItem($options['type'] === 'object' ? 'array' : $options['type']);
     }
 
-    public function getLaravelValidation(): array
+    public function getLaravelValidationRules(): array
     {
         return $this->laravelValidation;
     }
 
-    public function addValidationItem(string $name): void
+    public function addValidationRule(string $name): void
     {
         if (! in_array($name, $this->laravelValidation)) {
             $this->laravelValidation[] = $name;

@@ -14,7 +14,7 @@ class Schema
         return $this->properties;
     }
 
-    public function getRequired(): array
+    public function getRequiredProperties(): array
     {
         return $this->required;
     }
@@ -24,7 +24,12 @@ class Schema
         $this->properties[$property->name] = $property;
     }
 
-    public function pushRequiredPropName(string $name): void
+    public function getProperty(string $propertyName): ?OpenapiProperty
+    {
+        return $this->properties[$propertyName] ?? null;
+    }
+
+    public function addRequiredProperty(string $name): void
     {
         if (! in_array($name, $this->required)) {
             $this->required[] = $name;

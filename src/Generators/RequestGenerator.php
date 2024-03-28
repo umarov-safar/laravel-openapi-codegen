@@ -39,35 +39,36 @@ class RequestGenerator implements GeneratorInterface
         }
     }
 
-    protected function generateRequests(PathItem $pathItem)
+    public function generateRequests(PathItem $pathItem): void
     {
         foreach (array_keys($pathItem->getOperations()) as $methodName) {
+            /** @var Operation $operation */
             $operation = $pathItem->{$methodName};
 
-            $controller = $operation->{'x-og-controller'} ?? null;
-            $skipRequest = $operation->{'x-og-skip-request'} ?? null;
+            $controller = $operation->{'l-og-controller'} ?? null;
+            $skipRequest = $operation->{'l-og-skip-request'} ?? null;
 
             /**
              * For generating requests, we follow these rules:
              * 1. Ensure the controller exists. Requests will only be generated for controllers that we can confirm exist.
              * 2.1 Check if the request method is in the list of methods by default and not skipped for generation.
-             * 2.2 Or Alternatively, check if the flag x-og-skip-request is set to false. If skip-request is set to false,
+             * 2.2 Or Alternatively, check if the flag l-og-skip-request is set to false. If skip-request is set to false,
              * we generate requests even for methods not in the default list.
              */
             if ($controller && (
                 (in_array($methodName, $this->methodsForGenerate) && $skipRequest !== true) ||
                 $skipRequest === false
-            )) {
-
-                $this->extractedRouteController = RouteControllerResolver::extract($controller, $methodName);
+            )
+            ) {
+                $this->extractedRouteController = RouteControllerResolver::extract($controller);
                 $this->generateRequestForOperation($operation);
             }
         }
     }
 
-    protected function generateRequestForOperation(Operation $operation): void
+    public function generateRequestForOperation(Operation $operation): void
     {
-        if (! isset($operation->requestBody->content) /* || $this->requestFileExists() */) {
+        if ($this->requestFileExists()) {
             return;
         }
 
@@ -79,14 +80,17 @@ class RequestGenerator implements GeneratorInterface
         $this->filesystem->put($filePath, $stubContent);
     }
 
-    protected function replaceRules(Operation $operation, string $stubContent)
+    public function replaceRules(Operation $operation, string $stubContent): string
     {
-        $rules = $this->getRules($operation);
+        $rules = '';
+        if (isset($operation->requestBody->content)) {
+            $rules = $this->getAllRules($operation);
+        }
 
         return str_replace('{{ rules }}', $rules, $stubContent);
     }
 
-    protected function replaceNamespace(string $stubContent): string
+    public function replaceNamespace(string $stubContent): string
     {
         $namespaceParts = explode('\\', $this->makeNamespace());
         $requestClasName = array_pop($namespaceParts);
@@ -104,7 +108,7 @@ class RequestGenerator implements GeneratorInterface
         );
     }
 
-    protected function getRules(Operation $operation): string
+    public function getAllRules(Operation $operation): string
     {
         $openapiSchema = $operation->requestBody->content[MediaType::APPLICATION_JSON]->getSerializableData()->schema;
         $schema = (new ModelSchemaParser($openapiSchema))->parse();
@@ -112,22 +116,19 @@ class RequestGenerator implements GeneratorInterface
         $rules = '';
 
         foreach ($schema->getProperties() as $propertyName => $property) {
-            if (in_array($propertyName, $schema->getRequired())) {
-                $property->addValidationItem('required');
-            }
-            $rules .= sprintf("\t\t\t'%s' => %s", $propertyName, $this->makeRule($property));
+            $rules .= sprintf("\t\t\t'%s' => %s", $propertyName, $this->makeRulesForProperty($property));
         }
 
         return trim($rules);
     }
 
-    public function makeRule(OpenapiProperty $property): string
+    public function makeRulesForProperty(OpenapiProperty $property): string
     {
         $rules = array_map(function ($item) {
             return "'".$item."'";
-        }, $property->getLaravelValidation());
+        }, $property->getLaravelValidationRules());
 
-        return '['.implode(', ', $rules)."], \n";
+        return '['.implode(', ', $rules)."],\n";
     }
 
     public function requestFileExists(): bool
@@ -135,7 +136,7 @@ class RequestGenerator implements GeneratorInterface
         return file_exists($this->getFilePath());
     }
 
-    protected function createRequestFileIfNotExists(): string
+    public function createRequestFileIfNotExists(): string
     {
         $requestNamespace = $this->makeNamespace();
 
@@ -157,7 +158,7 @@ class RequestGenerator implements GeneratorInterface
         return $filePath;
     }
 
-    protected function makeNamespace(): string
+    public function makeNamespace(): string
     {
         // replace Controllers directory with Requests directory in controller namespace
         $requestNamespace = str_replace('Controllers\\', 'Requests\\', $this->extractedRouteController->namespace);
@@ -171,14 +172,14 @@ class RequestGenerator implements GeneratorInterface
         return str_replace($this->extractedRouteController->controller, $requestClassName, $requestNamespace);
     }
 
-    protected function getFilePath(): string
+    public function getFilePath(): string
     {
         $requestFilePath = lcfirst($this->makeNamespace()).'.php';
 
         return normalizePathSeparators(base_path($requestFilePath));
     }
 
-    protected function getRequestStubContent(): string
+    public function getRequestStubContent(): string
     {
         return Stub::getStubContent('request.stub');
     }

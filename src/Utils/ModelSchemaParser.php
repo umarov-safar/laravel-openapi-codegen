@@ -50,7 +50,7 @@ class ModelSchemaParser
     {
         if (isset($openapiSchema->required) && is_array($openapiSchema->required)) {
             foreach ($openapiSchema->required as $propName) {
-                $this->schema->pushRequiredPropName($propName);
+                $this->schema->addRequiredProperty($propName);
             }
         }
 

@@ -1,0 +1,107 @@
+PathForRequestTest:
+  post:
+    summary: Test path for request-gen
+    description: This endpoint is just for testing request generation
+    tags:
+      - request-generation
+    l-og-controller: App\Http\Controllers\SomeController@create
+    l-og-skip-request: false
+    l-og-middlewares: auth
+    l-og-route-name: 'requestGeneration'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    responses:
+      '201':
+        description: User created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+
+  get:
+    tags:
+      - request-generation
+    summary: Test for request-gen
+    l-og-controller: App\Http\Controllers\SomeController@index
+    l-og-skip-request: false
+    l-og-route-name: 'generateRequestForGetMethod'
+    responses:
+      '200':
+        description: A list of users
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+
+GenerateRequestEvenForGetMethod:
+  get:
+    tags:
+      - request-generation
+    summary: Test path with get method for request-gen with l-og-request false
+    l-og-controller: App\Http\Controllers\SomeController@getNotSkip
+    l-og-skip-request: false
+    l-og-middlewares: auth
+    l-og-route-name: 'getNotSkip'
+#    requestBody:
+#      content:
+#        application/json:
+#          schema:
+#            type: object
+#            properties:
+#              filter:
+#                type: object
+#                properties:
+#                  name:
+#                    type: string
+    responses:
+      '200':
+        description: A list of users
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+
+NotGenerateRequestPath:
+  post:
+    tags:
+      - request-generation
+    summary: Test path for request-gen with l-og-skip-request true
+    l-og-controller: App\Http\Controllers\SomeController@skip
+    l-og-skip-request: true
+    l-og-middlewares: auth
+    l-og-route-name: 'requestGenerationSkip'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    responses:
+      '201':
+        description: User created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Id
+        name:
+          type: string
+          required: true
+        email:
+          type: string
+          format: email

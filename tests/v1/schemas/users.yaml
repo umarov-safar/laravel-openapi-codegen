@@ -5,11 +5,11 @@ CreateUserAndGetAll:
       - users
     summary: Get all users
     description: This get operation return all users with pagination
-    x-og-generation: true
-    x-og-route-name: getUsers
-    x-og-controller: App\Http\Controllers\UsersController@index
-    x-og-skip-request: true
-    x-og-middlewares: auth,admin
+    l-og-generation: true
+    l-og-route-name: getUsers
+    l-og-controller: App\Http\Controllers\UsersController@index
+    l-og-skip-request: true
+    l-og-middlewares: auth,admin
     responses:
       200:
         description: Successful response
@@ -24,11 +24,11 @@ CreateUserAndGetAll:
       - users
     summary: Create user
     description: This post operation create a user
-    x-og-generation: false
-    x-og-route-name: createUser
-    x-og-controller: App\Http\Controllers\UsersController@create
-    x-og-skip-request: false
-    x-og-middlewares: auth,admin
+    l-og-generation: false
+    l-og-route-name: createUser
+    l-og-controller: App\Http\Controllers\UsersController@create
+    l-og-skip-request: false
+    l-og-middlewares: auth,admin
     requestBody:
       content:
         application/json:
@@ -48,11 +48,11 @@ CurrentUser:
       - users
     summary: Get user by id
     description: Get user by id
-    x-og-generation: false
-    x-og-route-name: getUser
-    x-og-controller: App\Http\Controllers\UsersController@view
-    x-og-skip-request: true
-    x-og-middlewares: auth,admin
+    l-og-generation: false
+    l-og-route-name: getUser
+    l-og-controller: App\Http\Controllers\UsersController@view
+    l-og-skip-request: true
+    l-og-middlewares: auth,admin
     parameters:
       - $ref: '../index.yaml#/components/parameters/PathId'
       - $ref: '../index.yaml#/components/parameters/QueryInclude'
