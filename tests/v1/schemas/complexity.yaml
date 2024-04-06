@@ -1,0 +1,145 @@
+VeryComplexity:
+  post:
+    tags:
+      - validation
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/ComplexRequest'
+    responses:
+      200:
+        content:
+          applications/json:
+            schema:
+              $ref: '#/ComplexResponse'
+
+ComplexResponse:
+  type: object
+  properties:
+    name:
+      type: string
+      nullable: true
+    age:
+      type: integer
+      format: int32
+      nullable: true
+    email:
+      type: string
+      format: email
+      nullable: false
+  required:
+    - name
+    - email
+
+ComplexRequest:
+  type: object
+  properties:
+    status:
+      type: string
+      enum: [pending, approved, rejected]
+    details:
+      oneOf:
+        - $ref: "#/DetailFirst"
+        - $ref: "#/DetailSecond"
+
+
+DetailFirst:
+  type: object
+  properties:
+    name:
+      type: string
+    age:
+      type:
+        oneOf:
+          - type: string
+          - type: object
+            properties:
+              - type: integer
+              - type: object
+                properties:
+                  name:
+                    type: string
+      format: int32
+      nullable: true
+    email:
+      type: string
+      format: email
+      nullable: false
+      minLength: 5
+    date:
+      type: string
+      format: date
+      required: false
+    password:
+      type: string
+      format: password
+      required: true
+      example: secret
+    roles:
+      anyOf:
+        - $ref: '#/Role1'
+        - $ref: '#/Role2'
+        - type: string
+  required:
+    - email
+    - name
+
+DetailSecond:
+  type: object
+  properties:
+    name:
+      type: string
+    age:
+      type: integer
+      format: int32
+      nullable: true
+    email:
+      type: string
+      format: email
+      nullable: false
+    last_name:
+      type: string
+    profile_url:
+      type: string
+      format: uri
+      maxLength: 200
+      required: false
+  required:
+    - email
+    - name
+
+Role1:
+  type: object
+  properties:
+    name:
+      type: string
+      required: true
+    user_id:
+      type: integer
+
+Role2:
+  type: object
+  properties:
+    name:
+      type: string
+    manager_id:
+      type: integer
+    options:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          allOf:
+            - type: string
+              enum:
+                - active
+                - inactive
+            - type: object
+              properties:
+                code:
+                  type: integer
+                  enum: [ 1, 2, 3 ]

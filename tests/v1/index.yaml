@@ -26,6 +26,8 @@ paths:
     $ref: './schemas/request.yaml#/NotGenerateRequestPath'
   /request-generation-for-get:
     $ref: './schemas/request.yaml#/GenerateRequestEvenForGetMethod'
+  /for-validation:
+    $ref: './schemas/complexity.yaml#/VeryComplexity'
 components:
   parameters:
     QueryInclude:

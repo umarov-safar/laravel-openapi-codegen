@@ -8,20 +8,31 @@ if (! function_exists('normalizePathSeparators')) {
 }
 
 if (! function_exists('convertTypeOfSchemaToArray')) {
-    function convertTypeOfSchemaToArray($options): array
+    function mergeRecursiveTypeOfSchemaPropertiesToArray($properties): array
     {
-        $result = [];
-        // Assuming $schema is an associative array representing the JSON Schema
-        foreach ($options as $key => $value) {
-            if ($key === 'oneOf' || $key === 'anyOf' || $key === 'allOf') {
-                foreach ($value as $schema) {
-                    $result = array_merge($result, convertTypeOfSchemaToArray(get_object_vars($schema)));
+        foreach ($properties as $key => $property) {
+            if (($key === 'oneOf' || $key === 'anyOf' || $key === 'allOf') && is_array($property)) {
+                $mergedSubSchemaProperties = [];
+                $mergedSchema = [];
+
+                foreach ($property as $_key => $schema) {
+                    if (is_object($schema) && isset($schema->properties)) {
+                        $schema = get_object_vars($schema);
+                        $props = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($schema['properties']));
+                        $mergedSubSchemaProperties = array_merge($props, $mergedSubSchemaProperties);
+                        $mergedSchema = array_merge($schema, $mergedSchema);
+                        $mergedSchema['properties'] = $mergedSubSchemaProperties;
+                    } else {
+                        $mergedSchema = $property;
+                    }
                 }
-            } else {
-                $result[$key] = $value;
+
+                return $mergedSchema;
+            } elseif (is_object($property)) {
+                $properties[$key] = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($property));
             }
         }
 
-        return $result;
+        return $properties;
     }
 }

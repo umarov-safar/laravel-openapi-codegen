@@ -48,7 +48,8 @@
         "lint": [
             "@php vendor/bin/phpstan analyse"
         ],
-        "test": "@php vendor/bin/phpunit tests"
+        "test": "@php vendor/bin/phpunit tests",
+        "fix-style": "@php vendor/bin/pint ./"
     },
     "require": {
         "devizzent/cebe-php-openapi": "1.6.x-dev"

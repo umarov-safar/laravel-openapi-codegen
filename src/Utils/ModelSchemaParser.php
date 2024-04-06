@@ -55,10 +55,9 @@ class ModelSchemaParser
         }
 
         if (isset($openapiSchema->type) && $openapiSchema->type == 'object' && isset($openapiSchema->properties)) {
-            $properties = get_object_vars($openapiSchema->properties);
+            $properties = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($openapiSchema->properties));
 
             foreach ($properties as $propertyName => $options) {
-                $options = convertTypeOfSchemaToArray(get_object_vars($options));
                 $property = OpenapiPropertyConvertor::convert($propertyName, $options);
                 $this->schema->addProperty($property);
             }

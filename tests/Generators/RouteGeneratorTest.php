@@ -55,7 +55,6 @@ class RouteGeneratorTest extends TestCase
 
         /**
          * @var RouteInfo $routeInfo
-         *                Call protected method makeRouteInfo
          */
         $routeInfo = $this->routeGenerator->makeRouteInfo('/users', $operation, 'get');
 
