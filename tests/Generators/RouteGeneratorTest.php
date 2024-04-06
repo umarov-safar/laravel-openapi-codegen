@@ -5,7 +5,6 @@ namespace LaravelOpenapi\Codegen\Tests\Generators;
 use cebe\openapi\Reader;
 use cebe\openapi\spec\Operation;
 use cebe\openapi\SpecObjectInterface;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Config;
 use LaravelOpenapi\Codegen\DTO\RouteConfiguration;
 use LaravelOpenapi\Codegen\DTO\RouteInfo;
@@ -14,6 +13,7 @@ use LaravelOpenapi\Codegen\Generators\RouteGenerator;
 use LaravelOpenapi\Codegen\Tests\TestCase;
 use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
 use LaravelOpenapi\Codegen\Utils\Stub;
+use PHPUnit\Framework\Attributes\Depends;
 
 class RouteGeneratorTest extends TestCase
 {
@@ -72,9 +72,7 @@ class RouteGeneratorTest extends TestCase
         $this->assertSame(get_object_vars($routeConfiguration), get_object_vars($routeInfo->routeConfiguration));
     }
 
-    /**
-     * @depends test_correctly_extract_route_segments
-     */
+    #[Depends('test_correctly_extract_route_segments')]
     public function test_correctly_replace_middleware_method_in_route_stub_string(array $routeSegments)
     {
         $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers', 'auth,admin');
@@ -84,9 +82,7 @@ class RouteGeneratorTest extends TestCase
         $this->assertSame("->middleware(['auth', 'admin'])", $replacedMiddlewares);
     }
 
-    /**
-     * @depends test_correctly_extract_route_segments
-     */
+    #[Depends('test_correctly_extract_route_segments')]
     public function test_correctly_replace_route_name_method_in_route_stub_string(array $routeSegments)
     {
         $routeConfiguration = RouteConfiguration::create('get', 'users', 'getUsers', 'auth,admin');
