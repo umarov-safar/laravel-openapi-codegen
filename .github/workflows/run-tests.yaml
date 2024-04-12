@@ -28,8 +28,4 @@ jobs:
           sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
           sudo mkdir ./vendor/orchestra/testbench-core/laravel/public/api
           sudo cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api
-      - name: PHPUnit tests
-        uses: php-actions/phpunit@v3
-        with:
-          configuration: ./phpunit.xml.dist
-        
+          run composer test
