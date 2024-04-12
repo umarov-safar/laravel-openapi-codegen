@@ -22,10 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "Composer dependencies installation"
       - uses: php-actions/composer@v6
-      - run: echo "Composer dependencies have been installed"
+      - run: echo "Configuration for testing package"
       - run: |
           sudo chmod 777 -R ./vendor/orchestra/testbench-core/laravel/public
           sudo mkdir ./vendor/orchestra/testbench-core/laravel/public/api
           sudo cp -r ./tests/v1 ./vendor/orchestra/testbench-core/laravel/public/api
-          run composer test
+      - run: echo "PHPUnit testing"
+      - run: composer test
