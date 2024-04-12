@@ -166,6 +166,7 @@ class RouteGenerator implements GeneratorInterface
             ],
             $routeAction
         );
+
         $route .= $this->replaceRouteNameMethod($routeInfo->routeConfiguration, $routeNameMethod);
         $route .= $this->replaceMiddlewareMethod($routeInfo->routeConfiguration, $middlewaresMethod);
 
