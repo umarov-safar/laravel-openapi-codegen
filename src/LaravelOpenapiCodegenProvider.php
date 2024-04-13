@@ -26,6 +26,5 @@ class LaravelOpenapiCodegenProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/openapi-codegen.php', 'openapi-codegen'
         );
-        Config::set('openapi-codegen.api_docs_url', __DIR__ . '/../tests/v1/index.yaml');
     }
 }
