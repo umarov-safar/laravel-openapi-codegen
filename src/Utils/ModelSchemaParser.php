@@ -10,9 +10,9 @@ class ModelSchemaParser
 {
     protected Schema $schema;
 
-    protected stdClass|MediaType $openapiSchema;
+    protected stdClass $openapiSchema;
 
-    public function __construct(stdClass|MediaType $openapiSchema)
+    public function __construct(stdClass $openapiSchema)
     {
         $this->openapiSchema = $openapiSchema;
         $this->schema = new Schema();

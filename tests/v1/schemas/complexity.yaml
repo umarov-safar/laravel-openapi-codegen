@@ -35,6 +35,23 @@ ComplexResponse:
 ComplexRequest:
   type: object
   properties:
+    name:
+      type: string
+      nullable: true
+      minLength: 5
+      pattern: '^\d{3}-\d{2}-\d{4}$'
+    age:
+      type: integer
+      format: int32
+      nullable: true
+      required: true
+    email:
+      type: string
+      format: email
+      nullable: false
+    permissions:
+      type: array
+
     status:
       type: string
       enum: [pending, approved, rejected]

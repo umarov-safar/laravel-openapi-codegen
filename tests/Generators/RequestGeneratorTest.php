@@ -26,6 +26,7 @@ class RequestGeneratorTest extends TestCase
         $this->requestGenerator = DefaultGeneratorFactory::createGenerator('request');
 
         $this->spec = Reader::readFromYamlFile(Config::get('openapi-codegen.api_docs_url'));
+
     }
 
     public function test_can_generate_request_from_path()

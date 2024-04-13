@@ -9,7 +9,9 @@ use LaravelOpenapi\Codegen\Tests\TestCase;
 class TypeOfSchemaToArrayTest extends TestCase
 {
     /**
-     * @incom
+     * The test is for: oneOf, anyOf and anyOf
+     * The mergeRecursiveTypeOfSchemaPropertiesToArray function recursively merge all schema (oneOf, anyOf and anyOf)
+     * to generate request and resource class that contains all possible properties
      */
     public function test_can_convert_all_type_of_to_array()
     {
@@ -17,8 +19,8 @@ class TypeOfSchemaToArrayTest extends TestCase
 
         $path = $reader->paths->getPath('/for-validation');
         $properties = $path->post->requestBody->content['application/json']->schema->getSerializableData();
-        $converted = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($properties));
-        $this->assertTrue(true);
-        //        $this->markTestSkipped();
+        $result = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($properties));
+
+        $this->assertIsArray($result);
     }
 }

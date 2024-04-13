@@ -27,5 +27,12 @@ class OpenapiToLaravelValidationMapper extends Fluent
         'password' => 'string',
         'email' => 'email',
         'uuid' => 'uuid',
+        'pattern' => 'regex'
     ];
+
+
+    public function getWithRule($key, $rule): string
+    {
+        return $this->get($key) . ':' . $rule;
+    }
 }
