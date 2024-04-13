@@ -2,7 +2,6 @@
 
 namespace LaravelOpenapi\Codegen\Utils;
 
-use cebe\openapi\spec\MediaType;
 use LaravelOpenapi\Codegen\DTO\Schema;
 use stdClass;
 

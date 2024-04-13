@@ -12,12 +12,12 @@ class OpenapiPropertyConvertor
         $property = new OpenapiProperty($propertyName);
         $openapiToLaravelValidationMapper = new OpenapiToLaravelValidationMapper();
 
-        if (!empty($options['required']) ) {
+        if (! empty($options['required'])) {
             $property->required = true;
             $property->addValidationRule('required');
         }
 
-        if (!empty($options['nullable'])) {
+        if (! empty($options['nullable'])) {
             $property->nullable = true;
             $property->addValidationRule('nullable');
         }
