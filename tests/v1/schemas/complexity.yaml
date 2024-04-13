@@ -79,6 +79,12 @@ DetailFirst:
                     type: string
       format: int32
       nullable: true
+    status:
+      type: integer
+      description: Статус компании
+      allOf:
+        - type: integer
+        - $ref: 'status_enum.yaml'
     email:
       type: string
       format: email

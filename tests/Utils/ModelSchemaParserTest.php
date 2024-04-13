@@ -17,7 +17,8 @@ class ModelSchemaParserTest extends TestCase
         $path = $reader->paths->getPath('/for-validation');
         $schema = $path->post->requestBody->content[MediaType::APPLICATION_JSON]->getSerializableData()->schema;
 
-        $schemaParser = new ModelSchemaParser($schema);
+        $schema = (new ModelSchemaParser($schema))->parse();
 
+        $this->assertIsArray($schema->getProperties());
     }
 }

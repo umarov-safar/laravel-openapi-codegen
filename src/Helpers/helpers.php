@@ -14,22 +14,30 @@ if (! function_exists('convertTypeOfSchemaToArray')) {
             if (($key === 'oneOf' || $key === 'anyOf' || $key === 'allOf') && is_array($property)) {
                 $mergedSubSchemaProperties = [];
                 $mergedSchema = [];
-
-                foreach ($property as $_key => $schema) {
+                foreach ($property as $schema) {
                     if (is_object($schema) && isset($schema->properties)) {
                         $schema = get_object_vars($schema);
                         $props = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($schema['properties']));
                         $mergedSubSchemaProperties = array_merge($props, $mergedSubSchemaProperties);
                         $mergedSchema = array_merge($schema, $mergedSchema);
                         $mergedSchema['properties'] = $mergedSubSchemaProperties;
-                    } else {
-                        $mergedSchema = $property;
+                    } elseif (is_array($property)) {
+                        foreach ($property as $subProp) {
+                            if (! is_object($subProp)) {
+                                return [];
+                            }
+                            $props = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($subProp));
+                            $mergedSubSchemaProperties = array_merge($props, $mergedSubSchemaProperties);
+                        }
+                        $mergedSchema = $mergedSubSchemaProperties;
                     }
                 }
 
                 return $mergedSchema;
             } elseif (is_object($property)) {
-                $properties[$key] = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($property));
+                $propertyArr = get_object_vars($property);
+                $result = mergeRecursiveTypeOfSchemaPropertiesToArray($propertyArr);
+                $properties[$key] = $result ?: $propertyArr;
             }
         }
 
