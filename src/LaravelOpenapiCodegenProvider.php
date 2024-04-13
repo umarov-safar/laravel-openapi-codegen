@@ -2,7 +2,6 @@
 
 namespace LaravelOpenapi\Codegen;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use LaravelOpenapi\Codegen\Console\Commands\LaravelOpenapiCodegenCommand;
 
