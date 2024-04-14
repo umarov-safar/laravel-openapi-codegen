@@ -4,8 +4,19 @@ namespace LaravelOpenapi\Codegen\DTO;
 
 class OpenapiProperty
 {
+    /**
+     * Property name
+     */
     public string $name;
 
+    /**
+     * Openapi original type
+     */
+    public string $originalType;
+
+    /**
+     * It contains a php type that converted from openapi
+     */
     public string $type;
 
     public bool $nullable = false;
@@ -32,11 +43,23 @@ class OpenapiProperty
 
     public ?int $maxProperties = null;
 
+    /**
+     * Contains all OpenApi property validation converted to laravel validations
+     */
     protected array $laravelValidation = [];
 
-    public function __construct(
-        string $name,
-    ) {
+    /**
+     * This contains all properties of OpenApi property which type is object
+     */
+    protected array $properties = [];
+
+    /**
+     * The required properties of Openapi property type object
+     */
+    protected array $requiredProperties = [];
+
+    public function __construct(string $name)
+    {
         $this->name = $name;
     }
 
@@ -45,10 +68,39 @@ class OpenapiProperty
         return $this->laravelValidation;
     }
 
-    public function addValidationRule(string $name): void
+    public function addValidationRule(string $rule): void
     {
-        if (! in_array($name, $this->laravelValidation)) {
-            $this->laravelValidation[] = $name;
+        if (! in_array($rule, $this->laravelValidation)) {
+            $this->laravelValidation[] = $rule;
         }
+    }
+
+    public function getProperties(): array
+    {
+        return $this->properties;
+    }
+
+    public function addProperty(OpenapiProperty $property): void
+    {
+        if (array_key_exists($property->name, $this->properties)) {
+            return;
+        }
+
+        if (in_array($property->name, $this->getRequiredProperties())) {
+            $property->required = true;
+            $property->addValidationRule('required');
+        }
+
+        $this->properties[$property->name] = $property;
+    }
+
+    public function getRequiredProperties(): array
+    {
+        return $this->requiredProperties;
+    }
+
+    public function setRequiredProperties(array $required): void
+    {
+        $this->requiredProperties = $required;
     }
 }

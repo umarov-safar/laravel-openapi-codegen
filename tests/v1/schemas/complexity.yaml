@@ -2,6 +2,10 @@ VeryComplexity:
   post:
     tags:
       - validation
+    l-og-controller: App\Http\Controllers\ComplexController@create
+    l-og-skip-request: false
+    l-og-route-name: 'forValidation'
+    l-og-middleware: 'forValidation'
     requestBody:
       content:
         application/json:
@@ -59,7 +63,10 @@ ComplexRequest:
       oneOf:
         - $ref: "#/DetailFirst"
         - $ref: "#/DetailSecond"
-
+  required:
+    - name
+    - permissions
+    - details
 
 DetailFirst:
   type: object
@@ -67,17 +74,13 @@ DetailFirst:
     name:
       type: string
     age:
-      type:
-        oneOf:
-          - type: string
-          - type: object
-            properties:
-              - type: integer
-              - type: object
-                properties:
-                  name:
-                    type: string
-      format: int32
+      oneOf:
+        - type: integer
+          format: int32
+        - type: object
+          properties:
+            name:
+              type: string
       nullable: true
     status:
       type: integer
@@ -107,7 +110,6 @@ DetailFirst:
   required:
     - email
     - name
-
 DetailSecond:
   type: object
   properties:

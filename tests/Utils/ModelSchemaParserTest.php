@@ -12,13 +12,11 @@ class ModelSchemaParserTest extends TestCase
 {
     public function test_can_parse_model_correctly()
     {
-
         $reader = Reader::readFromYamlFile(Config::get('openapi-codegen.api_docs_url'));
         $path = $reader->paths->getPath('/for-validation');
         $schema = $path->post->requestBody->content[MediaType::APPLICATION_JSON]->getSerializableData()->schema;
 
         $schema = (new ModelSchemaParser($schema))->parse();
-
         $this->assertIsArray($schema->getProperties());
     }
 }

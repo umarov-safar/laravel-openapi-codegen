@@ -21,6 +21,22 @@ class TypeOfSchemaToArrayTest extends TestCase
         $properties = $path->post->requestBody->content['application/json']->schema->getSerializableData();
         $result = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($properties));
 
-        $this->assertIsArray($result);
+        $this->assertFalse($this->doesNotHaveTypeOf($result));
+    }
+
+    public function doesNotHaveTypeOf(array $data)
+    {
+        $hasTypeOf = false;
+        foreach ($data as $k => $datum) {
+            if ($k === 'anyOf' || $k === 'allOf' || $k == 'oneOf') {
+                $hasTypeOf = true;
+            }
+
+            if (is_array($datum)) {
+                $hasTypeOf = $this->doesNotHaveTypeOf($datum);
+            }
+        }
+
+        return $hasTypeOf;
     }
 }

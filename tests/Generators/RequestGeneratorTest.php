@@ -26,7 +26,6 @@ class RequestGeneratorTest extends TestCase
         $this->requestGenerator = DefaultGeneratorFactory::createGenerator('request');
 
         $this->spec = Reader::readFromYamlFile(Config::get('openapi-codegen.api_docs_url'));
-
     }
 
     public function test_can_generate_request_from_path()
@@ -179,5 +178,26 @@ class RequestGeneratorTest extends TestCase
         $expectedFile = base_path('app/Http/Requests/CreateSomeRequest.php');
         $actual = $this->requestGenerator->getFilePath();
         $this->assertSame($expectedFile, $actual);
+    }
+
+    public function test_can_create_complexity_request()
+    {
+        $pathItem = $this->spec->paths->getPath('/for-validation');
+        $operation = $pathItem->post;
+
+        $extractedRC = RouteControllerResolver::extract($operation->{'l-og-controller'});
+        $this->requestGenerator->setExtractedRouteController($extractedRC);
+
+        $this->requestGenerator->generateRequestForOperation($operation);
+
+        $file = base_path('app/Http/Requests/CreateComplexRequest.php');
+        $requestFileContent = file_get_contents($file);
+
+        $this->assertFileExists($file);
+        $this->assertStringContainsString(
+            "'details.name' => ['string', 'required']",
+            $requestFileContent
+        );
+        unlink($file);
     }
 }

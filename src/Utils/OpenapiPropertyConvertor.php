@@ -7,10 +7,13 @@ use LaravelOpenapi\Codegen\DTO\OpenapiProperty;
 
 class OpenapiPropertyConvertor
 {
+    protected static OpenapiToLaravelValidationMapper $openapiToLaravelValidationMapper;
+
     public static function convert(string $propertyName, array $options): OpenapiProperty
     {
+        self::$openapiToLaravelValidationMapper = new OpenapiToLaravelValidationMapper();
+
         $property = new OpenapiProperty($propertyName);
-        $openapiToLaravelValidationMapper = new OpenapiToLaravelValidationMapper();
 
         if (! empty($options['required'])) {
             $property->required = true;
@@ -22,12 +25,13 @@ class OpenapiPropertyConvertor
             $property->addValidationRule('nullable');
         }
 
+        $property->originalType = $options['type'];
         $property->type = $options['type'] == 'object' ? 'array' : $options['type'];
         $property->addValidationRule($property->type);
 
         if (isset($options['format'])) {
             $property->format = $options['format'];
-            $formatLaravel = $openapiToLaravelValidationMapper->get($options['format']);
+            $formatLaravel = self::$openapiToLaravelValidationMapper->get($options['format']);
             if ($formatLaravel) {
                 $property->addValidationRule($formatLaravel);
             }
@@ -35,7 +39,7 @@ class OpenapiPropertyConvertor
 
         if (isset($options['pattern'])) {
             $property->pattern = $options['pattern'];
-            $property->addValidationRule($openapiToLaravelValidationMapper->getWithRule(
+            $property->addValidationRule(self::$openapiToLaravelValidationMapper->getWithRule(
                 'pattern',
                 sprintf('/%s/', $property->pattern)
             ));
@@ -46,18 +50,25 @@ class OpenapiPropertyConvertor
             $property->enumData = $options['enum'];
         }
 
+        self::addValidationForType($property, $options);
+
+        return $property;
+    }
+
+    private static function addValidationForType(OpenapiProperty $property, array $options): void
+    {
         switch (strtolower($options['type'])) {
             case 'string':
                 if (isset($options['minLength'])) {
                     $property->minLength = $options['minLength'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('minLength', $property->minLength)
+                        self::$openapiToLaravelValidationMapper->getWithRule('minLength', $property->minLength)
                     );
                 }
                 if (isset($options['maxLength'])) {
                     $property->maxLength = $options['maxLength'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('maxLength', $property->maxLength)
+                        self::$openapiToLaravelValidationMapper->getWithRule('maxLength', $property->maxLength)
                     );
                 }
                 break;
@@ -66,13 +77,13 @@ class OpenapiPropertyConvertor
                 if (isset($options['minimum'])) {
                     $property->minimum = $options['minimum'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('minimum', $property->minimum)
+                        self::$openapiToLaravelValidationMapper->getWithRule('minimum', $property->minimum)
                     );
                 }
                 if (isset($options['maximum'])) {
                     $property->maximum = $options['maximum'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('maximum', $property->maximum)
+                        self::$openapiToLaravelValidationMapper->getWithRule('maximum', $property->maximum)
                     );
                 }
                 break;
@@ -80,13 +91,13 @@ class OpenapiPropertyConvertor
                 if (isset($options['minItems'])) {
                     $property->minimum = $options['minItems'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('minItems', $property->minimum)
+                        self::$openapiToLaravelValidationMapper->getWithRule('minItems', $property->minimum)
                     );
                 }
                 if (isset($options['maxItems'])) {
                     $property->maximum = $options['maxItems'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('maxItems', $property->maximum)
+                        self::$openapiToLaravelValidationMapper->getWithRule('maxItems', $property->maximum)
                     );
                 }
                 break;
@@ -94,18 +105,27 @@ class OpenapiPropertyConvertor
                 if (isset($options['minProperties'])) {
                     $property->minProperties = $options['minProperties'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('minProperties', $property->minProperties)
+                        self::$openapiToLaravelValidationMapper->getWithRule('minProperties', $property->minProperties)
                     );
                 }
                 if (isset($options['maxProperties'])) {
                     $property->maxProperties = $options['maxProperties'];
                     $property->addValidationRule(
-                        $openapiToLaravelValidationMapper->getWithRule('maxProperties', $property->maxProperties)
+                        self::$openapiToLaravelValidationMapper->getWithRule('maxProperties', $property->maxProperties)
                     );
+                }
+                if (! empty($options['required']) && is_array($options['required'])) {
+                    $property->setRequiredProperties($options['required']);
+                }
+
+                if (! empty($options['properties']) && is_array($options['properties'])) {
+                    foreach ($options['properties'] as $subKey => $subProperty) {
+                        $property->addProperty(
+                            OpenapiPropertyConvertor::convert($subKey, $subProperty)
+                        );
+                    }
                 }
                 break;
         }
-
-        return $property;
     }
 }

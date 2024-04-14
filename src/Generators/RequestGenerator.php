@@ -117,6 +117,16 @@ class RequestGenerator implements GeneratorInterface
 
         foreach ($schema->getProperties() as $propertyName => $property) {
             $rules .= sprintf("\t\t\t'%s' => %s", $propertyName, $this->makeRulesForProperty($property));
+
+            if ($property->originalType === 'object') {
+                foreach ($property->getProperties() as $subPropName => $subProperty) {
+                    $rules .= sprintf(
+                        "\t\t\t'%s' => %s",
+                        ($propertyName.'.'.$subPropName),
+                        $this->makeRulesForProperty($subProperty)
+                    );
+                }
+            }
         }
 
         return trim($rules);
