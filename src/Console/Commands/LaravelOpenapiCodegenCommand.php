@@ -21,9 +21,15 @@ class LaravelOpenapiCodegenCommand extends Command
     {
         $spec = Reader::readFromYamlFile(Config::get('openapi-codegen.api_docs_url'));
 
+        $bar = $this->output->createProgressBar(count($spec->paths));
+        $bar->start();
+
         foreach (Config::get('openapi-codegen.entities') as $entity) {
             $generator = new BaseGenerator(DefaultGeneratorFactory::createGenerator($entity));
             $generator->generate($spec);
+            $bar->advance();
         }
+
+        $bar->finish();
     }
 }
