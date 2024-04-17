@@ -8,10 +8,10 @@ use cebe\openapi\SpecObjectInterface;
 use Illuminate\Filesystem\Filesystem;
 use LaravelOpenapi\Codegen\Contracts\GeneratorInterface;
 use LaravelOpenapi\Codegen\Data\MediaType;
-use LaravelOpenapi\Codegen\DTO\ExtractedRouteController;
+use LaravelOpenapi\Codegen\DTO\NamespaceInfo;
 use LaravelOpenapi\Codegen\DTO\OpenapiProperty;
 use LaravelOpenapi\Codegen\Utils\ModelSchemaParser;
-use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
+use LaravelOpenapi\Codegen\Utils\NamespaceConvertor;
 use LaravelOpenapi\Codegen\Utils\Stub;
 
 class RequestGenerator implements GeneratorInterface
@@ -20,16 +20,16 @@ class RequestGenerator implements GeneratorInterface
 
     protected array $methodsForGenerate = ['put', 'patch', 'post', 'delete'];
 
-    protected ExtractedRouteController $extractedRouteController;
+    protected NamespaceInfo $namespaceInfo;
 
     public function __construct()
     {
         $this->filesystem = new Filesystem();
     }
 
-    public function setExtractedRouteController(ExtractedRouteController $extractedRouteController): void
+    public function setNamespaceInfo(NamespaceInfo $namespaceInfo): void
     {
-        $this->extractedRouteController = $extractedRouteController;
+        $this->namespaceInfo = $namespaceInfo;
     }
 
     public function generate(SpecObjectInterface $spec): void
@@ -60,7 +60,7 @@ class RequestGenerator implements GeneratorInterface
                 $skipRequest === false
             )
             ) {
-                $this->extractedRouteController = RouteControllerResolver::extract($controller);
+                $this->namespaceInfo = NamespaceConvertor::makeRequestNamespace($controller);
                 $this->generateRequestForOperation($operation);
             }
         }
@@ -92,17 +92,14 @@ class RequestGenerator implements GeneratorInterface
 
     public function replaceNamespace(string $stubContent): string
     {
-        $namespaceParts = explode('\\', $this->makeNamespace());
-        $requestClasName = array_pop($namespaceParts);
-
         return str_replace(
             [
                 '{{ namespace }}',
                 '{{ class }}',
             ],
             [
-                implode('\\', $namespaceParts),
-                $requestClasName,
+                $this->namespaceInfo->namespaceWithoutClassName,
+                $this->namespaceInfo->className,
             ],
             $stubContent
         );
@@ -143,12 +140,12 @@ class RequestGenerator implements GeneratorInterface
 
     public function requestFileExists(): bool
     {
-        return file_exists($this->getFilePath());
+        return file_exists($this->namespaceInfo->filePath);
     }
 
     public function createRequestFileIfNotExists(): string
     {
-        $requestNamespace = $this->makeNamespace();
+        $requestNamespace = $this->namespaceInfo->namespace;
 
         $filePath = normalizePathSeparators(lcfirst($requestNamespace).'.php');
         $filePath = base_path($filePath);
@@ -166,27 +163,6 @@ class RequestGenerator implements GeneratorInterface
         fclose($newFile);
 
         return $filePath;
-    }
-
-    public function makeNamespace(): string
-    {
-        // replace Controllers directory with Requests directory in controller namespace
-        $requestNamespace = str_replace('Controllers\\', 'Requests\\', $this->extractedRouteController->namespace);
-
-        // make request class name from controller
-        $requestClassName = sprintf('%s%s',
-            ucfirst($this->extractedRouteController->action),
-            str_replace('Controller', 'Request', $this->extractedRouteController->controller)
-        );
-
-        return str_replace($this->extractedRouteController->controller, $requestClassName, $requestNamespace);
-    }
-
-    public function getFilePath(): string
-    {
-        $requestFilePath = lcfirst($this->makeNamespace()).'.php';
-
-        return normalizePathSeparators(base_path($requestFilePath));
     }
 
     public function getRequestStubContent(): string

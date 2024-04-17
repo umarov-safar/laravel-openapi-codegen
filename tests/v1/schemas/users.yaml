@@ -1,4 +1,3 @@
-
 CreateUserAndGetAll:
   get:
     tags:
@@ -9,6 +8,7 @@ CreateUserAndGetAll:
     l-og-route-name: getUsers
     l-og-controller: App\Http\Controllers\UsersController@index
     l-og-skip-request: true
+    l-og-skip-resource: false
     l-og-middlewares: auth,admin
     responses:
       200:

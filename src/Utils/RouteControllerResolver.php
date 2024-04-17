@@ -23,8 +23,8 @@ class RouteControllerResolver
         }
 
         [$namespace, $action] = explode('@', $controller);
-        $lastBlackSlash = strrpos($controller, '\\');
-        $controller = substr($namespace, $lastBlackSlash + 1);
+        $lastBackSlash = strrpos($controller, '\\');
+        $controller = substr($namespace, $lastBackSlash + 1);
 
         return new ExtractedRouteController(
             namespace: $namespace,

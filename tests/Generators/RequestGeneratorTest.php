@@ -10,7 +10,7 @@ use LaravelOpenapi\Codegen\DTO\OpenapiProperty;
 use LaravelOpenapi\Codegen\Factories\DefaultGeneratorFactory;
 use LaravelOpenapi\Codegen\Generators\RequestGenerator;
 use LaravelOpenapi\Codegen\Tests\TestCase;
-use LaravelOpenapi\Codegen\Utils\RouteControllerResolver;
+use LaravelOpenapi\Codegen\Utils\NamespaceConvertor;
 use LaravelOpenapi\Codegen\Utils\Stub;
 
 class RequestGeneratorTest extends TestCase
@@ -52,14 +52,6 @@ class RequestGeneratorTest extends TestCase
         $this->assertFileDoesNotExist($file);
     }
 
-    public function test_can_make_correct_namespace()
-    {
-        $this->requestGenerator->setExtractedRouteController(RouteControllerResolver::extract('App\Http\Controllers\SomeController@create'));
-        $namespace = $this->requestGenerator->makeNamespace();
-
-        $this->assertSame('App\Http\Requests\CreateSomeRequest', $namespace);
-    }
-
     public function test_generate_request_for_get_method_with_request_skip_false()
     {
         $pathItem = $this->spec->paths->getPath('/request-generation-for-get');
@@ -76,7 +68,7 @@ class RequestGeneratorTest extends TestCase
 
     public function test_can_replace_namespace_correctly()
     {
-        $this->requestGenerator->setExtractedRouteController(RouteControllerResolver::extract('App\Http\Controllers\SomeController@create'));
+        $this->requestGenerator->setNamespaceInfo(NamespaceConvertor::makeRequestNamespace('App\Http\Controllers\SomeController@create'));
         $requestStub = $this->requestGenerator->replaceNamespace(Stub::getStubContent('request.stub'));
 
         $this->assertStringContainsString('namespace App\Http\Requests;', $requestStub);
@@ -124,8 +116,8 @@ class RequestGeneratorTest extends TestCase
         $pathItem = $this->spec->paths->getPath('/request-generation');
         $operation = $pathItem->post;
 
-        $extractedRC = RouteControllerResolver::extract($operation->{'l-og-controller'});
-        $this->requestGenerator->setExtractedRouteController($extractedRC);
+        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'l-og-controller'});
+        $this->requestGenerator->setNamespaceInfo($namespaceInfo);
 
         $this->requestGenerator->generateRequestForOperation($operation);
 
@@ -156,8 +148,8 @@ class RequestGeneratorTest extends TestCase
         $pathItem = $this->spec->paths->getPath('/request-generation');
         $operation = $pathItem->post;
         $operation->{'l-og-controller'} = "App\Http\Controllers\NotExistsFolder\SomeController@create";
-        $extractedRC = RouteControllerResolver::extract($operation->{'l-og-controller'});
-        $this->requestGenerator->setExtractedRouteController($extractedRC);
+        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'l-og-controller'});
+        $this->requestGenerator->setNamespaceInfo($namespaceInfo);
         $file = base_path('app/Http/Requests/NotExistsFolder/CreateSomeRequest.php');
 
         $this->assertFileDoesNotExist($file);
@@ -168,25 +160,13 @@ class RequestGeneratorTest extends TestCase
         unlink($file);
     }
 
-    public function test_get_file_path_with_php_extension()
-    {
-        $pathItem = $this->spec->paths->getPath('/request-generation');
-        $operation = $pathItem->post;
-        $extractedRC = RouteControllerResolver::extract($operation->{'l-og-controller'});
-        $this->requestGenerator->setExtractedRouteController($extractedRC);
-
-        $expectedFile = base_path('app/Http/Requests/CreateSomeRequest.php');
-        $actual = $this->requestGenerator->getFilePath();
-        $this->assertSame($expectedFile, $actual);
-    }
-
     public function test_can_create_complexity_request()
     {
         $pathItem = $this->spec->paths->getPath('/for-validation');
         $operation = $pathItem->post;
 
-        $extractedRC = RouteControllerResolver::extract($operation->{'l-og-controller'});
-        $this->requestGenerator->setExtractedRouteController($extractedRC);
+        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'l-og-controller'});
+        $this->requestGenerator->setNamespaceInfo($namespaceInfo);
 
         $this->requestGenerator->generateRequestForOperation($operation);
 

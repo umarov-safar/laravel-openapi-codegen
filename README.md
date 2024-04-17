@@ -31,7 +31,7 @@ Middleware optional if it was set then middlewares will be add
 
 ```php
 Route::get([UserController::class, 'get'])->name('getUser')
-    ->middleware(['auth', 'amin']);;
+->middleware(['auth', 'amin']);;
 ```
 
 
