@@ -16,6 +16,8 @@ use LaravelOpenapi\Codegen\Utils\Stub;
 
 class RequestGenerator implements GeneratorInterface
 {
+    use ApplyFileCreatable;
+
     protected Filesystem $filesystem;
 
     protected array $methodsForGenerate = ['put', 'patch', 'post', 'delete'];
@@ -72,7 +74,7 @@ class RequestGenerator implements GeneratorInterface
             return;
         }
 
-        $filePath = $this->createRequestFileIfNotExists();
+        $filePath = $this->createFileIfNotExist();
         $stubContent = $this->getRequestStubContent();
         $stubContent = $this->replaceNamespace($stubContent);
         $stubContent = $this->replaceRules($operation, $stubContent);
@@ -107,7 +109,7 @@ class RequestGenerator implements GeneratorInterface
 
     public function getAllRules(Operation $operation): string
     {
-        $openapiSchema = $operation->requestBody->content[MediaType::APPLICATION_JSON]->getSerializableData()->schema;
+        $openapiSchema = $operation->requestBody->content[MediaType::APPLICATION_JSON]->schema->getSerializableData();
         $schema = (new ModelSchemaParser($openapiSchema))->parse();
 
         $rules = '';
@@ -141,28 +143,6 @@ class RequestGenerator implements GeneratorInterface
     public function requestFileExists(): bool
     {
         return file_exists($this->namespaceInfo->filePath);
-    }
-
-    public function createRequestFileIfNotExists(): string
-    {
-        $requestNamespace = $this->namespaceInfo->namespace;
-
-        $filePath = normalizePathSeparators(lcfirst($requestNamespace).'.php');
-        $filePath = base_path($filePath);
-        $directory = dirname($filePath);
-
-        if (! is_dir($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
-        if (file_exists($filePath)) {
-            return $filePath;
-        }
-
-        $newFile = fopen($filePath, 'w');
-        fclose($newFile);
-
-        return $filePath;
     }
 
     public function getRequestStubContent(): string

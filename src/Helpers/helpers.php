@@ -1,9 +1,22 @@
 <?php
 
+use cebe\openapi\spec\Operation;
+use cebe\openapi\spec\Schema;
+use LaravelOpenapi\Codegen\Data\MediaType;
+
 if (! function_exists('normalizePathSeparators')) {
     function normalizePathSeparators(string $path): string
     {
         return str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $path);
+    }
+}
+
+if (! function_exists('getAllowedResponseContentTypeMedia')) {
+    function getAllowedResponseContentTypeMedia(Operation $operation): ?Schema
+    {
+        $media = $operation->requestBody->content[MediaType::APPLICATION_JSON] ?? null;
+
+        return $media?->schema;
     }
 }
 

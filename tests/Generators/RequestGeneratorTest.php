@@ -154,7 +154,7 @@ class RequestGeneratorTest extends TestCase
 
         $this->assertFileDoesNotExist($file);
 
-        $this->requestGenerator->createRequestFileIfNotExists();
+        $this->requestGenerator->createFileIfNotExist();
 
         $this->assertFileExists($file);
         unlink($file);
