@@ -28,4 +28,9 @@ class ResourceGenerator implements GeneratorInterface
             }
         }
     }
+
+    protected function createFileIfNotExists()
+    {
+
+    }
 }
