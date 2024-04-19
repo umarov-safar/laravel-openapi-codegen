@@ -49,14 +49,16 @@ class OpenapiProperty
     protected array $laravelValidation = [];
 
     /**
-     * This contains all properties of OpenApi property which type is object
+     * Contains all properties of OpenApi property which type is object
      */
     protected array $properties = [];
 
     /**
-     * The required properties of Openapi property type object
+     * The required properties of Openapi property which type is object
      */
     protected array $requiredProperties = [];
+
+    protected array $items = [];
 
     public function __construct(string $name)
     {
@@ -102,5 +104,15 @@ class OpenapiProperty
     public function setRequiredProperties(array $required): void
     {
         $this->requiredProperties = $required;
+    }
+
+    public function getItems(): array
+    {
+        return $this->items;
+    }
+
+    public function addItem(mixed $item): void
+    {
+        $this->items[] = $item;
     }
 }

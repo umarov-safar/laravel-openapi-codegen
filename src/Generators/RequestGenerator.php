@@ -62,7 +62,7 @@ class RequestGenerator implements GeneratorInterface
                 $skipRequest === false
             )
             ) {
-                $this->namespaceInfo = NamespaceConvertor::makeRequestNamespace($controller);
+                $this->setNamespaceInfo(NamespaceConvertor::makeRequestNamespace($controller));
                 $this->generateRequestForOperation($operation);
             }
         }

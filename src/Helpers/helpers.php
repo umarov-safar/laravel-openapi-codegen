@@ -14,13 +14,21 @@ if (! function_exists('normalizePathSeparators')) {
 if (! function_exists('getAllowedResponseContentTypeMedia')) {
     function getAllowedResponseContentTypeMedia(Operation $operation): ?Schema
     {
-        $media = $operation->requestBody->content[MediaType::APPLICATION_JSON] ?? null;
+        if (isset($operation->responses['200'])) {
+            $response = $operation->responses['200'];
+        } elseif (isset($operation->responses['201'])) {
+            $response = $operation->responses['201'];
+        } else {
+            return null;
+        }
+
+        $media = $response->content[MediaType::APPLICATION_JSON] ?? null;
 
         return $media?->schema;
     }
 }
 
-if (! function_exists('convertTypeOfSchemaToArray')) {
+if (! function_exists('mergeRecursiveTypeOfSchemaPropertiesToArray')) {
     function mergeRecursiveTypeOfSchemaPropertiesToArray($properties): array
     {
         foreach ($properties as $key => $property) {

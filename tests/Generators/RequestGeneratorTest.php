@@ -52,7 +52,7 @@ class RequestGeneratorTest extends TestCase
         $this->assertFileDoesNotExist($file);
     }
 
-    public function test_generate_request_for_get_method_with_request_skip_false()
+    public function test_generate_request_even_for_get_method_with_request_skip_false()
     {
         $pathItem = $this->spec->paths->getPath('/request-generation-for-get');
         $this->requestGenerator->generateRequests($pathItem);

@@ -109,6 +109,9 @@ FillableProperties:
     roles:
       type: object
       description: Roles
+      properties:
+        name:
+          type: string
 
 UserSchema:
   allOf:
@@ -123,7 +126,13 @@ UsersResponse:
       type: array
       items:
         - $ref: '#/UserSchema'
-
+        - type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+              format: email
 UserResponse:
   type: object
   properties:

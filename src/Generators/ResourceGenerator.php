@@ -33,11 +33,11 @@ class ResourceGenerator implements GeneratorInterface
     public function generate(SpecObjectInterface $spec): void
     {
         foreach ($spec->paths as $uri => $path) {
-            $this->generateFromResourceFromPath($path);
+            $this->generateResourceFromPath($path);
         }
     }
 
-    public function generateFromResourceFromPath(PathItem $pathItem): void
+    public function generateResourceFromPath(PathItem $pathItem): void
     {
         foreach ($pathItem->getOperations() as $operation) {
 
@@ -53,7 +53,7 @@ class ResourceGenerator implements GeneratorInterface
 
     public function createResourceFromOperation(Operation $operation): void
     {
-        if (! $this->resourceFileExists() || empty(getAllowedResponseContentTypeMedia($operation))) {
+        if ($this->resourceFileExists() || empty(getAllowedResponseContentTypeMedia($operation))) {
             return;
         }
 
@@ -66,7 +66,7 @@ class ResourceGenerator implements GeneratorInterface
 
     private function resourceFileExists(): bool
     {
-        return file_exists($this->namespaceInfo->filePath);
+        return file_exists(base_path($this->namespaceInfo->filePath));
     }
 
     private function getResourceStubContent(): string
@@ -96,7 +96,9 @@ class ResourceGenerator implements GeneratorInterface
 
         $responseDataArray = '';
 
-        foreach ($schema->getProperties() as $propertyName => $property) {
+        $properties = $schema->getProperties()['data'] ?? $schema;
+
+        foreach ($properties->getProperties() as $propertyName => $property) {
             $responseDataArray .= sprintf("\t\t\t'%s' => \$this->%s,\n", $propertyName, $propertyName);
         }
 
