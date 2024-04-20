@@ -16,6 +16,11 @@ class NamespaceConvertor
         return self::makeNamespaceInfoFor($controller, 'resource');
     }
 
+    public static function makeNamespaceInfoForController(string $controller): NamespaceInfo
+    {
+        return self::makeNamespaceInfoFor($controller, 'controller');
+    }
+
     /**
      * This function make namespace info from controller for request, resource and etc
      */
@@ -33,6 +38,10 @@ class NamespaceConvertor
             case 'resource':
                 $namespace = str_replace('Controllers\\', 'Resources\\', $extractedRouteController->namespace);
                 $className = str_replace('Controller', 'Resource', $extractedRouteController->controller);
+                break;
+            case 'controller':
+                $namespace = $extractedRouteController->namespace;
+                $className = $extractedRouteController->controller;
                 break;
             default:
                 throw new \Exception("$type: must be one of resource or request");

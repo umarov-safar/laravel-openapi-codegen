@@ -20,6 +20,8 @@ paths:
     $ref: './schemas/users.yaml#/CreateUserAndGetAll'
   /users/{id}:
     $ref: './schemas/users.yaml#/CurrentUser'
+  /users/{id}/posts/{slug}:
+    $ref: './schemas/posts.yaml#/CurrentPost'
   /request-generation:
     $ref: './schemas/request.yaml#/PathForRequestTest'
   /request-skip-generation:

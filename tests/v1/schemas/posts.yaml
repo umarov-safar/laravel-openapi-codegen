@@ -1,0 +1,147 @@
+CreatePostAndGetAll:
+  get:
+    tags:
+      - Posts
+    summary: Get all Posts
+    description: This get operation return all Posts with pagination
+    l-og-generation: true
+    l-og-route-name: getPosts
+    l-og-controller: App\Http\Controllers\PostsController@index
+    l-og-skip-request: true
+    l-og-skip-resource: false
+    l-og-middlewares: auth,admin
+    responses:
+      200:
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              $ref: '#/PostsResponse'
+      404:
+        $ref: '../index.yaml#/components/responses/NotFound'
+  post:
+    tags:
+      - Posts
+    summary: Create Post
+    description: This post operation create a Post
+    l-og-generation: false
+    l-og-route-name: createPost
+    l-og-controller: App\Http\Controllers\PostsController@create
+    l-og-skip-request: false
+    l-og-middlewares: auth,admin
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/FillableProperties'
+    responses:
+      201:
+        description: Successful created
+        content:
+          application/json:
+            schema:
+              $ref: '#/PostResponse'
+
+CurrentPost:
+  get:
+    tags:
+      - Posts
+    summary: Get Post by slug
+    description: Get Post by slug
+    l-og-generation: false
+    l-og-route-name: getPost
+    l-og-controller: App\Http\Controllers\PostsController@get
+    l-og-skip-request: false
+    l-og-skip-resource: false
+    l-og-middlewares: auth,admin
+    parameters:
+      - in: path
+        name: slug
+        required: true
+        schema:
+          type: string
+        description: SLug post
+      - $ref: '../index.yaml#/components/parameters/PathId'
+      - $ref: '../index.yaml#/components/parameters/QueryInclude'
+    responses:
+      200:
+        description: Successful request
+        content:
+          application/json:
+            schema:
+              $ref: '#/PostResponse'
+      404:
+        $ref: '../index.yaml#/components/responses/NotFound'
+
+
+
+
+# ----------------- SCHEMAS -----------------------
+
+ReadOnlyProperties:
+  type: object
+  properties:
+    created_at:
+      type: string
+      format: date-time
+      example: '2021-06-11T11:27:10.000000Z'
+    updated_at:
+      type: string
+      format: date-time
+      example: '2021-06-11T11:27:10.000000Z'
+
+FillableProperties:
+  type: object
+  properties:
+    name:
+      type: string
+      example: Safar
+      minLength: 3
+      maxLength: 20
+      description: Postname
+      required: true
+    last_name:
+      type: string
+      nullable: true
+      required: false
+      maxLength: 20
+      example: 'Hello world'
+      description: Last name
+    email:
+      type: string
+      example: safarumarov711@gamil.com
+      description: Email
+      required: true
+      pattern: '[a-z0-9]+@[a-z]+\.[a-z]{2,10}'
+    roles:
+      type: object
+      description: Roles
+      properties:
+        name:
+          type: string
+
+PostSchema:
+  allOf:
+    - $ref: '#/FillableProperties'
+    - $ref: '#/ReadOnlyProperties'
+
+
+PostsResponse:
+  type: object
+  properties:
+    data:
+      type: array
+      items:
+        - $ref: '#/PostSchema'
+        - type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+              format: email
+PostResponse:
+  type: object
+  properties:
+    data:
+      $ref: '#/PostSchema'

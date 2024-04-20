@@ -1,4 +1,4 @@
-public function {{ method }}({{ params }}): JsonResponse
-{
-
-}
+    public function {{ method }}({{ params }}): JsonResponse
+    {
+        // {{ resource }}
+    }

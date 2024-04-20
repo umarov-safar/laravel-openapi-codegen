@@ -26,9 +26,9 @@ class ControllerGeneratorTest extends TestCase
 
     public function test_can_generate_controller_from_path_item()
     {
-        $pathItem = $this->spec->paths->getPath('/users');
+        $pathItem = $this->spec->paths->getPath('/users/{id}/posts/{slug}');
 
-        $this->controllerGenerator->makeController('/users', $pathItem);
+        $this->controllerGenerator->makeController('/users/{id}/posts/{slug}', $pathItem);
         $this->assertTrue(true);
     }
 }
