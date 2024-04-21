@@ -5,8 +5,102 @@ This package provides a convenient way to generate Laravel routes, requests, and
 
 
 ### Motivation
+**For example, we have this openapi.yaml**
 ```yaml
-
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      ...
+      x-og-route-name: listUsers
+      x-og-controller: App\Http\Controllers\UsersController@index
+      x-og-skip-request: true
+      x-og-middlewares: auth
+      x-og-skip-resource: false
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+    post:
+      ...
+      x-og-route-name: createUser
+      x-og-controller: App\Http\Controllers\UsersController@store
+      x-og-skip-request: false
+      x-og-skip-resource: false
+      x-og-middlewares: auth,admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+  /users/{userId}:
+    put:
+      ...
+      x-og-route-name: updateUser
+      x-og-controller: App\Http\Controllers\UsersController@update
+      x-og-skip-request: false
+      x-og-middlewares: auth,admin
+      x-og-skip-resource: false
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+          pattern: '^[a-zA-Z0-9_-]{3,16}$'
+        email:
+          type: string
+          format: email
+          maxLength: 30
+      required:
+        - username
+        - email
 ```
 ## Installation
 To install the package, you can use Composer:

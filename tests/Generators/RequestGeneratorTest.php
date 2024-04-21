@@ -175,7 +175,11 @@ class RequestGeneratorTest extends TestCase
 
         $this->assertFileExists($file);
         $this->assertStringContainsString(
-            "'details.name' => ['string', 'required']",
+            "'details.name' => ['required', 'string']",
+            $requestFileContent
+        );
+        $this->assertStringContainsString(
+            "'details.email' => ['required', 'string', 'email'",
             $requestFileContent
         );
         unlink($file);

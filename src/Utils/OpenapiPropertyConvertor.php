@@ -15,7 +15,7 @@ class OpenapiPropertyConvertor
 
         $property = new OpenapiProperty($propertyName);
 
-        if (! empty($options['required'])) {
+        if (! empty($options['required']) || ! empty($options['inRequired'])) {
             $property->required = true;
             $property->addValidationRule('required');
         }
@@ -119,14 +119,19 @@ class OpenapiPropertyConvertor
                         self::$openapiToLaravelValidationMapper->getWithRule('maxProperties', $property->maxProperties)
                     );
                 }
+
+                $requiredProperties = [];
                 if (! empty($options['required']) && is_array($options['required'])) {
-                    $property->setRequiredProperties($options['required']);
+                    $requiredProperties = $options['required'];
                 }
 
                 if (! empty($options['properties']) && is_array($options['properties'])) {
-                    foreach ($options['properties'] as $subKey => $subProperty) {
+                    foreach ($options['properties'] as $subProperty => $subOptions) {
+                        if (in_array($subProperty, $requiredProperties)) {
+                            $subOptions['inRequired'] = true;
+                        }
                         $property->addProperty(
-                            OpenapiPropertyConvertor::convert($subKey, $subProperty)
+                            OpenapiPropertyConvertor::convert($subProperty, $subOptions)
                         );
                     }
                 }

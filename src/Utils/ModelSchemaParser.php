@@ -47,21 +47,15 @@ class ModelSchemaParser
 
     public function parseSchema(stdClass $openapiSchema): Schema
     {
-        if (isset($openapiSchema->required) && is_array($openapiSchema->required)) {
-            foreach ($openapiSchema->required as $propName) {
-                $this->schema->addRequiredProperty($propName);
-            }
-        }
+        $requiredProperties = $openapiSchema->required ?? [];
 
         if (isset($openapiSchema->type) && $openapiSchema->type == 'object' && isset($openapiSchema->properties)) {
             $properties = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($openapiSchema->properties));
 
             foreach ($properties as $propertyName => $options) {
-
-                if (in_array($propertyName, $this->schema->getRequiredProperties())) {
-                    $options['required'] = true;
+                if (in_array($propertyName, $requiredProperties)) {
+                    $options['inRequired'] = true;
                 }
-
                 $property = OpenapiPropertyConvertor::convert($propertyName, $options);
                 $this->schema->addProperty($property);
             }
