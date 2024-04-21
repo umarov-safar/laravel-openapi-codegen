@@ -42,8 +42,8 @@ class ControllerGenerator implements GeneratorInterface
     public function makeController(string $uri, PathItem $pathItem)
     {
         foreach ($pathItem->getOperations() as $operation) {
-            if (isset($operation->{'l-og-controller'})) {
-                $controller = $operation->{'l-og-controller'};
+            if (isset($operation->{'x-og-controller'})) {
+                $controller = $operation->{'x-og-controller'};
                 $this->setNamespacesInfo($controller);
                 $this->generateControllerOrAddMethodToControllerFromOperation($uri, $operation);
             }
@@ -61,7 +61,7 @@ class ControllerGenerator implements GeneratorInterface
     {
         if ($this->controllerFilExists()) {
 
-            $extractedRouteController = RouteControllerResolver::extract($operation->{'l-og-controller'});
+            $extractedRouteController = RouteControllerResolver::extract($operation->{'x-og-controller'});
 
             $class = new ReflectionClass($this->namespaceInfo->namespace);
             if (! $class->hasMethod($extractedRouteController->action)) {
@@ -78,8 +78,8 @@ class ControllerGenerator implements GeneratorInterface
 
     public function addNewNamespaces(Operation $operation)
     {
-        $isRequestSkipped = $operation->{'l-og-skip-request'} ?? true;
-        $isResourceSkipped = $operation->{'l-og-skip-resource'} ?? true;
+        $isRequestSkipped = $operation->{'x-og-skip-request'} ?? true;
+        $isResourceSkipped = $operation->{'x-og-skip-resource'} ?? true;
 
         $namespaces = [];
         if (! $isRequestSkipped) {
@@ -159,7 +159,7 @@ class ControllerGenerator implements GeneratorInterface
     {
         $params = $this->getUrlParamsWithTypesFromParametersOperation($uri, $operation);
 
-        $isRequestSkipped = $operation->{'l-og-skip-request'} ?? true;
+        $isRequestSkipped = $operation->{'x-og-skip-request'} ?? true;
         if (! $isRequestSkipped) {
             $params[$this->requestNamespaceInfo->className] = 'request';
         }
@@ -223,7 +223,7 @@ class ControllerGenerator implements GeneratorInterface
 
     public function getResourceIfNotSkipped(Operation $operation): string
     {
-        $isResourceSkipped = $operation->{'l-og-skip-resource'} ?? true;
+        $isResourceSkipped = $operation->{'x-og-skip-resource'} ?? true;
 
         if (! $isResourceSkipped) {
             return sprintf('return %s%s;', $this->resourceNamespaceInfo->className, '()');

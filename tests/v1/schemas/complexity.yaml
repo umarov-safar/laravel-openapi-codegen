@@ -2,10 +2,10 @@ VeryComplexity:
   post:
     tags:
       - validation
-    l-og-controller: App\Http\Controllers\ComplexController@create
-    l-og-skip-request: false
-    l-og-route-name: 'forValidation'
-    l-og-middleware: 'forValidation'
+    x-og-controller: App\Http\Controllers\ComplexController@create
+    x-og-skip-request: false
+    x-og-route-name: 'forValidation'
+    x-og-middleware: 'forValidation'
     requestBody:
       content:
         application/json:

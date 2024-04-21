@@ -59,12 +59,12 @@ class RouteGeneratorTest extends TestCase
         $routeInfo = $this->routeGenerator->makeRouteInfo('/users', $operation, 'get');
 
         // make dummy object that makeRouteInfo must return
-        $extractedRouteController = RouteControllerResolver::extract($operation->{'l-og-controller'});
+        $extractedRouteController = RouteControllerResolver::extract($operation->{'x-og-controller'});
         $routeConfiguration = RouteConfiguration::create(
             'get',
             'users',
-            $operation->{'l-og-route-name'},
-            $operation->{'l-og-middlewares'}
+            $operation->{'x-og-route-name'},
+            $operation->{'x-og-middlewares'}
         );
 
         // assert objects properties are the same

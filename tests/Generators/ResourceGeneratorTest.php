@@ -30,7 +30,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $pathItem = $this->spec->paths->getPath('/users');
         $this->resourceGenerator->generateResourceFromPath(new PathItem(['post' => $pathItem->post]));
-        $namespaceInfo = NamespaceConvertor::makeResourceNamespace($pathItem->post->{'l-og-controller'});
+        $namespaceInfo = NamespaceConvertor::makeResourceNamespace($pathItem->post->{'x-og-controller'});
         $file = base_path('app/Http/Resources/UsersResource.php');
         $this->assertFileExists($file);
 
@@ -45,7 +45,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $pathItem = $this->spec->paths->getPath('/users');
 
-        $namespaceInfo = NamespaceConvertor::makeResourceNamespace($pathItem->post->{'l-og-controller'});
+        $namespaceInfo = NamespaceConvertor::makeResourceNamespace($pathItem->post->{'x-og-controller'});
         $f = fopen(base_path($namespaceInfo->filePath), 'a+');
         fclose($f);
 
@@ -62,7 +62,7 @@ class ResourceGeneratorTest extends TestCase
     {
         $pathItem = $this->spec->paths->getPath('/users');
         $this->resourceGenerator->generateResourceFromPath(new PathItem(['post' => $pathItem->get]));
-        $namespaceInfo = NamespaceConvertor::makeResourceNamespace($pathItem->get->{'l-og-controller'});
+        $namespaceInfo = NamespaceConvertor::makeResourceNamespace($pathItem->get->{'x-og-controller'});
         $file = base_path('app/Http/Resources/UsersResource.php');
         $this->assertFileExists($file);
 

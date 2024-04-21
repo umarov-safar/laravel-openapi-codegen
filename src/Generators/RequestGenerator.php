@@ -47,14 +47,14 @@ class RequestGenerator implements GeneratorInterface
             /** @var Operation $operation */
             $operation = $pathItem->{$methodName};
 
-            $controller = $operation->{'l-og-controller'} ?? null;
-            $skipRequest = $operation->{'l-og-skip-request'} ?? null;
+            $controller = $operation->{'x-og-controller'} ?? null;
+            $skipRequest = $operation->{'x-og-skip-request'} ?? null;
 
             /**
              * For generating requests, we follow these rules:
              * 1. Ensure the controller exists. Requests will only be generated for controllers that we can confirm exist.
              * 2.1 Check if the request method is in the list of methods by default and not skipped for generation.
-             * 2.2 Or Alternatively, check if the flag l-og-skip-request is set to false. If skip-request is set to false,
+             * 2.2 Or Alternatively, check if the flag x-og-skip-request is set to false. If skip-request is set to false,
              * we generate requests even for methods not in the default list.
              */
             if ($controller && (

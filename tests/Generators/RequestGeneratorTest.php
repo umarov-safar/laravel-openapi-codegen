@@ -116,7 +116,7 @@ class RequestGeneratorTest extends TestCase
         $pathItem = $this->spec->paths->getPath('/request-generation');
         $operation = $pathItem->post;
 
-        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'l-og-controller'});
+        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'x-og-controller'});
         $this->requestGenerator->setNamespaceInfo($namespaceInfo);
 
         $this->requestGenerator->generateRequestForOperation($operation);
@@ -147,8 +147,8 @@ class RequestGeneratorTest extends TestCase
     {
         $pathItem = $this->spec->paths->getPath('/request-generation');
         $operation = $pathItem->post;
-        $operation->{'l-og-controller'} = "App\Http\Controllers\NotExistsFolder\SomeController@create";
-        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'l-og-controller'});
+        $operation->{'x-og-controller'} = "App\Http\Controllers\NotExistsFolder\SomeController@create";
+        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'x-og-controller'});
         $this->requestGenerator->setNamespaceInfo($namespaceInfo);
         $file = base_path('app/Http/Requests/NotExistsFolder/CreateSomeRequest.php');
 
@@ -165,7 +165,7 @@ class RequestGeneratorTest extends TestCase
         $pathItem = $this->spec->paths->getPath('/for-validation');
         $operation = $pathItem->post;
 
-        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'l-og-controller'});
+        $namespaceInfo = NamespaceConvertor::makeRequestNamespace($operation->{'x-og-controller'});
         $this->requestGenerator->setNamespaceInfo($namespaceInfo);
 
         $this->requestGenerator->generateRequestForOperation($operation);

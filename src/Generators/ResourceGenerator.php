@@ -41,8 +41,8 @@ class ResourceGenerator implements GeneratorInterface
     {
         foreach ($pathItem->getOperations() as $operation) {
 
-            $controller = $operation->{'l-og-controller'} ?? null;
-            $skipResource = $operation->{'l-og-skip-resource'} ?? null;
+            $controller = $operation->{'x-og-controller'} ?? null;
+            $skipResource = $operation->{'x-og-skip-resource'} ?? null;
 
             if (! empty($controller) && $skipResource !== true) {
                 $this->setNamespaceInfo(NamespaceConvertor::makeResourceNamespace($controller));

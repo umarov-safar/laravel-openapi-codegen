@@ -4,12 +4,12 @@ CreatePostAndGetAll:
       - Posts
     summary: Get all Posts
     description: This get operation return all Posts with pagination
-    l-og-generation: true
-    l-og-route-name: getPosts
-    l-og-controller: App\Http\Controllers\PostsController@index
-    l-og-skip-request: true
-    l-og-skip-resource: false
-    l-og-middlewares: auth,admin
+    x-og-generation: true
+    x-og-route-name: getPosts
+    x-og-controller: App\Http\Controllers\PostsController@index
+    x-og-skip-request: true
+    x-og-skip-resource: false
+    x-og-middlewares: auth,admin
     responses:
       200:
         description: Successful response
@@ -24,11 +24,11 @@ CreatePostAndGetAll:
       - Posts
     summary: Create Post
     description: This post operation create a Post
-    l-og-generation: false
-    l-og-route-name: createPost
-    l-og-controller: App\Http\Controllers\PostsController@create
-    l-og-skip-request: false
-    l-og-middlewares: auth,admin
+    x-og-generation: false
+    x-og-route-name: createPost
+    x-og-controller: App\Http\Controllers\PostsController@create
+    x-og-skip-request: false
+    x-og-middlewares: auth,admin
     requestBody:
       content:
         application/json:
@@ -48,12 +48,12 @@ CurrentPost:
       - Posts
     summary: Get Post by slug
     description: Get Post by slug
-    l-og-generation: false
-    l-og-route-name: getPost
-    l-og-controller: App\Http\Controllers\PostsController@get
-    l-og-skip-request: false
-    l-og-skip-resource: false
-    l-og-middlewares: auth,admin
+    x-og-generation: false
+    x-og-route-name: getPost
+    x-og-controller: App\Http\Controllers\PostsController@get
+    x-og-skip-request: false
+    x-og-skip-resource: false
+    x-og-middlewares: auth,admin
     parameters:
       - in: path
         name: slug

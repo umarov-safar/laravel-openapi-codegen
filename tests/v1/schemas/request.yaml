@@ -4,10 +4,10 @@ PathForRequestTest:
     description: This endpoint is just for testing request generation
     tags:
       - request-generation
-    l-og-controller: App\Http\Controllers\SomeController@create
-    l-og-skip-request: false
-    l-og-middlewares: auth
-    l-og-route-name: 'requestGeneration'
+    x-og-controller: App\Http\Controllers\SomeController@create
+    x-og-skip-request: false
+    x-og-middlewares: auth
+    x-og-route-name: 'requestGeneration'
     requestBody:
       required: true
       content:
@@ -26,9 +26,9 @@ PathForRequestTest:
     tags:
       - request-generation
     summary: Test for request-gen
-    l-og-controller: App\Http\Controllers\SomeController@index
-    l-og-skip-request: false
-    l-og-route-name: 'generateRequestForGetMethod'
+    x-og-controller: App\Http\Controllers\SomeController@index
+    x-og-skip-request: false
+    x-og-route-name: 'generateRequestForGetMethod'
     responses:
       '200':
         description: A list of users
@@ -43,11 +43,11 @@ GenerateRequestEvenForGetMethod:
   get:
     tags:
       - request-generation
-    summary: Test path with get method for request-gen with l-og-request false
-    l-og-controller: App\Http\Controllers\SomeController@getNotSkip
-    l-og-skip-request: false
-    l-og-middlewares: auth
-    l-og-route-name: 'getNotSkip'
+    summary: Test path with get method for request-gen with x-og-request false
+    x-og-controller: App\Http\Controllers\SomeController@getNotSkip
+    x-og-skip-request: false
+    x-og-middlewares: auth
+    x-og-route-name: 'getNotSkip'
 #    requestBody:
 #      content:
 #        application/json:
@@ -73,11 +73,11 @@ NotGenerateRequestPath:
   post:
     tags:
       - request-generation
-    summary: Test path for request-gen with l-og-skip-request true
-    l-og-controller: App\Http\Controllers\SomeController@skip
-    l-og-skip-request: true
-    l-og-middlewares: auth
-    l-og-route-name: 'requestGenerationSkip'
+    summary: Test path for request-gen with x-og-skip-request true
+    x-og-controller: App\Http\Controllers\SomeController@skip
+    x-og-skip-request: true
+    x-og-middlewares: auth
+    x-og-route-name: 'requestGenerationSkip'
     requestBody:
       required: true
       content:
