@@ -14,7 +14,7 @@ info:
 paths:
   /users:
     get:
-      ...
+      #...
       x-og-route-name: listUsers
       x-og-controller: App\Http\Controllers\UsersController@index
       x-og-skip-request: true
@@ -58,6 +58,7 @@ paths:
   /users/{userId}:
     put:
       ...
+      x-og-generation: true
       x-og-route-name: updateUser
       x-og-controller: App\Http\Controllers\UsersController@update
       x-og-skip-request: false
@@ -101,6 +102,109 @@ components:
       required:
         - username
         - email
+```
+by using package we can generate below code easy-peasy
+
+`routes/openapi-codegen.php`
+```php
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
+
+Route::get('users', [UsersController::class, 'index'])->name('listUsers')->middleware(['auth']);
+Route::post('users', [UsersController::class, 'store'])->name('createUser')->middleware(['auth', 'admin']);
+Route::put('users/{userId}', [UsersController::class, 'update'])->name('updateUser')->middleware(['auth', 'admin']);
+```
+`app/Http/Controllers/UsersController.php`
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use App\Http\Resources\UsersResource;
+use App\Http\Requests\StoreUsersRequest;
+use App\Http\Requests\UpdateUsersRequest;
+
+class UsersController
+{
+    public function index(): JsonResponse
+    {
+        // return UsersResource();
+    }
+
+    public function store(StoreUsersRequest $request): JsonResponse
+    {
+        // return UsersResource();
+    }
+
+    public function update(int $userId, UpdateUsersRequest $request): JsonResponse
+    {
+        // return UsersResource();
+    }
+
+}
+```
+`app/Http/Requests/StoreUsersRequest.php`
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Http\Request;
+
+class StoreUsersRequest extends Request
+{
+    public function rules(): array
+    {
+        return [
+            'username' => ['required', 'string', 'regex:/^[a-zA-Z0-9_-]{3,16}$/'],
+            'email' => ['required', 'string', 'email', 'max:30'],
+        ];
+    }
+}
+```
+`app/Http/Requests/UpdateUsersRequest.php`
+```php
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Http\Request;
+
+class UpdateUsersRequest extends Request
+{
+    public function rules(): array
+    {
+        return [
+            'username' => ['required', 'string', 'regex:/^[a-zA-Z0-9_-]{3,16}$/'],
+            'email' => ['required', 'string', 'email', 'max:30'],
+        ];
+    }
+}
+```
+`app/Http/Resources/UsersResource.php`
+```php
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class UsersResource extends JsonResource
+{
+    public function toArray(Request $request): array
+    {
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'email' => $this->email,
+        ];
+    }
+}
 ```
 ## Installation
 To install the package, you can use Composer:
