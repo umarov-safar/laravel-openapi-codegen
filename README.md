@@ -1,49 +1,38 @@
-## OpenApi Server generator
+# Laravel OpenAPI Code Generation
 
-### Route generator 
-Now can generate route with:
-- [x] Route name
-- [x] Middlewares
-- [ ] Regular Expression Constraints
-
-### settings
-###### x-og-controller: App\Http\Controllers\UserController@get
-
-Controller action for which will be generate route
-
-```php
-Route::get([UserController::class, 'get']);
-```
+### Introduction
+This package provides a convenient way to generate Laravel routes, requests, and controllers based on OpenAPI specifications in YAML format.
 
 
+# Installation
+To install the package, you can use Composer:
 
-###### x-og-route-name: getUser
+`composer require --dev laravel-openapi/codegen`
 
-Route name optional if name was set then in route will be added.
+### Configuration
+After installing the package, you need to publish the configuration file:
 
-```php
-Route::get([UserController::class, 'get'])->name('getUser');
-```
+```php artisan vendor:publish --provider="LaravelOpenapi\Codegen\LaravelOpenapiCodegenProvider"```
 
-###### x-og-middlewares: auth,admin
+This will create an `openapi-codegen.php` file in your Laravel application's `config` directory.
 
-Middleware optional if it was set then middlewares will be add
+### Usage
+#### Generate code
+To generate Laravel code from an OpenAPI YAML file, you can use the following Artisan command:
 
-```php
-Route::get([UserController::class, 'get'])->name('getUser')
-->middleware(['auth', 'amin']);;
-```
+```php artisan openapi:generate-code```
 
+This command will generate Laravel routes, requests, routes and controllers based on the provided OpenAPI YAML file.
 
 
-### Request generator
+### Configuration Options
+In the `openapi-codegen.php` configuration file, `you must define api_docs_url=to_your_yaml_file.yaml`.
 
-For all controller method automatically will be generate Request except `Request GET` method.
+### Contributing
+We welcome contributions from the community! If you have any ideas for improvements or find any issues, please feel free to open an issue or submit a pull request on GitHub.
 
-But we are free to skip generation with flag
+### License
+This package is open-source software licensed under the MIT License.
 
-##### x-og-skip-request: true
-
-if this flag is set to true then class request not will be gSenerate.
-
-If you want also create request for your get method than set `x-og-skip-request: false` if it was set false it create request even for request method
+### Support
+If you encounter any problems or have questions about using the package, please don't hesitate to reach out to us via email (safarumarov@gmail.com) or GitHub issues.
