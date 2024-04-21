@@ -111,8 +111,8 @@ class OpenapiProperty
         return $this->items;
     }
 
-    public function addItem(mixed $item): void
+    public function setItems(array $items)
     {
-        $this->items[] = $item;
+        $this->items = $items;
     }
 }

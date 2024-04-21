@@ -96,9 +96,15 @@ class ResourceGenerator implements GeneratorInterface
 
         $responseDataArray = '';
 
-        $properties = $schema->getProperties()['data'] ?? $schema;
+        $properties = $schema->getProperties()['data'] ?? $schema->getProperties();
 
-        foreach ($properties->getProperties() as $propertyName => $property) {
+        if (! $properties->getProperties() && isset($properties->getItems()['properties'])) {
+            $properties = $properties->getItems()['properties'];
+        } else {
+            $properties = $properties->getProperties();
+        }
+
+        foreach ($properties as $propertyName => $property) {
             $responseDataArray .= sprintf("\t\t\t'%s' => \$this->%s,\n", $propertyName, $propertyName);
         }
 

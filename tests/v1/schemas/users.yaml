@@ -70,7 +70,6 @@ CurrentUser:
 
 
 # ----------------- SCHEMAS -----------------------
-
 ReadOnlyProperties:
   type: object
   properties:
@@ -125,14 +124,8 @@ UsersResponse:
     data:
       type: array
       items:
-        - $ref: '#/UserSchema'
-        - type: object
-          properties:
-            name:
-              type: string
-            email:
-              type: string
-              format: email
+        $ref: '#/UserSchema'
+
 UserResponse:
   type: object
   properties:
