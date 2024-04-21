@@ -57,6 +57,11 @@ class ModelSchemaParser
             $properties = mergeRecursiveTypeOfSchemaPropertiesToArray(get_object_vars($openapiSchema->properties));
 
             foreach ($properties as $propertyName => $options) {
+
+                if (in_array($propertyName, $this->schema->getRequiredProperties())) {
+                    $options['required'] = true;
+                }
+
                 $property = OpenapiPropertyConvertor::convert($propertyName, $options);
                 $this->schema->addProperty($property);
             }
