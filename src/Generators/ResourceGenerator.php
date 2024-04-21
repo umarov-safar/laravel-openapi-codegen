@@ -96,12 +96,15 @@ class ResourceGenerator implements GeneratorInterface
 
         $responseDataArray = '';
 
-        $properties = $schema->getProperties()['data'] ?? $schema->getProperties();
+        $laravelDataResponse = $schema->getProperties()['data'] ?? null;
+        $properties = $schema->getProperties();
 
-        if (! $properties->getProperties() && isset($properties->getItems()['properties'])) {
-            $properties = $properties->getItems()['properties'];
-        } else {
-            $properties = $properties->getProperties();
+        if ($laravelDataResponse && is_object($laravelDataResponse)) {
+            if ($laravelDataResponse->originalType === 'array' && isset($laravelDataResponse->getItems()['properties'])) {
+                $properties = $laravelDataResponse->getItems()['properties'];
+            } elseif ($laravelDataResponse->originalType === 'object') {
+                $properties = $laravelDataResponse->getProperties();
+            }
         }
 
         foreach ($properties as $propertyName => $property) {

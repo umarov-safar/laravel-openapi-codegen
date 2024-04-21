@@ -67,5 +67,6 @@ class ResourceGeneratorTest extends TestCase
         $this->assertFileExists($file);
 
         $this->assertStringContainsString('App\Http\Resources\UsersResource', $namespaceInfo->namespace);
+        unlink($file);
     }
 }

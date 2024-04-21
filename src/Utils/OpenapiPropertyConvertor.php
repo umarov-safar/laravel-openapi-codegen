@@ -100,8 +100,10 @@ class OpenapiPropertyConvertor
                         self::$openapiToLaravelValidationMapper->getWithRule('maxItems', $property->maximum)
                     );
                 }
+
                 if (isset($options['items']) && is_array($options['items'])) {
                     $property->setItems($options['items']);
+
                 }
                 break;
             case 'object':

@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: List all users
+      description: Retrieve a list of all users.
+      x-og-generation: false
+      x-og-route-name: listUsers
+      x-og-controller: App\Http\Controllers\UsersController@index
+      x-og-skip-request: true
+      x-og-middlewares: auth
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a user
+      description: Create a new user.
+      x-og-generation: true
+      x-og-route-name: createUser
+      x-og-controller: App\Http\Controllers\UsersController@store
+      x-og-skip-request: false
+      x-og-middlewares: auth,admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      description: Retrieve a single user by ID.
+      x-og-generation: true
+      x-og-route-name: getUser
+      x-og-controller: App\Http\Controllers\UsersController@show
+      x-og-skip-request: false
+      x-og-middlewares: auth
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user to retrieve.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    put:
+      summary: Update user
+      description: Update an existing user by ID.
+      x-og-generation: true
+      x-og-route-name: updateUser
+      x-og-controller: App\Http\Controllers\UsersController@update
+      x-og-skip-request: false
+      x-og-middlewares: auth,admin
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user to update.
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete user
+      description: Delete a user by ID.
+      x-og-generation: true
+      x-og-route-name: deleteUser
+      x-og-controller: App\Http\Controllers\UsersController@destroy
+      x-og-skip-request: true
+      x-og-middlewares: auth,admin
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID of the user to delete.
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: User deleted successfully.
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+      required:
+        - username
+        - email
