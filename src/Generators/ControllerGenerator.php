@@ -65,7 +65,7 @@ class ControllerGenerator implements GeneratorInterface
 
             $class = new ReflectionClass($this->namespaceInfo->namespace);
             if (! $class->hasMethod($extractedRouteController->action)) {
-                $controllerNamespace = $this->addNewNamespaces($operation);
+                $this->addNewNamespaces($operation);
                 $this->addNewMethodInControllerFileContent($uri, $extractedRouteController, $operation);
             }
         } else {
@@ -76,7 +76,7 @@ class ControllerGenerator implements GeneratorInterface
         }
     }
 
-    public function addNewNamespaces(Operation $operation)
+    public function addNewNamespaces(Operation $operation): void
     {
         $isRequestSkipped = $operation->{'x-og-skip-request'} ?? true;
         $isResourceSkipped = $operation->{'x-og-skip-resource'} ?? true;
@@ -172,7 +172,7 @@ class ControllerGenerator implements GeneratorInterface
         return trim($stringParams, ', ');
     }
 
-    public function getUrlParamsWithTypesFromParametersOperation(string $uri, Operation $operation)
+    public function getUrlParamsWithTypesFromParametersOperation(string $uri, Operation $operation): array
     {
         $params = $this->getUrlParams($uri);
         if (! empty($params) && isset($operation->parameters) && is_array($operation->parameters)) {
@@ -237,12 +237,12 @@ class ControllerGenerator implements GeneratorInterface
         return file_exists(base_path($this->namespaceInfo->filePath));
     }
 
-    public function getControllerStubContent()
+    public function getControllerStubContent(): string
     {
         return Stub::getStubContent('controller.stub');
     }
 
-    public function getControllerMethodStubContent()
+    public function getControllerMethodStubContent(): string
     {
         return Stub::getStubContent('controller.method.stub');
     }
