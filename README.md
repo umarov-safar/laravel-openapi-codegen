@@ -103,7 +103,7 @@ components:
         - username
         - email
 ```
-by using package after running `php artisan openapi:generate-codei` package generates for you below code.
+by using package after running `php artisan openapi:generate-code` package generates for you below code.
 
 `routes/openapi-codegen.php`
 ```php
