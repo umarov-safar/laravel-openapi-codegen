@@ -5,7 +5,7 @@ This package provides a convenient way to generate Laravel routes, requests, and
 
 
 ### Motivation
-**For example, we have this openapi.yaml**
+For example, we have this openapi.yaml
 ```yaml
 openapi: 3.0.0
 info:
