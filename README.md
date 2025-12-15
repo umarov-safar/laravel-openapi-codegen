@@ -1,7 +1,7 @@
 # Laravel OpenAPI Code Generation
 
 ## Introduction
-This package provides a convenient way to generate Laravel routes, requests, and controllers based on OpenAPI specifications in YAML format.
+This package provides a convenient way to generate Laravel routes, requests, controllers and etc. based on OpenAPI specifications in YAML format.
 
 
 ### Motivation
