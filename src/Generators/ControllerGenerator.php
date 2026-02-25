@@ -64,16 +64,19 @@ class ControllerGenerator implements GeneratorInterface
             $extractedRouteController = RouteControllerResolver::extract($operation->{'x-og-controller'});
 
             $class = new ReflectionClass($this->namespaceInfo->namespace);
+            
             if (! $class->hasMethod($extractedRouteController->action)) {
                 $this->addNewNamespaces($operation);
                 $this->addNewMethodInControllerFileContent($uri, $extractedRouteController, $operation);
             }
-        } else {
-            $file = $this->createFileIfNotExist();
-            $stubContent = $this->replaceNamespaceAndClassName();
-            $this->filesystem->put($file, $stubContent);
-            $this->generateControllerOrAddMethodToControllerFromOperation($uri, $operation);
+            
+            return;
         }
+
+        $file = $this->createFileIfNotExist();
+        $stubContent = $this->replaceNamespaceAndClassName();
+        $this->filesystem->put($file, $stubContent);
+        $this->generateControllerOrAddMethodToControllerFromOperation($uri, $operation);
     }
 
     public function addNewNamespaces(Operation $operation): void
