@@ -9,8 +9,7 @@ class RouteConfiguration
         public string $uri,
         public ?string $routeName,
         public ?string $middlewares
-    ) {
-    }
+    ) {}
 
     public static function create(
         string $method,

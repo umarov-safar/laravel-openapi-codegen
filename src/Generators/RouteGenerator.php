@@ -23,7 +23,7 @@ class RouteGenerator implements GeneratorInterface
 
     public function __construct()
     {
-        $this->filesystem = new Filesystem();
+        $this->filesystem = new Filesystem;
     }
 
     /**

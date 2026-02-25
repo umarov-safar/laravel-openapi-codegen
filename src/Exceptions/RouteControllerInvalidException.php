@@ -2,6 +2,4 @@
 
 namespace LaravelOpenapi\Codegen\Exceptions;
 
-class RouteControllerInvalidException extends \Exception
-{
-}
+class RouteControllerInvalidException extends \Exception {}

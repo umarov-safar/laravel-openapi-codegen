@@ -7,8 +7,7 @@ class RouteInfo
     public function __construct(
         public ExtractedRouteController $extractedRouteController,
         public RouteConfiguration $routeConfiguration
-    ) {
-    }
+    ) {}
 
     public static function create(
         ExtractedRouteController $extractedRouteController,

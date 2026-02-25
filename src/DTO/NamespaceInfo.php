@@ -9,8 +9,7 @@ class NamespaceInfo
         public string $namespace,
         public string $filePath,
         public string $namespaceWithoutClassName
-    ) {
-    }
+    ) {}
 
     public static function create(
         string $className,

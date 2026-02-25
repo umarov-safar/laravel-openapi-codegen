@@ -11,7 +11,7 @@ class OpenapiPropertyConvertor
 
     public static function convert(string $propertyName, array $options): OpenapiProperty
     {
-        self::$openapiToLaravelValidationMapper = new OpenapiToLaravelValidationMapper();
+        self::$openapiToLaravelValidationMapper = new OpenapiToLaravelValidationMapper;
 
         $property = new OpenapiProperty($propertyName);
 

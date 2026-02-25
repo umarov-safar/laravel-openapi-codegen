@@ -18,10 +18,10 @@ class DefaultGeneratorFactory extends GeneratorFactory
     public static function createGenerator(string $type): GeneratorInterface
     {
         return match ($type) {
-            EntityType::ROUTE => new RouteGenerator(),
-            EntityType::CONTROLLER => new ControllerGenerator(),
-            EntityType::REQUEST => new RequestGenerator(),
-            EntityType::RESOURCE => new ResourceGenerator(),
+            EntityType::ROUTE => new RouteGenerator,
+            EntityType::CONTROLLER => new ControllerGenerator,
+            EntityType::REQUEST => new RequestGenerator,
+            EntityType::RESOURCE => new ResourceGenerator,
             default => throw new GeneratorNotFoundException('Generator not found')
         };
     }

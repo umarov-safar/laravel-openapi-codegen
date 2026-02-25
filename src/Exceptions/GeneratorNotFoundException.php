@@ -2,6 +2,4 @@
 
 namespace LaravelOpenapi\Codegen\Exceptions;
 
-class GeneratorNotFoundException extends \Exception
-{
-}
+class GeneratorNotFoundException extends \Exception {}

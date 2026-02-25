@@ -26,7 +26,7 @@ class RequestGenerator implements GeneratorInterface
 
     public function __construct()
     {
-        $this->filesystem = new Filesystem();
+        $this->filesystem = new Filesystem;
     }
 
     public function setNamespaceInfo(NamespaceInfo $namespaceInfo): void

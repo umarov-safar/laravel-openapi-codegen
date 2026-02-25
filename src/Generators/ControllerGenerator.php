@@ -29,7 +29,7 @@ class ControllerGenerator implements GeneratorInterface
 
     public function __construct()
     {
-        $this->filesystem = new Filesystem();
+        $this->filesystem = new Filesystem;
     }
 
     public function generate(SpecObjectInterface $spec): void
@@ -64,12 +64,12 @@ class ControllerGenerator implements GeneratorInterface
             $extractedRouteController = RouteControllerResolver::extract($operation->{'x-og-controller'});
 
             $class = new ReflectionClass($this->namespaceInfo->namespace);
-            
+
             if (! $class->hasMethod($extractedRouteController->action)) {
                 $this->addNewNamespaces($operation);
                 $this->addNewMethodInControllerFileContent($uri, $extractedRouteController, $operation);
             }
-            
+
             return;
         }
 
@@ -183,7 +183,7 @@ class ControllerGenerator implements GeneratorInterface
                 if (isset($parameter->in) && $parameter->in === 'path' && in_array($parameter->name, $params)) {
                     $type = 'mixed';
                     if (isset($parameter->schema->type)) {
-                        $type = (new OpenapiTypeToPhpMapper())->get($parameter->schema->type);
+                        $type = (new OpenapiTypeToPhpMapper)->get($parameter->schema->type);
                     }
                     $params[$parameter->name] = $type;
                 }

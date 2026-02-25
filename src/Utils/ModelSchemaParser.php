@@ -14,7 +14,7 @@ class ModelSchemaParser
     public function __construct(stdClass $openapiSchema)
     {
         $this->openapiSchema = $openapiSchema;
-        $this->schema = new Schema();
+        $this->schema = new Schema;
     }
 
     public function parse(): Schema

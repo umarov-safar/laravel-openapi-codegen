@@ -8,8 +8,7 @@ class ExtractedRouteController
         public string $namespace,
         public string $controller,
         public string $action,
-    ) {
-    }
+    ) {}
 
     public static function create(
         string $namespace,
